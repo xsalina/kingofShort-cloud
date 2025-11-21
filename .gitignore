@@ -1,0 +1,25 @@
+# Node.js dependencies
+node_modules/
+npm-debug.log
+
+# Cloud functions dependencies
+cloudfunctions/**/node_modules/
+
+# Local environment files
+.env
+.env.*
+
+# Build output
+miniprogram_npm/
+dist/
+build/
+.idea/
+.vscode/
+
+# System files
+.DS_Store
+Thumbs.db
+
+# Logs
+logs/
+*.log
