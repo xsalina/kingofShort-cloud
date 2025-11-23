@@ -1,60 +1,215 @@
-.install_tip_back {
-  position: fixed;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  background-color: rgba(0,0,0,0.4);
-  z-index: 1;
-}
-.install_tip_close{
-  position:absolute;
-  right: 10rpx;
-  top: 10rpx;
-  width: 32px;
-  height: 32px;
-  /* background-color: red; */
-}
-.install_tip_detail {
-  position: fixed;
-  background-color: white;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  border-radius: 40rpx 40rpx 0 0;
-  padding: 50rpx 50rpx 100rpx 50rpx;
-  z-index: 9;
+.container {
+  padding: 0;
+  background-color: #f0f2f5;
+  min-height: 100vh;
 }
 
-.install_tip_detail_title {
-  font-weight: 400;
-  font-size: 40rpx;
+/* 页头 */
+.header {
   text-align: center;
+  margin-bottom: 20rpx;
 }
-
-.install_tip_detail_tip {
-  font-size: 25rpx;
-  color: rgba(0,0,0,0.4);
-  margin-top: 20rpx;
-  text-align: left;
+.title {
+  font-size: 36rpx;
+  font-weight: bold;
+  color: #1e90ff;
 }
-.install_tip_detail_buttons {
-  padding-top: 50rpx;
+.profit-row {
   display: flex;
+  justify-content: space-around;
+  margin-top: 8rpx;
+  font-size: 28rpx;
 }
-.install_tip_detail_button {
-  color: #07C160;
-  font-weight: 500;
-  background-color: rgba(0,0,0,0.1);
-  width: 40%;
-  text-align: center;
-  /* height: 90rpx; */
-  /* line-height: 90rpx; */
-  border-radius: 10rpx;
-  margin: 0 auto;
+.profit {
+  color: #ff4500;
+  font-weight: bold;
 }
 
-.install_tip_detail_button_primary {
-  background-color: #07C160;
+
+.sellBtn {
+  background-color: #32cd32;
   color: #fff;
+  font-size: 28rpx;
+  padding: 6rpx 12rpx;
+  border-radius: 10rpx;
+}
+
+/* 交易记录 */
+.record {
+  padding: 12rpx;
+  margin-bottom: 12rpx;
+  border-radius: 12rpx;
+}
+.record-row {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 6rpx;
+  font-size: 28rpx;
+}
+.buy {
+  background-color: #1e90ff;
+}
+.sell {
+  background-color: #32cd32;
+}
+.profit {
+  color: #ff4500;
+  font-weight: bold;
+}
+/* 设置 row 换行，并让 picker/input 宽度拉满 */
+.row.wrap {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  margin-bottom: 12rpx;
+}
+
+.label {
+  font-size: 28rpx;
+  color: #555;
+  min-width: 120rpx; /* label 最小宽度，可以换行 */
+  margin-bottom: 6rpx; /* 如果换行，和输入框保持间距 */
+}
+
+.input-full,
+.picker-full {
+  flex: 1;
+  border: 1rpx solid #ccc;
+  border-radius: 8rpx;
+  padding: 6rpx 10rpx;
+  font-size: 28rpx;
+  min-width: 150rpx; /* 防止太窄 */
+}
+
+.tx-record {
+  width: calc(100% - 40rpx);
+  margin: 0 20rpx 28rpx;
+  padding: 16rpx;
+  border-radius: 16rpx;
+  background-color: #fff;
+  box-shadow: 0 4rpx 12rpx rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+}
+
+.tx-record.sold {
+  border-left: 6rpx solid #32cd32;
+  background-color: #d0f0c0;
+}
+
+.tx-record.unsold {
+  border-left: 6rpx solid #999;
+  background-color: #e0e0e5;
+}
+
+/* 头部 */
+.tx-record-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12rpx;
+}
+
+.tx-stock-name {
+  font-size: 30rpx;
+  font-weight: bold;
+  color: #222;
+}
+
+.tx-tag {
+  padding: 4rpx 14rpx;
+  border-radius: 14rpx;
+  font-size: 24rpx;
+  color: #fff;
+  min-width: 70rpx;
+  text-align: center;
+  line-height: 28rpx;
+}
+
+.tx-tag-sold {
+  background-color: #32cd32;
+}
+.tx-tag-unsold {
+  background-color: #999;
+}
+
+/* 主体布局 */
+.tx-record-body {
+  display: flex;
+  position: relative;
+  align-items: center;
+  margin-bottom: 12rpx;
+}
+
+/* 左侧文案列 */
+.tx-left-labels {
+  width: 80rpx; /* 固定宽度 */
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  margin-right: 8rpx;
+  font-size: 26rpx;
+  color: #333;
+}
+
+/* 箭头 */
+.tx-arrow {
+  position: absolute;
+  left: calc(50% + 50rpx);
+  transform: translateX(-50%);
+  font-size: 36rpx;
+  color: #666;
+}
+
+/* 右侧内容区 */
+.tx-right-content {
+  flex: 1;
+  display: flex;
+  justify-content: space-between;
+  margin-left: 8rpx;
+}
+.tx-col {
+  width:216rpx;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+}
+/* 左右列各占一半 */
+/* 右侧内容区列统一字体样式 */
+.tx-left-labels text,.tx-col text {
+  font-size: 26rpx; /* 统一字体大小 */
+  font-weight: bold; /* 统一字体粗细 */
+  color: #222; /* 统一颜色 */
+  margin: 6rpx 0; /* 上下间距 */
+}
+.tx-left-labels .trasprent-text{
+    color: transparent;
+}
+
+/* 标签字体保持稍大可选 */
+.tx-label {
+  font-weight: bold;
+  font-size: 26rpx;
+  margin-bottom: 12rpx;
+}
+
+/* 卖出数值列 */
+.tx-sell-col text {
+  /* margin: 8rpx 0;
+  font-size: 26rpx;
+  font-weight: bold;
+  color: #222; */
+}
+
+/* 收益 */
+.tx-record-footer {
+  text-align: right;
+  font-size: 26rpx;
+  margin-top: 8rpx;
+}
+
+.tx-profit {
+  color: #ff4500;
+  font-weight: bold;
 }

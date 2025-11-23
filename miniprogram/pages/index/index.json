@@ -1,6 +1,5 @@
 {
   "navigationBarTitleText": "短线股票助手",
   "usingComponents": {
-    "cloud-tip-modal": "/components/cloudTipModal/index"
   }
 }

@@ -2,6 +2,14 @@
   "pages": [
     "pages/index/index"
   ],
+  "subpackages": [
+    {
+      "root": "subpackages/deal",
+      "pages": [
+        "add-deal/index"
+      ]
+    }
+  ],
   "window": {
     "backgroundColor": "#F6F6F6",
     "backgroundTextStyle": "light",

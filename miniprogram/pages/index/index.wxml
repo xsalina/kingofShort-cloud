@@ -1,139 +1,31 @@
+<!-- pages/index/index.wxml -->
+
 <view class="container">
 
-  <!-- 页头 -->
-  <view class="header">
-    <view class="profit-row">
-      <text>本月收益: {{monthProfit.toFixed(2) || 0}}</text>
-      <text>总收益: {{totalProfit.toFixed(2) || 0}}</text>
-    </view>
-  </view>
-
-  <!-- 新增交易卡片 -->
-  <view class="card">
-  <text class="card-title">新增交易</text>
-
-  <!-- 股票选择 -->
-  <view class="row wrap">
-    <text class="label">选择股票</text>
-    <picker mode="selector" range="{{stockNames}}" value="{{selectedStockIndex}}" bindchange="onStockChange" class="picker-full">
-      <view class="">{{selectedStockObj.name}}</view>
-    </picker>
-  </view>
-
-  <!-- 买入价格 -->
-  <view class="row wrap">
-    <text class="label">买入价格</text>
-    <input class="input-full" type="digit" placeholder="例如 210.56" bindinput="onPriceInput"/>
-  </view>
-
-  <!-- 买入数量 -->
-  <view class="row wrap">
-    <text class="label">买入数量</text>
-    <input class="input-full" type="digit" placeholder="最小单位 {{minUnit}}" bindinput="onQtyInput"/>
-  </view>
-
-  <!-- 目标收益率 -->
-  <view class="row wrap">
-    <text class="label">目标收益率 (%)</text>
-    <input class="input-full" type="digit" placeholder="例如 10" bindinput="onTargetRateInput"/>
-  </view>
-
-  <view wx:if="{{suggestedSellPrice}}">
-    <text>建议卖出价格: {{selectedStockObj.currency}}{{suggestedSellPrice}}</text>
-    <view>预期收益: {{selectedStockObj.currency}}{{suggestedProfit}}</view>
-  </view>
-
-  <button bindtap="addTransaction" class="btn">添加交易</button>
-</view>
-
-
-  <!-- 交易列表 -->
-  <!-- <view class="card">
-    <text class="card-title">交易记录</text>
-    <block wx:for="{{transactions}}" wx:key="_id">
-      <view class="record {{item.typeClass}}">
-        <view class="record-row">
-          <text>{{item.stockName}} | {{item.currency}}{{item.price}} × {{item.qty}}</text>
-          <text>目标卖价: {{item.currency}}{{item.targetPrice.toFixed(4)}} | 盈亏: {{item.currency}}{{item.profit.toFixed(2)}}</text>
-        </view>
-        <view class="record-row">
-          <button wx:if="{{item.typeClass==='buy' && item.qty>0}}" data-index="{{index}}" bindtap="sellTransaction" class="sellBtn">卖出</button>
-        </view>
-      </view>
-    </block>
-  </view> -->
-
-<!-- 交易记录卡片 -->
-<block wx:for="{{transactionssss}}" wx:key="_id">
-  <view class="tx-record {{item.sold?'sold':'unsold'}}">
-
-    <!-- 股票名 + 标签 -->
-    <view class="tx-record-header">
-      <text class="tx-stock-name">{{item.stockName}}</text>
-      <view class="tx-tag {{item.sold?'tx-tag-sold':'tx-tag-unsold'}}">
-        <text>{{item.sold?'已卖':'未卖'}}</text>
+  <!-- 收益统计栏 -->
+  <view class="stats-bar">
+    <view class="stat-item" bindtap="onMonthProfitTap">
+      <view class="stat-title">本月收益</view>
+      <view class="stat-values">
+        <text class="currency">$ {{monthProfitUSD}}</text>
+        <text class="currency">¥ {{monthProfitCNY}}</text>
+        <text class="currency">HK$ {{monthProfitHKD}}</text>
       </view>
     </view>
 
-    <!-- 卡片主体：三列布局 -->
-    <view class="tx-record-body">
-
-      <!-- 最左侧文案列 -->
-      <view class="tx-left-labels">
-        <text class="trasprent-text">模式</text>
-        <text>价格</text>
-        <text>数量</text>
-        <text>时间</text>
+    <view class="stat-item" bindtap="onTotalProfitTap">
+      <view class="stat-title">总收益</view>
+      <view class="stat-values">
+        <text class="currency">$ {{totalProfitUSD}}</text>
+        <text class="currency">¥ {{totalProfitCNY}}</text>
+        <text class="currency">HK$ {{totalProfitHKD}}</text>
       </view>
-
-      <!-- 箭头 -->
-      <view class="tx-arrow">→</view>
-
-      <!-- 右侧内容区 -->
-      <view class="tx-right-content">
-        <!-- 买入列 -->
-        <view class="tx-col tx-buy-col">
-          <text class="tx-label">买入</text>
-          <text>{{item.currency}}{{item.price}}</text>
-          <text>{{item.qty}}</text>
-          <text>{{item.buyTime}}</text>
-        </view>
-
-        <!-- 卖出列 -->
-        <view class="tx-col tx-sell-col">
-          <text class="tx-label">卖出</text>
-          <text>{{item.sold ? item.currency + item.sellPrice : '-'}}</text>
-          <text>{{item.sold ? item.sellQty : '-'}}</text>
-          <text>{{item.sold ? item.sellTime : '-'}}</text>
-        </view>
-      </view>
-
     </view>
-
-    <!-- 收益 -->
-    <view class="tx-record-footer">
-      <text>收益: <text class="tx-profit">{{item.currency}}{{item.profit}}</text></text>
-    </view>
-
   </view>
-</block>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+  <!-- 新增交易按钮区 -->
+  <view class="add-transaction-area">
+    <button class="add-btn" bindtap="onAddTransaction">+ 新增交易</button>
+  </view>
 
 </view>

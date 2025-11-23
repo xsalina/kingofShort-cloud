@@ -7,12 +7,49 @@ function safeSubtract(a,b){return(Math.round(a*1000000)-Math.round(b*1000000))/1
 
 Page({
   data:{
-    monthProfitUSD:300,
-    monthProfitCNY:300,
-    monthProfitHKD:400,
-    totalProfitUSD:300,
-    totalProfitCNY:400,
-    totalProfitHKD:100
+    stockOptions:[
+      {name:"特斯拉", fractional:true, market:"美股", currency:"$"},
+      {name:"英伟达", fractional:true, market:"美股", currency:"$"},
+      {name:"阿里巴巴", fractional:false, market:"港股", currency:"HK$"},
+      {name:"工商银行", fractional:false, market:"A股", currency:"¥"}
+    ],
+    stockNames:["特斯拉","英伟达","阿里巴巴","工商银行"],
+    selectedStockIndex:0,
+    selectedStockObj:{name:"特斯拉", fractional:true, market:"美股", currency:"$"},
+    price:0,
+    qty:0,
+    minUnit:0.0001,
+    targetRate:0,
+
+    // 新增：买入手续费（用户输入）
+    buyFeeInput: 0,
+
+    suggestedSellPrice:null,
+    suggestedProfit:null,
+
+    transactionssss: [
+  {
+    stockName: "特斯拉",
+    price: 398,
+    qty: 5,
+    currency: "$",
+    buyTime: "2025-11-16 10:20",
+    sold: true,
+    sellPrice: 498,
+    sellQty: 5,
+    sellTime: "2025-11-16 14:30",
+    profit: 500
+  },
+  {
+    stockName: "英伟达",
+    price: 310,
+    qty: 2,
+    currency: "$",
+    buyTime: "2025-11-17 09:50",
+    sold: false,
+    profit: 0
+  }
+]
   },
 
   onLoad(){

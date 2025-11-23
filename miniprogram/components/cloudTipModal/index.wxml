@@ -1,10 +1,57 @@
-<!--miniprogram/components/cloudTipModal/index.wxml-->
-<!--  wx:if="{{showUploadTip}}" -->
-<view class="install_tip" wx:if="{{showTip}}">
-  <view class="install_tip_back"></view>
-  <view class="install_tip_detail">
-    <image class="install_tip_close" bind:tap="onClose" src="../../images/icons/close.png"/>
-    <view class="install_tip_detail_title">{{title}}</view>
-    <view class="install_tip_detail_tip">{{content}}</view>
+<view class="container">
+  <!-- 页头 -->
+  <view class="header">
+    <view class="profit-row">
+      <text>本月收益: {{monthProfit.toFixed(2) || 0}}</text>
+      <text>总收益: {{totalProfit.toFixed(2) || 0}}</text>
+    </view>
   </view>
+ 
+  <block wx:for="{{transactionssss}}" wx:key="_id">
+    <view class="tx-record {{item.sold?'sold':'unsold'}}">
+      <!-- 股票名 + 标签 -->
+      <view class="tx-record-header">
+        <text class="tx-stock-name">{{item.stockName}}</text>
+        <view class="tx-tag {{item.sold?'tx-tag-sold':'tx-tag-unsold'}}">
+          <text>{{item.sold?'已卖':'未卖'}}</text>
+        </view>
+      </view>
+      <!-- 卡片主体：三列布局 -->
+      <view class="tx-record-body">
+        <!-- 最左侧文案列 -->
+        <view class="tx-left-labels">
+          <text class="trasprent-text">模式</text>
+          <text>价格</text>
+          <text>数量</text>
+          <text>时间</text>
+        </view>
+        <!-- 箭头 -->
+        <view class="tx-arrow">→</view>
+        <!-- 右侧内容区 -->
+        <view class="tx-right-content">
+          <!-- 买入列 -->
+          <view class="tx-col tx-buy-col">
+            <text class="tx-label">买入</text>
+            <text>{{item.currency}}{{item.price}}</text>
+            <text>{{item.qty}}</text>
+            <text>{{item.buyTime}}</text>
+          </view>
+          <!-- 卖出列 -->
+          <view class="tx-col tx-sell-col">
+            <text class="tx-label">卖出</text>
+            <text>{{item.sold ? item.currency + item.sellPrice : '-'}}</text>
+            <text>{{item.sold ? item.sellQty : '-'}}</text>
+            <text>{{item.sold ? item.sellTime : '-'}}</text>
+          </view>
+        </view>
+      </view>
+      <!-- 收益 -->
+      <view class="tx-record-footer">
+        <text>
+          收益:
+          <text class="tx-profit">{{item.currency}}{{item.profit}}</text>
+        </text>
+      </view>
+    </view>
+  </block>
 </view>
