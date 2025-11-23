@@ -45,5 +45,12 @@ Component({
         statusClass: cls
       });
     }
+  },
+  methods:{
+    gotoDetail(){
+      wx.navigateTo({
+      url: '/subpackages/deal/deal-detail/index'
+    });
+    }
   }
 });
