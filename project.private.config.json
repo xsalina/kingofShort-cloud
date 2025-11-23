@@ -26,6 +26,13 @@
           "query": "",
           "launchMode": "default",
           "scene": null
+        },
+        {
+          "name": "",
+          "pathName": "subpackages/deal/deal-detail/index",
+          "query": "",
+          "launchMode": "default",
+          "scene": null
         }
       ]
     }

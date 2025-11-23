@@ -1,0 +1,123 @@
+.container { padding: 20rpx; background-color: #f5f5f5; }
+
+.detail-header { display:flex; justify-content:space-between; align-items:center; margin-bottom:20rpx; }
+.stock-name { font-size:32rpx; font-weight:bold; }
+.tx-tag { padding:4rpx 14rpx; border-radius:14rpx; font-size:24rpx; color:#fff; text-align:center; line-height:28rpx; }
+.tx-tag-sold { background-color:#32cd32; }
+.tx-tag-partial { background-color:#ffa500; }
+.tx-tag-pending { background-color:#5a9bd4; }
+.tx-tag-unsold { background-color:#999; }
+
+
+.highlight-tip {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 24rpx 28rpx;
+  background: #fff7e6;
+  border: 2rpx solid #ffb54c;
+  border-radius: 14rpx;
+  margin-bottom: 30rpx;
+}
+
+.tip-title {
+  font-size: 30rpx;
+  font-weight: bold;
+  color: #d97a00;
+  margin-bottom: 16rpx;
+}
+
+.tip-line {
+  font-size: 28rpx;
+  margin-bottom: 8rpx;
+  color: #5a4500;
+}
+
+.tip-number {
+  color: #d96b00;
+  font-weight: bold;
+}
+
+
+.detail-section { width:100%;background-color:#fff; border-radius:16rpx; padding:20rpx; margin-bottom:20rpx; box-shadow:0 4rpx 12rpx rgba(0,0,0,0.1);box-sizing: border-box; }
+.section-title { font-size:28rpx; font-weight:bold; margin-bottom:12rpx; }
+
+.detail-row { display:flex; justify-content:space-between; font-size:26rpx; margin-bottom:10rpx; }
+.total-row { font-weight:bold; font-size:28rpx; }
+.divider { height:1rpx; background-color:#e0e0e0; margin:8rpx 0; }
+
+.detail-actions { display:flex; margin-top:12rpx; }
+.action-btn { border-radius:16rpx; padding:10rpx 20rpx; font-size:26rpx; color:#fff; margin-right:16rpx; border:none; }
+.pending-btn { background-color:#5a9bd4; } /* 挂单 */
+.cancel-btn { background-color:#999; }    /* 取消挂单 */
+.sell-btn { background-color:#32cd32; }   /* 卖出 */
+.tx-profit { font-weight:bold; }
+.detail-actions { display: flex; flex-wrap: wrap; margin-top: 12rpx; }
+.action-btn {
+  border-radius: 16rpx;
+  padding: 10rpx 20rpx;
+  font-size: 26rpx;
+  color: #fff;
+  margin-right: 16rpx;
+  margin-bottom: 12rpx;
+  border: none;
+}
+
+.modify-btn { background-color: #5a9bd4; }     /* 修改挂单蓝色 */
+.cancel-btn { background-color: #999; }       /* 取消挂单灰色 */
+.partial-sell-btn { background-color: #ffa500; } /* 部分卖橙色 */
+.pending-btn { background-color: #5a9bd4; }    /* 挂单蓝色 */
+.sell-btn { background-color: #32cd32; }       /* 卖出绿色 */
+
+/* 挂单信息区块 */
+.pending-section {
+  background-color: #f0f8ff; /* 淡蓝色区分挂单信息 */
+  border-left: 6rpx solid #1e90ff;
+  margin-top: 20rpx;
+}
+
+/* 区块标题 */
+.detail-title {
+  font-size: 30rpx;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 20rpx;
+}
+
+/* 每一行 */
+.detail-row {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 15rpx;
+}
+
+/* 左标签 */
+.detail-label {
+  font-size: 28rpx;
+  color: #555;
+}
+
+/* 右值 */
+.detail-value {
+  font-size: 28rpx;
+  font-weight: bold;
+  color: #222;
+}
+
+/* 收益高亮 */
+.detail-profit {
+  font-size: 28rpx;
+  font-weight: bold;
+  color: #ff4500;
+}
+/* 卖出总收益 */
+.total-profit-row {
+  margin-top: 15rpx;
+  padding-top: 10rpx;
+}
+
+.detail-profit {
+  font-size: 28rpx;
+  font-weight: bold;
+  color: #ff4500; /* 统一收益高亮 */
+}
+

@@ -1,0 +1,136 @@
+<view class="container">
+
+  <!-- 股票名 + 状态标签 -->
+  <view class="detail-header">
+    <text class="stock-name">{{transaction.stockName}}</text>
+    <view class="tx-tag {{transaction.statusClass}}">
+      <text>{{transaction.statusText}}</text>
+    </view>
+  </view>
+  <!-- 统一提示区 -->
+<view class="highlight-tip">
+  <view class="tip-title">持仓提示</view>
+  <view class="tip-line">
+    <text>还有</text>
+    <text class="tip-number"> 5 </text>
+    <text>股未卖出</text>
+    
+  </view>
+
+  <view class="tip-line">
+    <text>持仓成本单价：</text>
+    <text class="tip-number">{{transaction.currency}}398.28</text>
+  </view>
+</view>
+
+
+  <!-- 买入信息 -->
+  <view class="detail-section">
+    <view class="section-title">买入信息</view>
+    <view class="detail-row">
+      <text>价格：</text><text>{{transaction.currency}}{{transaction.buyPrice}}</text>
+    </view>
+    <view class="detail-row">
+      <text>数量：</text><text>{{transaction.buyQty}}</text>
+    </view>
+    <view class="detail-row">
+      <text>手续费：</text><text>{{transaction.currency}}{{transaction.buyFee}}</text>
+    </view>
+    <view class="detail-row total-row">
+      <text>买入总额：</text><text>{{transaction.currency}}{{transaction.buyTotal.toFixed(2)}}</text>
+    </view>
+  </view>
+
+
+    <!-- 挂单信息（仅在 status === 'pending' 时显示） -->
+<view wx:if="{{transaction.status === 'pending'}}" class="detail-section pending-section">
+  <view class="detail-title">挂单信息</view>
+
+  <view class="detail-row">
+    <text class="detail-label">价格：</text>
+    <text class="detail-value">{{pending.price}}</text>
+  </view>
+
+  <view class="detail-row">
+    <text class="detail-label">数量：</text>
+    <text class="detail-value">{{pending.quantity}}</text>
+  </view>
+
+  <view class="detail-row">
+    <text class="detail-label">手续费：</text>
+    <text class="detail-value">{{pending.fee}}</text>
+  </view>
+
+  <view class="detail-row">
+    <text class="detail-label">预计收益：</text>
+    <text class="detail-profit">{{pending.estimatedProfit}}</text>
+  </view>
+</view>
+
+  <!-- 卖出信息 -->
+  <view class="detail-section" wx:if="transaction.status !== 'unsold'">
+    <view class="section-title">卖出信息</view>
+    <block wx:for="{{transaction.sellList}}" wx:key="index">
+      <view class="detail-row">
+        <text>价格：</text><text>{{transaction.currency}}{{item.sellPrice}}</text>
+      </view>
+      <view class="detail-row">
+        <text>数量：</text><text>{{item.sellQty}}</text>
+      </view>
+      <view class="detail-row">
+        <text>手续费：</text><text>{{transaction.currency}}{{item.sellFee}}</text>
+      </view>
+      <view class="detail-row total-row">
+        <text>总额：</text><text>{{transaction.currency}}{{item.sellTotal.toFixed(2)}}</text>
+      </view>
+      <view class="detail-row">
+        <text>收益：</text>
+        <text class="tx-profit" style="color:{{item.profit>=0?'#ff4500':'#32cd32'}}">
+          {{transaction.currency}}{{item.profit.toFixed(2)}}
+        </text>
+      </view>
+      <view class="detail-row">
+        <text>时间：</text><text>{{item.sellTime}}</text>
+      </view>
+      <view class="divider"></view>
+    </block>
+    <!-- 卖出总收益（仅卖出状态显示） -->
+<view class="detail-row total-profit-row">
+  <text class="detail-label">总收益：</text>
+  <text class="detail-profit">{{transaction.currency}}20000</text>
+</view>
+
+  </view>
+
+
+
+
+  <!-- 操作按钮 -->
+  <view class="detail-actions">
+  <!-- 挂单 -->
+  <view wx:if="{{transaction.status === 'pending'}}">
+    <!-- <button class="action-btn modify-btn" bindtap="onModifyPending">修改挂单</button> -->
+    <button class="action-btn cancel-btn" bindtap="onCancelPending">取消挂单</button>
+    <button class="action-btn partial-sell-btn" bindtap="onPartialSell">卖出</button>
+  </view>
+
+  <!-- 部分卖 -->
+  <view wx:elif="{{transaction.status === 'partial'}}">
+    <button class="action-btn pending-btn" bindtap="onSetPending">挂单</button>
+    <button class="action-btn sell-btn" bindtap="onSell">卖出</button>
+  </view>
+
+  <!-- 未卖 -->
+  <view wx:elif="{{transaction.status === 'unsold'}}">
+    <button class="action-btn pending-btn" bindtap="onSetPending">挂单</button>
+    <button class="action-btn sell-btn" bindtap="onSell">卖出</button>
+  </view>
+
+  <!-- 已卖 -->
+  <view wx:elif="{{transaction.status === 'sold'}}">
+    <!-- 无按钮 -->
+  </view>
+</view>
+
+
+</view>

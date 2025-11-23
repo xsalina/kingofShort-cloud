@@ -24,8 +24,38 @@
   </view>
 
   <!-- 新增交易按钮区 -->
-  <view class="add-transaction-area">
+  <!-- <view class="add-transaction-area">
     <button class="add-btn" bindtap="onAddTransaction">+ 新增交易</button>
+  </view> -->
+
+
+  <view class="tx-list">
+    <block wx:for="{{transactions}}" wx:key="id">
+      <record-card 
+        stockName="{{item.stockName}}"
+        status="{{item.status}}" 
+        currency="{{item.currency}}"
+        buyPrice="{{item.buyPrice}}"
+        buyQty="{{item.buyQty}}"
+        buyTime="{{item.buyTime}}"
+        sold="{{item.sold}}"
+        sellPrice="{{item.sellPrice}}"
+        sellQty="{{item.sellQty}}"
+        sellTime="{{item.sellTime}}"
+        profit="{{item.profit}}">
+      </record-card>
+    </block>
   </view>
+
+  <view class="fab" bindtap="onAddTransaction">
+  <text class="fab-icon">交易</text>
+</view>
+
+<view class="load-more-btn" bindtap="goToAllRecords">
+  <text>查看更多</text>
+  <text class="arrow">›</text>
+</view>
+
+
 
 </view>

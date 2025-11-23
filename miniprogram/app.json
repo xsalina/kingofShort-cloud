@@ -6,7 +6,8 @@
     {
       "root": "subpackages/deal",
       "pages": [
-        "add-deal/index"
+        "add-deal/index",
+        "deal-detail/index"
       ]
     }
   ],

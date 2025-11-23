@@ -1,0 +1,162 @@
+.tx-record {
+  width: 100%;
+  margin: 0 0 30rpx;
+  padding: 16rpx;
+  border-radius: 16rpx;
+  background-color: #fff;
+  box-shadow: 0 4rpx 12rpx rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+}
+
+/* 状态颜色区分 */
+.tx-record.sold {
+  border-left: 6rpx solid #32cd32;
+  background-color: #d0f0c0;
+}
+
+.tx-record.unsold {
+  border-left: 6rpx solid #999;
+  background-color: #e0e0e5;
+}
+
+.tx-record.pending { /* 挂单 */
+  border-left: 6rpx solid #5a9bd4;
+  background-color: #e6f0fa;
+}
+
+.tx-record.partial { /* 部分卖 */
+  border-left: 6rpx solid #ff9800;
+  background-color: #fff3e0;
+}
+
+/* 标签颜色区分 */
+.tx-record.sold .tx-tag {
+  background-color: #32cd32;
+  color: #fff;
+}
+
+.tx-record.unsold .tx-tag {
+  background-color: #999;
+  color: #fff;
+}
+
+.tx-record.pending .tx-tag {
+  background-color: #5a9bd4;
+  color: #fff;
+}
+
+.tx-record.partial .tx-tag {
+  background-color: #ff9800;
+  color: #fff;
+}
+
+/* 头部 */
+.tx-record-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12rpx;
+}
+
+.tx-stock-name {
+  font-size: 30rpx;
+  font-weight: bold;
+  color: #222;
+}
+
+.tx-tag {
+  padding: 4rpx 14rpx;
+  border-radius: 14rpx;
+  font-size: 24rpx;
+  color: #fff;
+  min-width: 70rpx;
+  text-align: center;
+  line-height: 28rpx;
+}
+
+/* 主体布局 */
+.tx-record-body {
+  display: flex;
+  position: relative;
+  align-items: center;
+  margin-bottom: 12rpx;
+}
+
+/* 左侧文案列 */
+.tx-left-labels {
+  width: 80rpx; /* 固定宽度 */
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  margin-right: 8rpx;
+  font-size: 26rpx;
+  color: #333;
+}
+
+.tx-left-labels .trasprent-text {
+  color: transparent;
+}
+
+/* 箭头 */
+.tx-arrow {
+  position: absolute;
+  left: calc(50% + 50rpx);
+  transform: translateX(-50%);
+  font-size: 36rpx;
+  color: #666;
+}
+
+/* 右侧内容区 */
+.tx-right-content {
+  flex: 1;
+  display: flex;
+  justify-content: space-between;
+  /* margin-left: 8rpx; */
+}
+
+.tx-col {
+  width: calc(50% - 40rpx);
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+}
+
+/* 左右列文字样式统一 */
+.tx-left-labels text,
+.tx-col text {
+  font-size: 26rpx;
+  font-weight: bold;
+  color: #222;
+  margin: 6rpx 0;
+}
+
+/* 标签字体 */
+.tx-label {
+  font-weight: bold;
+  font-size: 26rpx;
+  margin-bottom: 12rpx;
+}
+
+/* 收益 */
+.tx-record-footer {
+  text-align: right;
+  font-size: 26rpx;
+  margin-top: 8rpx;
+}
+
+.tx-profit {
+  color: #ff4500;
+  font-weight: bold;
+}
+.detail-btn {
+  margin-left: 20rpx;
+  padding: 4rpx 12rpx;
+  border-radius: 14rpx;
+  background-color: #5a9bd4; /* 蓝色按钮 */
+  color: #fff;
+  font-size: 24rpx;
+  line-height: 28rpx;
+}
+
