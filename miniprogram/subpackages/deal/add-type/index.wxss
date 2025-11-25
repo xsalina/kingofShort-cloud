@@ -83,7 +83,7 @@ page {
   color: white;
   border-radius: 16rpx;
   margin-top: 10rpx;
-  padding: 12rpx 0;
+  padding: 10rpx 0;
   box-sizing: border-box;
 }
 
