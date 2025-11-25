@@ -1,5 +1,6 @@
 {
   "navigationBarTitleText": "交易详情",
   "usingComponents": {
+    "sell-modal": "/components/sell-modal/index"
   }
 }

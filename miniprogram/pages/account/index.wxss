@@ -1,0 +1,58 @@
+.mine-container {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 40rpx 30rpx;
+  background-color: #f7f8fa;
+}
+
+/* 标题 */
+.mine-header {
+  margin-bottom: 40rpx;
+}
+.mine-title {
+  font-size: 42rpx;
+  font-weight: 700;
+  color: #111;
+}
+
+/* 外部卡片 */
+.mine-card {
+  background-color: #fff;
+  border-radius: 20rpx;
+  box-shadow: 0 4rpx 12rpx rgba(0,0,0,0.04);
+  padding: 20rpx 0;
+}
+
+/* 单项 */
+.mine-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 30rpx 36rpx;
+  border-bottom: 1rpx solid #f2f2f2;
+}
+.mine-item:last-child {
+  border-bottom: none;
+}
+
+.mine-item-left {
+  display: flex;
+  align-items: center;
+  gap: 24rpx;
+}
+
+/* 图标简约版，不再使用背景圆形 */
+.mine-icon {
+  font-size: 36rpx;
+}
+
+.mine-item-text {
+  font-size: 30rpx;
+  color: #222;
+  font-weight: 500;
+}
+
+.mine-arrow {
+  font-size: 38rpx;
+  color: #bbb;
+}

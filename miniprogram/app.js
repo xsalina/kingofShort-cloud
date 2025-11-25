@@ -1,20 +1,37 @@
 // app.js
+const globalData = require("/utils/globalData.js");
 App({
-  onLaunch: function () {
-    this.globalData = {
-      // env 参数说明：
-      //   env 参数决定接下来小程序发起的云开发调用（wx.cloud.xxx）会默认请求到哪个云环境的资源
-      //   此处请填入环境 ID, 环境 ID 可打开云控制台查看
-      //   如不填则使用默认环境（第一个创建的环境）
-      env: ""
-    };
-    if (!wx.cloud) {
-      console.error("请使用 2.2.3 或以上的基础库以使用云能力");
+  data: {
+    globalData: {
+      // userInfo: null, // 存储当前登录用户信息
+    },
+  },
+  onLaunch: async function() {
+    this.globalData = { ...globalData };
+    await this.initCloundFun();
+  },
+  initCloundFun() {
+    if (wx.cloud) {
+      try {
+        // 1️⃣ 你的云环境 ID（如果没用云开发，可以留空或注释）
+        const ENV_ID = "cloud1-7gdq3emj774ac1dd"; // ⚠️ 如果启用云开发，这里填入你的云环境ID，例如 'cloud1-xxxxxx'
+
+        if (ENV_ID && ENV_ID.trim() !== "") {
+          // ✅ 正常初始化
+          wx.cloud.init({
+            env: ENV_ID,
+            traceUser: true,
+          });
+          console.log("[Cloud] 已成功初始化环境：", ENV_ID);
+        } else {
+          // ⚠️ 没填 env 时仅提示，不报错
+          console.warn("[Cloud] 未配置 env，跳过云开发初始化。");
+        }
+      } catch (e) {
+        console.error("[Cloud] 初始化失败：", e);
+      }
     } else {
-      wx.cloud.init({
-        env: this.globalData.env,
-        traceUser: true,
-      });
+      console.log("[Cloud] 当前基础库版本过低，不支持云能力。");
     }
   },
 });

@@ -1,0 +1,37 @@
+<view wx:if="{{visible}}" class="modal-overlay">
+    <view class="modal-box">
+        <!-- 顶部信息 -->
+        <view class="modal-header">
+            <view class="buy-info">买入信息</view>
+            <view class="buy-info-detail">
+                价格  <text class="info-number">{{tx.currency}}{{tx.price}},</text>  未卖股数  <text class="info-number">{{tx.remainingQty}},</text>  手续费  <text class="info-number">{{tx.currency}}{{tx.buyFee}},</text>  持仓成本单价 <text class="info-number">{{tx.currency}}{{tx.costPerUnit}}</text>
+            </view>
+        </view>
+        <!-- 输入区 -->
+        <view class="modal-body">
+            <view class="buy-info">买出信息</view>
+            <!-- <view class="field row wrap">
+                <view class="label">目标收益率 (%)</view>
+                <input class="input-full" type="digit" placeholder="输入目标收益率（选填）" bindinput="onTargetRateInput" />
+            </view> -->
+            <view class="field row wrap">
+                <view class="label">价格{{tx.currency}}</view>
+                <input class="input-full" type="digit" placeholder="输入卖出价格" bindinput="onSellPriceInput" />
+            </view>
+            <view class="field row wrap">
+                <view class="label">数量</view>
+                <input class="input-full" type="digit" placeholder="输入卖出数量(最大5股)" bindinput="onSellQtyInput" />
+            </view>
+            <view class="field row wrap">
+                <view class="label">手续费{{tx.currency}}</view>
+                <input class="input-full" type="digit" placeholder="输入手续费（选填）" bindinput="onSellFeeInput" />
+            </view>
+            <view class="estimated-profit">预计收益: {{tx.currency}}{{estimatedProfit}}</view>
+        </view>
+        <!-- 底部按钮 -->
+        <view class="modal-footer">
+            <button class="btn-sell" bindtap="confirmSell">卖出</button>
+            <button class="btn-cancel" bindtap="cancel">取消</button>
+        </view>
+    </view>
+</view>

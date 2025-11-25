@@ -16,7 +16,10 @@
     </view>
 
     <!-- 箭头 -->
-    <view class="tx-arrow">→</view>
+    <view class="tx-arrow">
+      <view class="tips">剩<text class="tips-number"> 5 </text>股</view>
+      <view class="arrow-symbol">→</view>
+    </view>
 
     <!-- 右侧内容区 -->
     <view class="tx-right-content">

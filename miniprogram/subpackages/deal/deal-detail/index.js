@@ -1,5 +1,9 @@
+const { safeMultiply, safeAdd, safeSubtract, safeDivide } = require('../../../utils/number.js');
+
+const app = getApp();
 Page({
   data: {
+    isIPX: app.globalData.isIPX,
     transaction: {
       id: 1,
       stockName: "特斯拉",
@@ -7,13 +11,17 @@ Page({
       buyPrice: 398.28,
       buyQty: 5,
       buyFee: 1.99,
-      status: 'pending', // unsold / pending / partial / sold
-      statusClass: 'tx-tag-pending',
-      statusText: '挂单',
+      status: 'partial', // unsold  / partial / sold
+      statusClass: 'tx-tag-partial',
+      statusText: '部分卖',
       sellList: [
         {sellPrice: 450, sellQty: 3, sellFee: 0.5, sellTime: '2025-11-16 14:30'},
         {sellPrice: 455, sellQty: 2, sellFee: 0.3, sellTime: '2025-11-17 10:00'}
       ]
+    },
+    showSellModal: true,
+    selectedTx: {
+      price:398.28,remainingQty: 2, buyFee:1.99, costPerUnit: 398.28,currency:'$'
     }
   },
 
@@ -22,14 +30,8 @@ Page({
 
     // 安全计算函数
     const factor = 1000000;
-    function safeMultiply(a, b) { return Math.round(a*factor)*Math.round(b*factor)/(factor*factor); }
-    function safeDivide(a, b) { if(b===0) return 0; return Math.round(a*factor)/Math.round(b*factor); }
-    function safeAdd(a, b) { return (Math.round(a*factor)+Math.round(b*factor))/factor; }
-    function safeSubtract(a, b) { return (Math.round(a*factor)-Math.round(b*factor))/factor; }
-
     // 计算买入总额 = 价格*数量 + 手续费
     tx.buyTotal = safeAdd(safeMultiply(tx.buyPrice, tx.buyQty), tx.buyFee);
-
     // 计算每笔卖出总额和收益
     tx.sellList = tx.sellList.map(item => {
       item.sellTotal = safeSubtract(safeMultiply(item.sellPrice, item.sellQty), item.sellFee);
@@ -42,10 +44,16 @@ Page({
     this.setData({ transaction: tx });
   },
 
-  // 挂单操作
-  onSetPending() { wx.showToast({ title: '挂单成功', icon: 'success' }); },
-  onCancelPending() { wx.showToast({ title: '已取消挂单', icon: 'none' }); },
 
   // 卖出操作
-  onSell() { wx.showToast({ title: '卖出操作弹框或跳转', icon: 'none' }); }
+  openSell(tx) {
+    this.setData({showSellModal: true });
+  },
+  handleSell(e) {
+    console.log("卖出数据:", e.detail);
+    // TODO: 处理卖出逻辑
+  },
+  handleCancel() {
+    console.log("取消卖出");
+  }
 });

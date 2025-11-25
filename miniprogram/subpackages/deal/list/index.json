@@ -1,0 +1,6 @@
+{
+  "navigationBarTitleText": "交易列表",
+  "usingComponents": {
+    "record-card": "/components/record-card/index"
+  }
+}

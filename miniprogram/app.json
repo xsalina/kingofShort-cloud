@@ -1,16 +1,36 @@
 {
   "pages": [
-    "pages/index/index"
+    "pages/index/index",
+    "pages/account/index"
   ],
   "subpackages": [
     {
       "root": "subpackages/deal",
       "pages": [
         "add-deal/index",
-        "deal-detail/index"
+        "deal-detail/index",
+        "add-type/index",
+        "list/index"
       ]
     }
   ],
+  "tabBar": {
+    "custom": true,
+    "list": [
+      {
+        "pagePath": "pages/index/index",
+        "text": "首页",
+        "iconPath": "/assets/images/index1.png",
+        "selectedIconPath": "/assets/images/index2.png"
+      },
+      {
+        "pagePath": "pages/account/index",
+        "text": "个人中心",
+        "iconPath": "/assets/images/account1.png",
+        "selectedIconPath": "/assets/images/account2.png"
+      }
+    ]
+  },
   "window": {
     "backgroundColor": "#F6F6F6",
     "backgroundTextStyle": "light",

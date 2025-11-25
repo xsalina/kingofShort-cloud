@@ -1,0 +1,26 @@
+<view class="mine-container">
+    <!-- 页面标题 -->
+    <view class="mine-header">
+        <text class="mine-title">我的</text>
+    </view>
+    <!-- 菜单卡片 -->
+    <view class="mine-card">
+        <!-- 我的交易 -->
+        <view class="mine-item" bindtap="goMyTrades">
+            <view class="mine-item-left">
+                <text class="mine-icon">📊</text>
+                <text class="mine-item-text">我的交易</text>
+            </view>
+            <text class="mine-arrow">›</text>
+        </view>
+        <!-- 增加股票类型 -->
+        <view class="mine-item" bindtap="goAddStockType">
+            <view class="mine-item-left">
+                <text class="mine-icon">➕</text>
+                <text class="mine-item-text">增加股票类型</text>
+            </view>
+            <text class="mine-arrow">›</text>
+        </view>
+    </view>
+    <add-transaction-btn />
+</view>

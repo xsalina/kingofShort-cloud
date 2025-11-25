@@ -1,0 +1,3 @@
+ <view class="fab" bindtap="onAddTransaction">
+  <text class="fab-icon">交易</text>
+</view>

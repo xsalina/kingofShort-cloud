@@ -1,16 +1,17 @@
 Page({
   data: {
-    monthProfitUSD: 1200,
-    monthProfitCNY: 8000,
-    monthProfitHKD: 5000,
-    totalProfitUSD: 5000,
-    totalProfitCNY: 35000,
-    totalProfitHKD: 20000,
+    tabs: ["已卖", "未卖", "部分卖"],
+    currentTabIndex: 0,
+    statusText: {
+      sold: "已卖",
+      unsold: "未卖",
+      partial: "部分卖"
+    },
     transactions: [
       {
         id: 1,
         stockName: "特斯拉",
-        status: "sold", // sold / unsold / pending / partial
+        status: "sold",  // sold / unsold / pending / partial
         currency: "$",
         buyPrice: 398.28,
         buyQty: 5,
@@ -19,7 +20,7 @@ Page({
         sellPrice: 450,
         sellQty: 5,
         sellTime: "2025-11-16 14:30",
-        profit: 258.6,
+        profit: 258.6
       },
       {
         id: 2,
@@ -33,7 +34,7 @@ Page({
         sellPrice: 0,
         sellQty: 0,
         sellTime: "",
-        profit: 0,
+        profit: 0
       },
       {
         id: 3,
@@ -47,7 +48,7 @@ Page({
         sellPrice: 0,
         sellQty: 0,
         sellTime: "",
-        profit: 0,
+        profit: 0
       },
       {
         id: 4,
@@ -61,21 +62,20 @@ Page({
         sellPrice: 420,
         sellQty: 5,
         sellTime: "2025-11-19 14:00",
-        profit: 100,
-      },
-    ],
+        profit: 100
+      }
+    ]
   },
-  onShow() {
-    if (typeof this.getTabBar === "function" && this.getTabBar()) {
-      console.log("设置 tabBar 选中项为 0");
-      this.getTabBar().setData({
-        selected: 0,
-      });
-    }
-  },
-  goToAllRecords() {
-    wx.navigateTo({
-      url: "/subpackages/deal/list/index",
+
+  switchTab(e) {
+    this.setData({
+      currentTabIndex: e.currentTarget.dataset.index
     });
   },
+
+  get filteredTransactions() {
+    const statusMap = ["sold","pending","unsold","partial"];
+    const currentStatus = statusMap[this.data.currentTabIndex];
+    return this.data.transactions.filter(tx => tx.status === currentStatus);
+  }
 });

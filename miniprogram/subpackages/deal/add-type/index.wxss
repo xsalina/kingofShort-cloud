@@ -1,0 +1,218 @@
+/* 全局 */
+.page {
+  padding: 32rpx;
+  box-sizing: border-box;
+  background: var(--bg);
+}
+
+/* 主题变量（亮/暗模式自动切换） */
+page {
+  --bg: #f5f7fa;
+  --card-bg: rgba(255, 255, 255, 0.82);
+  --border: rgba(0, 0, 0, 0.06);
+  --label: #333;
+  --text: #222;
+  --sub: #666;
+  --placeholder: #aaa;
+  --line: rgba(0, 0, 0, 0.12);
+}
+
+.page-header {
+  margin-bottom: 30rpx;
+}
+/* 标题 */
+.page-title {
+  font-size: 42rpx;
+  font-weight: 700;
+  color: #111;
+}
+
+/* 新增卡片 */
+.add-card {
+  background: var(--card-bg);
+  backdrop-filter: blur(14px);
+  padding: 30rpx;
+  border-radius: 22rpx;
+  border: 1rpx solid var(--border);
+  margin-bottom: 40rpx;
+}
+
+.input-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 26rpx;
+}
+
+.label {
+  font-size: 28rpx;
+  color: var(--label);
+}
+
+.input {
+  flex: 1;
+  margin-left: 20rpx;
+  font-size: 28rpx;
+  padding: 8rpx 0;
+  border-bottom: 2rpx solid var(--line);
+  color: var(--text);
+}
+
+/* 选择器 */
+.picker-box {
+}
+
+.picker-text {
+  font-size: 28rpx;
+}
+.placeholder {
+  color: var(--placeholder);
+}
+
+.arrow {
+  font-size: 32rpx;
+  color: var(--sub);
+  margin: 0 10rpx;
+  transform: rotate(90deg); /* 让 > 变成向下 */
+  display: inline-block; /* 必须给它，否则不能旋转 */
+  line-height: 32rpx;
+}
+
+.add-btn {
+  background: #007aff;
+  color: white;
+  border-radius: 16rpx;
+  margin-top: 10rpx;
+  padding: 12rpx 0;
+  box-sizing: border-box;
+}
+
+/* 标题 */
+.section-title {
+  font-size: 28rpx;
+  font-weight: bold;
+  color: var(--label);
+  margin: 24rpx 0 12rpx;
+}
+
+/* 股票卡片 */
+.stock-item {
+  background: var(--card-bg);
+  backdrop-filter: blur(12px);
+  border-radius: 20rpx;
+  padding: 24rpx 28rpx;
+  margin-bottom: 20rpx;
+  border: 1rpx solid var(--border);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.left {
+  display: flex;
+  flex-direction: column;
+}
+
+.name {
+  font-size: 30rpx;
+  font-weight: bold;
+  color: var(--text);
+}
+
+.market-tag {
+  margin-top: 6rpx;
+  font-size: 24rpx;
+  color: var(--sub);
+}
+
+/* 默认固定标签 */
+.fix-tag {
+  font-size: 24rpx;
+  padding: 6rpx 14rpx;
+  border-radius: 12rpx;
+  color: var(--sub);
+  border: 1rpx solid var(--line);
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+  gap: 20rpx;
+}
+
+.edit-btn {
+  font-size: 26rpx;
+  color: #0a84ff;
+}
+
+.delete-btn {
+  font-size: 26rpx;
+  color: #ff453a;
+}
+
+.row-wrap {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  margin-bottom: 30rpx;
+}
+.label {
+  font-size: 28rpx;
+  color: #555;
+  min-width: 120rpx;
+  margin-bottom: 6rpx;
+}
+.input-full,
+.picker-full {
+  flex: 1;
+  border: 1rpx solid #ccc;
+  border-radius: 8rpx;
+  padding: 6rpx 10rpx;
+  font-size: 28rpx;
+  min-width: 150rpx;
+}
+/* 字段 */
+.field {
+  display: flex;
+  margin-bottom: 40rpx;
+}
+.picker-type {
+  margin-left: 20rpx;
+  flex: 1;
+  border-radius: 8rpx;
+  font-size: 28rpx;
+  min-width: 150rpx;
+}
+
+.label {
+  color: #9fa5b3;
+  margin-bottom: 12rpx;
+  font-size: 26rpx;
+}
+
+/* picker 外框 */
+.picker-box {
+  padding: 28rpx 10rpx;
+  border-radius: 8rpx;
+  border: 1px solid #ccc;
+  height: 40rpx;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.picker-text {
+  font-size: 30rpx;
+}
+
+.placeholder {
+  color: #808080;
+}
+
+/* 旋转的 ">" 符号 */
+.arrow {
+  font-size: 40rpx;
+  transform: rotate(90deg);
+  color: #9fa5b3;
+}

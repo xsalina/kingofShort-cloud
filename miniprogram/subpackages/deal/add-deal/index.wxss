@@ -45,7 +45,7 @@
 
 /* 按钮 */
 .btn {
-  margin-top: 15rpx;
+  margin-top: 30rpx;
   background-color: #1e90ff;
   color: #fff;
   font-size: 30rpx;
@@ -57,7 +57,7 @@
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  margin-bottom: 12rpx;
+  margin-bottom: 20rpx;
 }
 
 .label {
@@ -76,4 +76,41 @@
   font-size: 28rpx;
   min-width: 150rpx; /* 防止太窄 */
 }
+.picker-box {
+  padding:5rpx 0;
+  border-radius: 8rpx;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
 
+.picker-text {
+  font-size: 28rpx;
+}
+.placeholder {
+  color: #808080;
+}
+
+.arrow {
+  font-size: 32rpx;
+  color: var(--sub);
+  margin: 0 10rpx;
+  transform: rotate(90deg); /* 让 > 变成向下 */
+  display: inline-block; /* 必须给它，否则不能旋转 */
+  line-height: 32rpx;
+}
+.suggested {
+  margin-top: 40rpx;
+  font-size: 28rpx;
+  color: #333;
+}
+.tips {
+  font-size: 20rpx;
+  color: #999;
+  margin: 6rpx 0  40rpx 0;   
+}  
+.suggest-price{
+  color:#ffb54c;
+  font-weight: bold;
+}

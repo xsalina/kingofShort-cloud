@@ -1,0 +1,22 @@
+.fab {
+  position: fixed;
+  right: 40rpx;
+  bottom: 500rpx;
+  width: 100rpx;
+  height: 100rpx;
+  border-radius: 50%;           /* 圆形 */
+  background-color: #1e90ff;
+  display: flex;                /* 使用 flex 布局 */
+  align-items: center;          /* 垂直居中 */
+  justify-content: center;      /* 水平居中 */
+  box-shadow: 0 6rpx 12rpx rgba(0,0,0,0.2);
+  z-index: 999;
+  border: none;
+  padding: 0;
+}
+
+.fab-icon {
+  font-size: 35rpx;
+  color: #fff;
+  font-weight: bold;
+}

@@ -1,0 +1,121 @@
+.modal-overlay {
+  position: fixed;
+  top:0;
+  left:0;
+  right:0;
+  bottom:0;
+  background: rgba(0,0,0,0.5);
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  z-index: 2;
+}
+
+.modal-box {
+  width: 90%;
+  background: #fff;
+  border-radius: 20rpx;
+  padding: 30rpx;
+}
+.modal-header{
+    margin-bottom:40rpx;
+}
+
+.buy-info{
+    margin-bottom:10rpx;
+     color:#000;
+     font-weight: bold;
+}
+.buy-info-detail{
+     font-size: 24rpx;
+     color: #000;
+}
+.info-number{
+     color:#d96b00;
+     font-weight: bold;
+}
+
+
+/* 表单行 */
+.row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12rpx;
+}
+.label {
+  font-size: 28rpx;
+  color: #555;
+}
+.input {
+  flex: 1;
+  border: 1rpx solid #ccc;
+  border-radius: 8rpx;
+  padding: 6rpx 10rpx;
+  font-size: 28rpx;
+  margin-left: 10rpx;
+}
+.picker {
+  flex: 1;
+  border: 1rpx solid #ccc;
+  border-radius: 8rpx;
+  padding: 6rpx 10rpx;
+  font-size: 28rpx;
+  margin-left: 10rpx;
+}
+.row.wrap {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  margin-bottom: 20rpx;
+}
+
+.label {
+  font-size: 28rpx;
+  color: #555;
+  min-width: 120rpx; /* label 最小宽度，可以换行 */
+  margin-bottom: 6rpx; /* 如果换行，和输入框保持间距 */
+}
+
+.input-full{
+  flex: 1;
+  border: 1rpx solid #ccc;
+  border-radius: 8rpx;
+  padding: 6rpx 10rpx;
+  font-size: 28rpx;
+  min-width: 150rpx; /* 防止太窄 */
+}
+
+
+
+
+
+.estimated-profit {
+  font-size: 30rpx;
+  font-weight: bold;
+  color: #d96b00;
+  margin: 20rpx 0;
+}
+
+.modal-footer {
+  display:flex;
+  justify-content: space-between;
+}
+
+.btn-sell {
+  width: 48% !important;
+  background: #32CD32;
+  color: #fff;
+  border-radius: 14rpx;
+  font-size: 28rpx;
+  padding: 14rpx;
+}
+
+.btn-cancel {
+  width: 48% !important;
+  background: #ccc;
+  color: #fff;
+  border-radius: 14rpx;
+  font-size: 28rpx;
+  padding: 14rpx;
+}

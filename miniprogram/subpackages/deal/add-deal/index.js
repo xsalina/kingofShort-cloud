@@ -8,14 +8,14 @@ function safeSubtract(a,b){return(Math.round(a*1000000)-Math.round(b*1000000))/1
 Page({
   data:{
     stockOptions:[
-      {name:"特斯拉", fractional:true, market:"美股", currency:"$"},
-      {name:"英伟达", fractional:true, market:"美股", currency:"$"},
-      {name:"阿里巴巴", fractional:false, market:"港股", currency:"HK$"},
-      {name:"工商银行", fractional:false, market:"A股", currency:"¥"}
+      {name:"特斯拉", market:"美股", currency:"$"},
+      {name:"英伟达",  market:"美股", currency:"$"},
+      {name:"阿里巴巴", market:"港股", currency:"HK$"},
+      {name:"工商银行", market:"A股", currency:"¥"}
     ],
     stockNames:["特斯拉","英伟达","阿里巴巴","工商银行"],
-    selectedStockIndex:0,
-    selectedStockObj:{name:"特斯拉", fractional:true, market:"美股", currency:"$"},
+    selectedStockIndex:-1,
+    selectedStockObj:null,
     price:0,
     qty:0,
     minUnit:0.0001,
@@ -54,7 +54,7 @@ Page({
 
   onLoad(){
     const stockObj=this.data.stockOptions[this.data.selectedStockIndex];
-    this.setData({ selectedStockObj: stockObj, minUnit: stockObj.fractional?0.0001:1, qty: stockObj.fractional?0:1 });
+    this.setData({ selectedStockObj: stockObj,  qty: 1 });
     this.loadTransactions();
   },
 
@@ -64,8 +64,7 @@ Page({
     this.setData({
       selectedStockIndex:index,
       selectedStockObj:stockObj,
-      minUnit: stockObj.fractional?0.0001:1,
-      qty: stockObj.fractional?0:1
+      qty:1
     });
     this.updateTargetSellPrice();
   },

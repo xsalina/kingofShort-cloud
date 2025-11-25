@@ -1,0 +1,36 @@
+<view class="page">
+    <view class="page-header">
+        <text class="page-title">股票类型管理</text>
+    </view>
+    <!-- 新增股票卡片 -->
+    <view class="add-card">
+        <view class="input-row row-wrap">
+            <text class="label">股票名称</text>
+            <input class="input input-full" maxlength="20" placeholder="请输入股票名称" bindinput="onNameInput" />
+        </view>
+        <!-- 市场类型（picker 替换版） -->
+        <view class="field">
+            <view class="label">市场类型</view>
+            <picker class="picker-type" mode="selector" range="{{marketOptions}}" range-key="label" bindchange="onMarketChange">
+                <view class="picker-box">
+                    <view class="picker-text {{!form.market ? 'placeholder':''}}">
+                        {{ form.market ? form.market + ' (' + form.currency + ')' : '请选择类型' }}
+                    </view>
+                    <!-- “>” 旋转后的图标 -->
+                    <text class="arrow">›</text>
+                </view>
+            </picker>
+        </view>
+        <button class="add-btn" bindtap="saveStock">添加股票</button>
+    </view>
+    <view class="section-title">我的股票</view>
+    <view class="stock-item" wx:for="{{stockList}}" wx:key="name">
+        <view class="left">
+            <text class="name">{{item.name}}</text>
+            <text class="market-tag">{{item.market}} {{item.currency}}</text>
+        </view>
+        <view class="actions">
+            <text class="delete-btn" data-index="{{index}}" bindtap="deleteStock">删除</text>
+        </view>
+    </view>
+</view>
