@@ -1,12 +1,13 @@
 <view class="add-card">
   <view class="card-title">新增交易</view>
   <!-- 股票选择 -->
+  <view class="add-tips-line" bindtap="onAddType"> 没有你要的股票? <image class="cli-img" src="{{clickCursorImg}}" mode="aspectFill" /><text class="tips-btn">我去添加</text></view>
   <view class="row wrap">
     <text class="label">选择股票</text>
     <picker mode="selector" range="{{stockNames}}" value="{{selectedStockIndex}}" bindchange="onStockChange" class="picker-full">
       <view class="picker-box">
         <view class="picker-text {{selectedStockObj.name ? '':'placeholder'}}">
-          {{ selectedStockObj.name? selectedStockObj.name  : '请选择类型' }}
+          {{ selectedStockObj.name? selectedStockObj.name  : '请选择股票' }}
         </view>
         <!-- “>” 旋转后的图标 -->
         <text class="arrow">›</text>

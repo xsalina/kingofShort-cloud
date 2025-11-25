@@ -7,6 +7,7 @@ function safeSubtract(a,b){return(Math.round(a*1000000)-Math.round(b*1000000))/1
 
 Page({
   data:{
+    clickCursorImg:'/assets/images/clickCursor.png',
     stockOptions:[
       {name:"特斯拉", market:"美股", currency:"$"},
       {name:"英伟达",  market:"美股", currency:"$"},
@@ -188,5 +189,10 @@ Page({
     });
 
     this.setData({totalProfit:total, monthProfit:month});
+  },
+  onAddType(){
+    wx.navigateTo({
+      url: "/subpackages/deal/add-type/index",
+    });
   }
 });
