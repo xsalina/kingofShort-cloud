@@ -9,7 +9,7 @@
         </view>
         <!-- 输入区 -->
         <view class="modal-body">
-            <view class="buy-info">买出信息</view>
+            <view class="buy-info">卖出信息</view>
             <!-- <view class="field row wrap">
                 <view class="label">目标收益率 (%)</view>
                 <input class="input-full" type="digit" placeholder="输入目标收益率（选填）" bindinput="onTargetRateInput" />
