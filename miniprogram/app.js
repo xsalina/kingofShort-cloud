@@ -1,14 +1,16 @@
-// app.js
+const user = require('/utils/user.js')
 const globalData = require("/utils/globalData.js");
 App({
   data: {
     globalData: {
-      // userInfo: null, // 存储当前登录用户信息
+      userInfo: null, // 存储当前登录用户信息
+      loginPromise: null,
     },
   },
   onLaunch: async function() {
     this.globalData = { ...globalData };
-    await this.initCloundFun();
+    await this.initCloundFun()
+    this.globalData.loginPromise = this.loginWx()
   },
   initCloundFun() {
     if (wx.cloud) {
@@ -34,4 +36,13 @@ App({
       console.log("[Cloud] 当前基础库版本过低，不支持云能力。");
     }
   },
+  async loginWx() {
+    const res = await user.silentLogin()
+    if (res.success) {
+      this.globalData.userInfo = res.user
+      return res.user
+    } else {
+      throw new Error('登录失败')
+    }
+  } 
 });

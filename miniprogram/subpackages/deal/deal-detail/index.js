@@ -19,7 +19,7 @@ Page({
         {sellPrice: 455, sellQty: 2, sellFee: 0.3, sellTime: '2025-11-17 10:00'}
       ]
     },
-    showSellModal: true,
+    showSellModal: false,
     selectedTx: {
       price:398.28,remainingQty: 2, buyFee:1.99, costPerUnit: 398.28,currency:'$'
     }

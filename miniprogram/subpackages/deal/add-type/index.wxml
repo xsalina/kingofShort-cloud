@@ -21,7 +21,7 @@
                 </view>
             </picker>
         </view>
-        <button class="add-btn" bindtap="saveStock">添加股票</button>
+        <button class="add-btn" bindtap="addType">添加股票</button>
     </view>
     <view class="section-title">我的股票</view>
     <view class="stock-item" wx:for="{{stockList}}" wx:key="name">

@@ -1,29 +1,36 @@
+const app = getApp();
 Page({
   data: {
     stockList: [
       { name: "特斯拉", market: "美股", currency: "$" },
-      { name: "苹果", market: "美股", currency: "$" }
+      { name: "苹果", market: "美股", currency: "$" },
     ],
 
     marketOptions: [
       { label: "美股 ($)", market: "美股", currency: "$" },
       { label: "港股 (HK$)", market: "港股", currency: "HK$" },
-      { label: "A股 (¥)", market: "A股", currency: "¥" }
+      { label: "A股 (¥)", market: "A股", currency: "¥" },
     ],
 
     form: {
       name: "",
       market: "",
-      currency: ""
+      currency: "",
     },
 
-    editingIndex: -1
+    editingIndex: -1,
+    userInfo: null,
+  },
+  async onLoad() {
+    const userInfo = await app.globalData.loginPromise;
+    this.setData({ userInfo }); 
+    this.queryTypeList(userInfo.userId);
   },
 
   // 名称输入
   onNameInput(e) {
     this.setData({
-      "form.name": e.detail.value
+      "form.name": e.detail.value,
     });
   },
 
@@ -34,25 +41,7 @@ Page({
 
     this.setData({
       "form.market": item.market,
-      "form.currency": item.currency
-    });
-  },
-
-  saveStock() {
-    const { form, stockList, editingIndex } = this.data;
-
-    if (!form.name || !form.market) return;
-
-    if (editingIndex >= 0) {
-      stockList[editingIndex] = { ...form };
-    } else {
-      stockList.push({ ...form });
-    }
-
-    this.setData({
-      stockList,
-      form: { name: "", market: "", currency: "" },
-      editingIndex: -1
+      "form.currency": item.currency,
     });
   },
 
@@ -62,24 +51,72 @@ Page({
 
     this.setData({
       form: { ...item },
-      editingIndex: index
+      editingIndex: index,
     });
   },
 
   deleteStock(e) {
     const index = e.currentTarget.dataset.index;
-    const _this = this;
-
+    const { _id } = this.data.stockList[index];
+    const { userInfo } = this.data;
+    const that = this;
     wx.showModal({
       title: "提示",
       content: "确认删除该股票名称吗？",
       success(res) {
         if (res.confirm) {
-          const list = _this.data.stockList;
-          list.splice(index, 1);
-          _this.setData({ stockList: list });
+          wx.cloud
+            .callFunction({
+              name: "manageStockType",
+              data: {
+                userId: userInfo?.userId,
+                action: "delete",
+                stockId: _id,
+              },
+            })
+            .then((res) => {
+              if (res.result.success) {
+                wx.showToast({ title: res.result.message });
+                that.queryTypeList();
+              }
+            });
         }
-      }
+      },
     });
-  }
+  },
+  queryTypeList(userId) {
+    wx.cloud
+      .callFunction({
+        name: "manageStockType",
+        data: {
+          userId: userId || this.data.userInfo?.userId,
+          action: "list",
+        },
+      })
+      .then((res) => {
+        if (res.result.success) {
+          this.setData({ stockList: res.result.data });
+        } else {
+          wx.showToast({ title: res.result.message, icon: "none" });
+        }
+      });
+  },
+  addType() {
+    const { userInfo, form } = this.data;
+    wx.cloud
+      .callFunction({
+        name: "manageStockType",
+        data: {
+          userId: userInfo?.userId,
+          action: "add",
+          ...form,
+        },
+      })
+      .then((res) => {
+        if (res.result.success) {
+          wx.showToast({ title: res.result.message });
+          this.queryTypeList();
+        }
+      });
+  },
 });

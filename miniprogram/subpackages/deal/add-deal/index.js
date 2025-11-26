@@ -1,20 +1,9 @@
-const db = wx.cloud.database();
-
-function safeMultiply(a,b){const f=1000000;return(Math.round(a*f)*Math.round(b*f))/(f*f);}
-function safeDivide(a,b){if(b===0)return 0;return(Math.round(a*1000000))/Math.round(b*1000000);}
-function safeAdd(a,b){return(Math.round(a*1000000)+Math.round(b*1000000))/1000000;}
-function safeSubtract(a,b){return(Math.round(a*1000000)-Math.round(b*1000000))/1000000;}
-
+const app = getApp();
+const { safeMultiply, safeAdd, safeSubtract, safeDivide } = require('../../../utils/number.js');
 Page({
   data:{
     clickCursorImg:'/assets/images/clickCursor.png',
-    stockOptions:[
-      {name:"特斯拉", market:"美股", currency:"$"},
-      {name:"英伟达",  market:"美股", currency:"$"},
-      {name:"阿里巴巴", market:"港股", currency:"HK$"},
-      {name:"工商银行", market:"A股", currency:"¥"}
-    ],
-    stockNames:["特斯拉","英伟达","阿里巴巴","工商银行"],
+    stockOptions:[],
     selectedStockIndex:-1,
     selectedStockObj:null,
     price:0,
@@ -28,35 +17,15 @@ Page({
     suggestedSellPrice:null,
     suggestedProfit:null,
 
-    transactionssss: [
-  {
-    stockName: "特斯拉",
-    price: 398,
-    qty: 5,
-    currency: "$",
-    buyTime: "2025-11-16 10:20",
-    sold: true,
-    sellPrice: 498,
-    sellQty: 5,
-    sellTime: "2025-11-16 14:30",
-    profit: 500
-  },
-  {
-    stockName: "英伟达",
-    price: 310,
-    qty: 2,
-    currency: "$",
-    buyTime: "2025-11-17 09:50",
-    sold: false,
-    profit: 0
-  }
-]
+    userInfo:null,
+
+    
   },
 
-  onLoad(){
-    const stockObj=this.data.stockOptions[this.data.selectedStockIndex];
-    this.setData({ selectedStockObj: stockObj,  qty: 1 });
-    this.loadTransactions();
+  async onLoad(){
+    const userInfo = await app.globalData.loginPromise;
+    this.setData({ userInfo }); 
+    this.queryTypeList()
   },
 
   onStockChange(e){
@@ -64,8 +33,7 @@ Page({
     const stockObj=this.data.stockOptions[index];
     this.setData({
       selectedStockIndex:index,
-      selectedStockObj:stockObj,
-      qty:1
+      selectedStockObj:stockObj
     });
     this.updateTargetSellPrice();
   },
@@ -78,7 +46,7 @@ Page({
   onQtyInput(e){
     let v=parseFloat(e.detail.value)||0;
     const minUnit=this.data.minUnit;
-    if(this.data.selectedStockObj.fractional) v=Math.floor(v/minUnit)*minUnit;
+    if(this.data.selectedStockObj?.fractional) v=Math.floor(v/minUnit)*minUnit;
     else v=Math.floor(v);
 
     this.setData({qty:v});
@@ -122,10 +90,10 @@ Page({
 
     // 预期收益（不考虑卖出手续费）
     const profit = safeSubtract(safeMultiply(sp, qty), buyCost);
-
+    console.log('计算建议卖出价:', { buyCost, targetTotal, sp, profit });
     this.setData({
-      suggestedSellPrice: sp.toFixed(4),
-      suggestedProfit: profit.toFixed(2)
+      suggestedSellPrice: sp,
+      suggestedProfit: profit
     });
   },
 
@@ -159,20 +127,8 @@ Page({
       .add({data:newTransaction})
       .then(()=>{
         wx.showToast({title:'添加成功',icon:'success'});
-        this.loadTransactions();
       })
       .catch(()=>wx.showToast({title:'添加失败',icon:'none'}));
-  },
-
-  loadTransactions(){
-    db.collection('transactions')
-      .orderBy('createTime','desc')
-      .get()
-      .then(res=>{
-        const transactions=res.data;
-        this.setData({transactions});
-        this.calculateProfits(transactions);
-      });
   },
 
   calculateProfits(transactions){
@@ -194,5 +150,22 @@ Page({
     wx.navigateTo({
       url: "/subpackages/deal/add-type/index",
     });
-  }
+  },
+   queryTypeList(userId) {
+    wx.cloud
+      .callFunction({
+        name: "manageStockType",
+        data: {
+          userId: userId || this.data.userInfo?.userId,
+          action: "list",
+        },
+      })
+      .then((res) => {
+        if (res.result.success) {
+          this.setData({ stockOptions: res.result.data });
+        } else {
+          wx.showToast({ title: res.result.message, icon: "none" });
+        }
+      });
+  },
 });

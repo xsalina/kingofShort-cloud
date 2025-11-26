@@ -38,3 +38,46 @@
  ├─ 用户自定义股票列表
  ├─ 新增 / 编辑 / 删除
  └─ 默认股票不可删除
+
+ {
+  _id: "tradeId_xxxx",
+
+  userId: "userId_xxxx",
+  stockId: "stockId_xxxx",
+
+  // 股票快照
+  stockName: "特斯拉",
+  market: "美股",
+  currency: "USD",                // ⭐ 必须有，用于按货币统计
+
+  // 买入信息
+  buyPrice: 100,
+  buyQuantity: 10,
+  buyFee: 1,
+  buyTime: "2025-01-10T14:23:00",
+
+  // 卖出记录
+  sellRecords: [
+    {
+      sellId: "sellId_xxxx",
+      price: 120,
+      quantity: 5,
+      fee: 0.5,
+      sellTime: "2025-02-11T10:10:00",
+      profit: 95,
+      currency: "USD"            // ⭐ 卖出记录也应保存 currency
+    }
+  ],
+
+  remainingQuantity: 5,
+  status: "部分卖",
+
+  // ⭐ 交易累积收益（同货币）
+  totalProfit: 95,
+
+  // ⭐ 最后一次卖出时间（做时间筛选）
+  lastSellTime: "2025-02-11T10:10:00",
+
+  createdAt: Date
+}
+

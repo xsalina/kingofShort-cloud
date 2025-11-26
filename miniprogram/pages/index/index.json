@@ -1,5 +1,5 @@
 {
-  "navigationBarTitleText": "短线股票助手",
+  "navigationBarTitleText": "短线之王",
   "usingComponents": {
     "record-card": "/components/record-card/index",
     "add-transaction-btn": "/components/add-transaction-btn/index"
