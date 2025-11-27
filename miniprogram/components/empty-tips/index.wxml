@@ -1,0 +1,9 @@
+<view class="empty-state">
+    <image src="{{image}}" class="empty-img"></image>
+    <text class="empty-title">{{title}}</text>
+    <view class="click-area" wx:if="{{showClickPoint}}" bindtap="onAddtraions">
+        <image class="cli-img" src="{{clickCursorImg}}" mode="aspectFill" />
+        <text class="tips-btn">我去添加交易</text>
+    </view>
+    <text wx:else class="empty-sub">{{subtitle}}</text>
+</view>

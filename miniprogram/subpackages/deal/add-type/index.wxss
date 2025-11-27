@@ -1,6 +1,6 @@
 /* 全局 */
 .page {
-  padding: 32rpx;
+  padding: 20rpx;
   box-sizing: border-box;
   background: var(--bg);
 }
@@ -18,7 +18,7 @@ page {
 }
 
 .page-header {
-  margin-bottom: 30rpx;
+  margin-bottom: 40rpx;
 }
 /* 标题 */
 .page-title {
@@ -58,10 +58,6 @@ page {
   color: var(--text);
 }
 
-/* 选择器 */
-.picker-box {
-}
-
 .picker-text {
   font-size: 28rpx;
 }
@@ -76,15 +72,6 @@ page {
   transform: rotate(90deg); /* 让 > 变成向下 */
   display: inline-block; /* 必须给它，否则不能旋转 */
   line-height: 32rpx;
-}
-
-.add-btn {
-  background: #007aff;
-  color: white;
-  border-radius: 16rpx;
-  margin-top: 10rpx;
-  padding: 10rpx 0;
-  box-sizing: border-box;
 }
 
 /* 标题 */
@@ -150,74 +137,3 @@ page {
   color: #ff453a;
 }
 
-.row-wrap {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  margin-bottom: 30rpx;
-}
-.label {
-  font-size: 28rpx;
-  color: #555;
-  min-width: 120rpx;
-  margin-bottom: 6rpx;
-}
-.input-full,
-.picker-full {
-  flex: 1;
-  border: 1rpx solid #ccc;
-  border-radius: 8rpx;
-  padding: 6rpx 10rpx;
-  font-size: 28rpx;
-  min-width: 150rpx;
-}
-/* 字段 */
-.field {
-  display: flex;
-  margin-bottom: 40rpx;
-}
-.picker-type {
-  margin-left: 20rpx;
-  flex: 1;
-  border-radius: 8rpx;
-  font-size: 28rpx;
-  min-width: 150rpx;
-}
-
-.label {
-  color: #9fa5b3;
-  margin-bottom: 12rpx;
-  font-size: 26rpx;
-}
-
-/* picker 外框 */
-.picker-box {
-  padding: 28rpx 10rpx;
-  border-radius: 8rpx;
-  border: 1px solid #ccc;
-  height: 40rpx;
-  box-sizing: border-box;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-
-.picker-text {
-  font-size: 30rpx;
-}
-
-.placeholder {
-  color: #808080;
-}
-
-/* 旋转的 ">" 符号 */
-.arrow {
-  font-size: 40rpx;
-  transform: rotate(90deg);
-  color: #9fa5b3;
-}
-.btn-disabled {
-  background-color: #d9d9d9 !important; /* 灰色背景 */
-  color: #a0a0a0 !important; /* 灰色文字 */
-  cursor: not-allowed; /* 鼠标提示不可点击 */
-}

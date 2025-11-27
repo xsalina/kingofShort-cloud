@@ -1,0 +1,44 @@
+
+/* ============================
+  空状态
+============================ */
+.empty-state {
+  margin-top: 100rpx;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.empty-img {
+  width: 240rpx;
+  height: 240rpx;
+  opacity: 0.7;
+}
+
+.empty-title {
+  font-size: 32rpx;
+  font-weight: bold;
+  color: #a0a0a0;
+}
+
+.empty-sub,.click-area {
+  margin-top: 10rpx;
+  font-size: 26rpx;
+  color: #888;
+}
+
+.click-area{
+    margin-top: 20rpx;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.tips-btn {
+  color: #ffb54c;
+  font-weight: bold;
+  font-size: 24rpx;
+}
+.cli-img {
+  width: 40rpx;
+  height: 40rpx;
+}

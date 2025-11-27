@@ -1,6 +1,5 @@
 {
   "navigationBarTitleText": "个人中心",
   "usingComponents": {
-    "add-transaction-btn": "/components/add-transaction-btn/index"
   }
 }

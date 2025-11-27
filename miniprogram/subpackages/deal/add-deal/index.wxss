@@ -1,7 +1,20 @@
+/* 全局 */
+.page {
+  padding: 20rpx;
+  box-sizing: border-box;
+  background: var(--bg);
+}
+.page-header {
+  margin-bottom: 40rpx;
+}
+/* 标题 */
+.page-title {
+  font-size: 42rpx;
+  font-weight: 700;
+  color: #111;
+}
 /* 卡片 */
 .add-card {
-  width: calc(100% - 40rpx);
-  margin: 0 20rpx 20rpx 20rpx;
   background-color: #fff;
   padding: 20rpx;
   border-radius: 16rpx;
@@ -43,63 +56,9 @@
   margin-left: 10rpx;
 }
 
-/* 按钮 */
-.btn {
-  margin-top: 30rpx;
-  background-color: #1e90ff;
-  color: #fff;
-  font-size: 30rpx;
-  border-radius: 12rpx;
-  padding: 12rpx 0;
-  text-align: center;
-}
-.row.wrap {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  margin-bottom: 20rpx;
-}
 
-.label {
-  font-size: 28rpx;
-  color: #555;
-  min-width: 120rpx; /* label 最小宽度，可以换行 */
-  margin-bottom: 6rpx; /* 如果换行，和输入框保持间距 */
-}
 
-.input-full,
-.picker-full {
-  flex: 1;
-  border: 1rpx solid #ccc;
-  border-radius: 8rpx;
-  padding: 6rpx 10rpx;
-  font-size: 28rpx;
-  min-width: 150rpx; /* 防止太窄 */
-}
-.picker-box {
-  padding: 5rpx 0;
-  border-radius: 8rpx;
-  box-sizing: border-box;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
 
-.picker-text {
-  font-size: 28rpx;
-}
-.placeholder {
-  color: #808080;
-}
-
-.arrow {
-  font-size: 32rpx;
-  color: var(--sub);
-  margin: 0 10rpx;
-  transform: rotate(90deg); /* 让 > 变成向下 */
-  display: inline-block; /* 必须给它，否则不能旋转 */
-  line-height: 32rpx;
-}
 .suggested {
   margin-top: 40rpx;
   font-size: 28rpx;
@@ -132,8 +91,5 @@
   width: 40rpx;
   height: 40rpx;
 }
-.btn-disabled {
-  background-color: #d9d9d9 !important; /* 灰色背景 */
-  color: #a0a0a0 !important; /* 灰色文字 */
-  cursor: not-allowed; /* 鼠标提示不可点击 */
-}
+
+

@@ -11,4 +11,8 @@
   <block wx:for="{{transactions}}" wx:key="id">
     <record-card cardItem="{{item}}" />
   </block>
+  <block wx:if="{{transactions.length === 0 && loaded}}">
+    <!-- 空状态 -->
+    <empty-tips showClickPoint="{{true}}" />
+  </block>
 </view>

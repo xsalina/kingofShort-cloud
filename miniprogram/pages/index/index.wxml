@@ -28,6 +28,8 @@
     <text>查看更多</text>
     <text class="arrow">›</text>
   </view>
-
-  <add-transaction-btn/>
+  <block wx:if="{{transactions.length === 0 && loaded}}">
+    <!-- 空状态 -->
+    <empty-tips />
+  </block>
 </view>

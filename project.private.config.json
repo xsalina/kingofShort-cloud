@@ -89,6 +89,20 @@
           "query": "",
           "launchMode": "default",
           "scene": null
+        },
+        {
+          "name": "",
+          "pathName": "subpackages/deal/list/index",
+          "query": "",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
+          "name": "",
+          "pathName": "subpackages/deal/deal-detail/index",
+          "query": "itemId=ab927786692842a7054ecdf747c63598",
+          "launchMode": "default",
+          "scene": null
         }
       ]
     }

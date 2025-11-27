@@ -93,6 +93,7 @@ Page({
         },
       })
       .then((res) => {
+        console.log("queryTypeList res:", res);
         if (res.result.success) {
           this.setData({ stockList: res.result.data });
         } else {

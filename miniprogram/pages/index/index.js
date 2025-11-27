@@ -1,10 +1,10 @@
-
 const app = getApp();
 Page({
   data: {
-    monthProfit:null,
-    totalProfit:null,
+    monthProfit: null,
+    totalProfit: null,
     transactions: [],
+    loaded: false,
   },
   async onShow() {
     if (typeof this.getTabBar === "function" && this.getTabBar()) {
@@ -39,10 +39,11 @@ Page({
       })
       .then((res) => {
         wx.hideLoading();
-        if (res.result.success) {
-          this.setData({ transactions: res.result.data.tradesList });
-          console.log(res.result.data.trades);
-        }
+        this.setData({
+          transactions: res?.result?.data?.tradesList,
+          loaded: true,
+        });
+        console.log(res.result.data.trades);
       });
   },
   queryTradesSummer() {

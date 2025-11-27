@@ -57,6 +57,7 @@
   font-size: 26rpx;
   color: #fff;
   border: none;
+  height:70rpx
 }
 
 .modify-btn { background-color: #5a9bd4; }     /* 修改挂单蓝色 */

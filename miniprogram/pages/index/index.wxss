@@ -58,15 +58,7 @@
   margin-bottom: 20rpx;
 }
 
-.add-btn {
-  width: 90%;
-  background-color: #007aff;
-  color: #ffffff;
-  font-size: 28rpx;
-  border-radius: 20rpx;
-  padding: 20rpx 0;
-  text-align: center;
-}
+
 .tx-list{
   width:100%;
 }
@@ -87,4 +79,7 @@
   margin-left: 6rpx;
   font-size: 32rpx;
 }
+
+
+
 

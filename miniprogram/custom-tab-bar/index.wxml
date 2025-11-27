@@ -1,3 +1,4 @@
+<view class="tabbar-box" >
 <view class="tabbar {{isIPX ? 'bot-area' : ''}}">
   <block wx:for="{{list}}" wx:key="index">
     <view class="tab-item {{selected === index ? 'active' : ''}}" bindtap="switchTab" data-index="{{index}}" >
@@ -5,4 +6,6 @@
       <text class="label">{{item.text}}</text>
     </view>
   </block>
+</view>
+<add-transaction-btn />
 </view>

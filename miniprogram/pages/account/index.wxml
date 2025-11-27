@@ -22,5 +22,4 @@
             <text class="mine-arrow">›</text>
         </view>
     </view>
-    <add-transaction-btn />
 </view>

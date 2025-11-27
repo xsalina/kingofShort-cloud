@@ -1,42 +1,58 @@
-<view class="add-card">
-  <view class="card-title">新增交易</view>
-  <!-- 股票选择 -->
-  <view class="add-tips-line" bindtap="onAddType"> 没有你要的股票? <image class="cli-img" src="{{clickCursorImg}}" mode="aspectFill" /><text class="tips-btn">我去添加</text></view>
-  <view class="row wrap">
-    <text class="label">选择股票</text>
-    <picker mode="selector" range="{{stockOptions}}" range-key="name" value="{{selectedStockIndex}}" bindchange="onStockChange" class="picker-full">
-      <view class="picker-box">
-        <view class="picker-text {{selectedStockObj.name ? '':'placeholder'}}">
-          {{ selectedStockObj.name? selectedStockObj.name  : '请选择股票' }}
+<view class="page">
+  <view class="page-header">
+    <text class="page-title">新增交易</text>
+  </view>
+  <view class="add-card">
+    <!-- 股票选择 -->
+    <view class="add-tips-line" bindtap="onAddType">
+      没有你要的股票?
+      <image class="cli-img" src="{{clickCursorImg}}" mode="aspectFill" />
+      <text class="tips-btn">我去添加</text>
+    </view>
+    <view class="row wrap">
+      <text class="label">选择股票</text>
+      <picker mode="selector" range="{{stockOptions}}" range-key="name" value="{{selectedStockIndex}}" bindchange="onStockChange" class="picker-full">
+        <view class="picker-box">
+          <view class="picker-text {{selectedStockObj.name ? '':'placeholder'}}">
+            {{ selectedStockObj.name? selectedStockObj.name  : '请选择股票' }}
+          </view>
+          <!-- “>” 旋转后的图标 -->
+          <text class="arrow">›</text>
         </view>
-        <!-- “>” 旋转后的图标 -->
-        <text class="arrow">›</text>
+      </picker>
+    </view>
+    <!-- 买入价格 -->
+    <view class="row wrap">
+      <text class="label">价格{{selectedStockObj.currency}}</text>
+      <input class="input-full" type="digit" placeholder="例如 210.56" bindinput="onPriceInput" />
+    </view>
+    <!-- 买入数量 -->
+    <view class="row wrap">
+      <text class="label">数量</text>
+      <input class="input-full" type="digit" placeholder="输入数量" bindinput="onQtyInput" />
+    </view>
+    <view class="row wrap">
+      <text class="label">手续费{{selectedStockObj.currency}}</text>
+      <input class="input-full" type="digit" placeholder="默认为 0" bindinput="onBuyFeeInput" />
+    </view>
+    <!-- 目标收益率 -->
+    <view class="row wrap">
+      <text class="label">目标收益率 (%)</text>
+      <input class="input-full" type="digit" placeholder="例如 10（选填）" bindinput="onTargetRateInput" />
+    </view>
+    <view wx:if="{{suggestedSellPrice}}" class="suggested">
+      <view>
+        建议卖出价格:
+        <text class="suggest-price">{{selectedStockObj.currency}} {{suggestedSellPrice}}</text>
       </view>
-    </picker>
+      <view class="tips">计算方式：((买入价格 * 数量 + 买入手续费) * (1 + 目标收益率)) / 数量</view>
+      <view>
+        预期收益:
+        <text class="suggest-price">{{selectedStockObj.currency}} {{suggestedProfit}}</text>
+      </view>
+    </view>
+    <button bindtap="addTransaction" disabled="{{disabled}}" class="add-btn {{disabled?'btn-disabled':''}}">
+      {{disabled ? "添加中..." : "添加交易"}}
+    </button>
   </view>
-  <!-- 买入价格 -->
-  <view class="row wrap">
-    <text class="label">价格{{selectedStockObj.currency}}</text>
-    <input class="input-full" type="digit" placeholder="例如 210.56" bindinput="onPriceInput" />
-  </view>
-  <!-- 买入数量 -->
-  <view class="row wrap">
-    <text class="label">数量</text>
-    <input class="input-full" type="digit" placeholder="输入数量" bindinput="onQtyInput" />
-  </view>
-  <view class="row wrap">
-    <text class="label">手续费{{selectedStockObj.currency}}</text>
-    <input class="input-full" type="digit" placeholder="默认为 0" bindinput="onBuyFeeInput" />
-  </view>
-  <!-- 目标收益率 -->
-  <view class="row wrap">
-    <text class="label">目标收益率 (%)</text>
-    <input class="input-full" type="digit" placeholder="例如 10（选填）" bindinput="onTargetRateInput" />
-  </view>
-  <view wx:if="{{suggestedSellPrice}}" class="suggested">
-    <view>建议卖出价格:  <text class="suggest-price">{{selectedStockObj.currency}} {{suggestedSellPrice}}</text></view>
-    <view class="tips">计算方式：((买入价格 * 数量 + 买入手续费) * (1 + 目标收益率)) / 数量</view>
-    <view>预期收益: <text class="suggest-price">{{selectedStockObj.currency}} {{suggestedProfit}}</text></view>
-  </view>
-  <button bindtap="addTransaction" disabled="{{disabled}}" class="btn {{disabled?'btn-disabled':''}}">{{disabled ? "添加中..." : "添加交易"}}</button>
 </view>

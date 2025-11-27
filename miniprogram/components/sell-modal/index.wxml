@@ -4,11 +4,11 @@
         <view class="modal-header">
             <view class="buy-info">买入信息</view>
             <view class="buy-info-detail">
-                价格
+                价格: 
                 <text class="info-number">{{tx.currency}}{{tx.price}} </text>
-                数量
-                <text class="info-number">{{tx.quantity}} </text>
-                手续费
+                | 数量: 
+                <text class="info-number">{{tx.quantity}}</text>
+                | 手续费: 
                 <text class="info-number">{{tx.currency}}{{tx.fee}}</text>
             </view>
         </view>
@@ -16,23 +16,24 @@
         <view class="modal-body">
             <view class="buy-info">卖出信息</view>
             <view class="remain-info">
-                单股均价
+                单股均价: 
                 <text class="info-number">{{tx.currency}}{{tx.avgCost}}</text>
-                还剩<text class="info-number"> {{tx.remainingQuantity}} </text>股
+                | 剩股: 
+                <text class="info-number">{{tx.remainingQuantity}}</text>
             </view>
             <!-- <view class="field row wrap">
                 <view class="label">目标收益率 (%)</view>
                 <input class="input-full" type="digit" placeholder="输入目标收益率（选填）" bindinput="onTargetRateInput" />
             </view> -->
-            <view class="field row wrap">
+            <view class="row wrap">
                 <view class="label">价格{{tx.currency}}</view>
                 <input class="input-full" type="digit" placeholder="输入卖出价格" bindinput="onSellPriceInput" />
             </view>
-            <view class="field row wrap">
+            <view class="row wrap">
                 <view class="label">数量</view>
                 <input class="input-full" max="{{tx.remainingQuantity}}" type="digit" placeholder="输入卖出数量(最大{{tx.remainingQuantity}}股)" bindinput="onSellQtyInput" />
             </view>
-            <view class="field row wrap">
+            <view class="row wrap">
                 <view class="label">手续费{{tx.currency}}</view>
                 <input class="input-full" type="digit" placeholder="输入手续费（选填）" bindinput="onSellFeeInput" />
             </view>

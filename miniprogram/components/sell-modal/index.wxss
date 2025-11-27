@@ -5,17 +5,19 @@
   right: 0;
   bottom: 0;
   background: rgba(0, 0, 0, 0.5);
-  display: flex;
+  /* display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: center; */
   z-index: 2;
 }
 
 .modal-box {
-  width: 90%;
+  width: calc(100% - 40rpx);
   background: #fff;
   border-radius: 20rpx;
   padding: 30rpx;
+  margin:200rpx auto 0 auto;
+  box-sizing: border-box;
 }
 .modal-header {
   margin-bottom: 40rpx;
@@ -38,56 +40,7 @@
 .remain-info{
   margin-bottom:20rpx;
   font-size: 24rpx;
-}
-
-/* 表单行 */
-.row {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 12rpx;
-}
-.label {
-  font-size: 28rpx;
-  color: #555;
-}
-.input {
-  flex: 1;
-  border: 1rpx solid #ccc;
-  border-radius: 8rpx;
-  padding: 6rpx 10rpx;
-  font-size: 28rpx;
-  margin-left: 10rpx;
-}
-.picker {
-  flex: 1;
-  border: 1rpx solid #ccc;
-  border-radius: 8rpx;
-  padding: 6rpx 10rpx;
-  font-size: 28rpx;
-  margin-left: 10rpx;
-}
-.row.wrap {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  margin-bottom: 20rpx;
-}
-
-.label {
-  font-size: 28rpx;
-  color: #555;
-  min-width: 120rpx; /* label 最小宽度，可以换行 */
-  margin-bottom: 6rpx; /* 如果换行，和输入框保持间距 */
-}
-
-.input-full {
-  flex: 1;
-  border: 1rpx solid #ccc;
-  border-radius: 8rpx;
-  padding: 6rpx 10rpx;
-  font-size: 28rpx;
-  min-width: 150rpx; /* 防止太窄 */
+  color:#999;
 }
 
 .estimated-profit {
@@ -102,25 +55,95 @@
   justify-content: space-between;
 }
 
-.btn-sell {
+.btn-sell,.btn-cancel {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   width: 48% !important;
   background: #32cd32;
   color: #fff;
   border-radius: 14rpx;
   font-size: 28rpx;
   padding: 14rpx;
+  height:70rpx;
+}
+.btn-sell,.btn-cancel {
+  background: #32cd32;
 }
 
 .btn-cancel {
-  width: 48% !important;
   background: #ccc;
-  color: #fff;
-  border-radius: 14rpx;
-  font-size: 28rpx;
-  padding: 14rpx;
 }
 .tips-text {
   font-size: 20rpx;
   color: #999;
   margin: 6rpx 0 40rpx 0;
+}
+
+.row.wrap {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  margin-bottom: 30rpx;
+}
+
+.label {
+  font-size: 28rpx;
+  color: #555;
+  min-width: 120rpx; /* label 最小宽度，可以换行 */
+  margin-bottom: 6rpx; /* 如果换行，和输入框保持间距 */
+}
+
+.input-full,.picker-full {
+  flex: 1;
+  border: 1rpx solid #ccc;
+  border-radius: 8rpx;
+  padding: 6rpx 10rpx;
+  font-size: 28rpx;
+  min-width: 150rpx; /* 防止太窄 */
+  height:50rpx;
+}
+.picker-box {
+  padding: 5rpx 0;
+  border-radius: 8rpx;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.picker-text {
+  font-size: 28rpx;
+}
+.placeholder {
+  color: #808080;
+}
+
+.arrow {
+  font-size: 32rpx;
+  color: var(--sub);
+  margin: 0 10rpx;
+  transform: rotate(90deg); /* 让 > 变成向下 */
+  display: inline-block; /* 必须给它，否则不能旋转 */
+  line-height: 32rpx;
+}
+
+/* 按钮 */
+.add-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height:70rpx;
+  margin-top: 40rpx;
+  background-color: #1e90ff;
+  color: #fff;
+  font-size: 30rpx;
+  border-radius: 12rpx;
+  padding: 12rpx 0;
+  text-align: center;
+}
+.btn-disabled {
+  background-color: #d9d9d9 !important; /* 灰色背景 */
+  color: #a0a0a0 !important; /* 灰色文字 */
+  cursor: not-allowed; /* 鼠标提示不可点击 */
 }
