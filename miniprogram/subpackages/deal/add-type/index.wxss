@@ -216,3 +216,8 @@ page {
   transform: rotate(90deg);
   color: #9fa5b3;
 }
+.btn-disabled {
+  background-color: #d9d9d9 !important; /* 灰色背景 */
+  color: #a0a0a0 !important; /* 灰色文字 */
+  cursor: not-allowed; /* 鼠标提示不可点击 */
+}

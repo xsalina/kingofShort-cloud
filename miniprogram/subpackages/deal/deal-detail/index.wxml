@@ -1,22 +1,22 @@
 <view class="container">
   <!-- 股票名 + 状态标签 -->
   <view class="detail-header">
-    <text class="stock-name">{{transaction.stockName}}</text>
-    <view class="tx-tag {{transaction.statusClass}}">
-      <text>{{transaction.statusText}}</text>
+    <text class="stock-name">{{detailInfo.stockName}}</text>
+    <view class="tx-tag tx-tag-{{statusClass}}">
+      <text>{{statusText}}</text>
     </view>
   </view>
   <!-- 统一提示区 -->
-  <view class="highlight-tip">
+  <view class="highlight-tip" wx:if="{{detailInfo.remainingQuantity}}">
     <view class="tip-title">持仓提示</view>
     <view class="tip-line">
       <text>还有</text>
-      <text class="tip-number"> 5 </text>
+      <text class="tip-number"> {{detailInfo.remainingQuantity}} </text>
       <text>股未卖出</text>
     </view>
     <view class="tip-line">
-      <text>持仓成本单价：</text>
-      <text class="tip-number">{{transaction.currency}}398.28</text>
+      <text>买入单股均价：</text>
+      <text class="tip-number">{{detailInfo.currency}}{{detailInfo.avgCost}}</text>
     </view>
   </view>
   <!-- 挂单信息（仅在 status === 'pending' 时显示） -->
@@ -44,66 +44,75 @@
     <view class="section-title">买入信息</view>
     <view class="detail-row">
       <text>价格</text>
-      <text>{{transaction.currency}}{{transaction.buyPrice}}</text>
+      <text>{{detailInfo.currency}}{{detailInfo.price}}</text>
     </view>
     <view class="detail-row">
       <text>数量</text>
-      <text>{{transaction.buyQty}}</text>
+      <text>{{detailInfo.quantity}}</text>
     </view>
     <view class="detail-row">
       <text>手续费</text>
-      <text>{{transaction.currency}}{{transaction.buyFee}}</text>
+      <text>{{detailInfo.currency}}{{detailInfo.fee}}</text>
+    </view>
+     <view class="detail-row">
+      <text>时间</text>
+      <text>{{detailInfo.buyTimeText}}</text>
     </view>
     <view class="detail-row total-row">
-      <text>买入总额</text>
-      <text>{{transaction.currency}}{{transaction.buyTotal.toFixed(2)}}</text>
+      <text>总额</text>
+      <text>{{detailInfo.currency}}{{buyTotalMoney}}</text>
     </view>
+    
   </view>
   <!-- 卖出信息 -->
-  <view class="detail-section" wx:if="transaction.status !== 'unsold'">
+  <view class="detail-section" wx:if="{{detailInfo.sellRecords && detailInfo.sellRecords.length > 0}}">
     <view class="section-title">卖出信息</view>
-    <block wx:for="{{transaction.sellList}}" wx:key="index">
+    <block wx:for="{{detailInfo.sellRecords}}" wx:key="index">
       <view class="detail-row">
         <text>价格</text>
-        <text>{{transaction.currency}}{{item.sellPrice}}</text>
+        <text>{{detailInfo.currency}}{{item.sellPrice}}</text>
       </view>
       <view class="detail-row">
         <text>数量</text>
-        <text>{{item.sellQty}}</text>
+        <text>{{item.sellQuantity}}</text>
       </view>
       <view class="detail-row">
         <text>手续费</text>
-        <text>{{transaction.currency}}{{item.sellFee}}</text>
+        <text>{{detailInfo.currency}}{{item.sellFee}}</text>
       </view>
-      <view class="detail-row total-row">
+       <view class="detail-row">
+        <text>时间</text>
+        <text>{{item.sellTimeText}}</text>
+      </view>
+      <!-- <view class="detail-row total-row">
         <text>总额</text>
         <text>{{transaction.currency}}{{item.sellTotal.toFixed(2)}}</text>
-      </view>
+      </view> -->
       <view class="detail-row">
         <text>收益</text>
         <text class="tx-profit" style="color:{{item.profit>=0?'#ff4500':'#32cd32'}}">
-          {{transaction.currency}}{{item.profit.toFixed(2)}}
+          {{detailInfo.currency}}{{item.profit}}
         </text>
       </view>
-      <view class="detail-row">
+      <!-- <view class="detail-row">
         <text>时间</text>
-        <text>{{item.sellTime}}</text>
-      </view>
+        <text>{{item.sellTimeText}}</text>
+      </view> -->
       <view class="divider"></view>
     </block>
     <!-- 卖出总收益（仅卖出状态显示） -->
     <view class="detail-row total-profit-row">
       <text class="detail-label">总收益</text>
-      <text class="detail-profit">{{transaction.currency}}20000</text>
+      <text class="detail-profit">{{detailInfo.currency}}{{detailInfo.totalProfit}}</text>
     </view>
   </view>
   <!-- 操作按钮 -->
   <view class="detail-actions">
     <!-- 挂单 -->
     <!-- 部分卖 -->
-    <view wx:if="{{transaction.status === 'partial' || transaction.status === 'unsold'}}" class="opera-btn {{isIPX ? 'ipx-padding' : ''}}">
+    <view wx:if="{{detailInfo.status === 'partial' || detailInfo.status === 'unSold'}}" class="opera-btn {{isIPX ? 'ipx-padding' : ''}}">
       <button class="action-btn sell-btn" bindtap="openSell">卖出</button>
     </view>
   </view>
 </view>
-<sell-modal visible="{{showSellModal}}" tx="{{selectedTx}}" bind:sell="handleSell" bind:cancel="handleCancel" />
+<sell-modal visible="{{showSellModal}}" tx="{{detailInfo}}" bind:sell="handleSell" bind:cancel="handleCancel" />

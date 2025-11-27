@@ -6,7 +6,7 @@
 .tx-tag-sold { background-color:#32cd32; }
 .tx-tag-partial { background-color:#ffa500; }
 .tx-tag-pending { background-color:#5a9bd4; }
-.tx-tag-unsold { background-color:#999; }
+.tx-tag-unSold { background-color:#999; }
 
 
 .highlight-tip {
@@ -39,11 +39,11 @@
 
 
 .detail-section { width:100%;background-color:#fff; border-radius:16rpx; padding:20rpx; margin-bottom:20rpx; box-shadow:0 4rpx 12rpx rgba(0,0,0,0.1);box-sizing: border-box; }
-.section-title { font-size:28rpx; font-weight:bold; margin-bottom:12rpx; }
+.section-title { font-size:28rpx; font-weight:bold; margin-bottom:20rpx; }
 
 .detail-row { display:flex; justify-content:space-between; font-size:26rpx; margin-bottom:10rpx; }
 .total-row { font-weight:bold; font-size:28rpx; }
-.divider { height:1rpx; background-color:#e0e0e0; margin:8rpx 0; }
+.divider { height:1rpx; background-color:#e0e0e0; margin:15rpx 0; }
 
 .detail-actions { display:flex; margin-top:12rpx; }
 .pending-btn { background-color:#5a9bd4; } /* 挂单 */
@@ -85,6 +85,7 @@
   display: flex;
   justify-content: space-between;
   margin-bottom: 15rpx;
+  align-items: center;
 }
 
 /* 左标签 */

@@ -5,26 +5,26 @@
     <view class="stat-item" bindtap="onMonthProfitTap">
       <view class="stat-title">本月收益</view>
       <view class="stat-values">
-        <text class="currency">$ {{monthProfitUSD}}</text>
-        <text class="currency">¥ {{monthProfitCNY}}</text>
-        <text class="currency">HK$ {{monthProfitHKD}}</text>
+        <text class="currency">$ {{monthProfit['$'] || 0}}</text>
+        <text class="currency">¥ {{monthProfit['¥'] || 0}}</text>
+        <text class="currency">HK$ {{monthProfit['HK$'] || 0}}</text>
       </view>
     </view>
     <view class="stat-item" bindtap="onTotalProfitTap">
       <view class="stat-title">总收益</view>
       <view class="stat-values">
-        <text class="currency">$ {{totalProfitUSD}}</text>
-        <text class="currency">¥ {{totalProfitCNY}}</text>
-        <text class="currency">HK$ {{totalProfitHKD}}</text>
+        <text class="currency">$ {{totalProfit['$'] || 0}}</text>
+        <text class="currency">¥ {{totalProfit['¥'] || 0}}</text>
+        <text class="currency">HK$ {{totalProfit['HK$'] || 0}}</text>
       </view>
     </view>
   </view>
   <view class="tx-list">
     <block wx:for="{{transactions}}" wx:key="id">
-      <record-card stockName="{{item.stockName}}" status="{{item.status}}" currency="{{item.currency}}" buyPrice="{{item.buyPrice}}" buyQty="{{item.buyQty}}" buyTime="{{item.buyTime}}" sold="{{item.sold}}" sellPrice="{{item.sellPrice}}" sellQty="{{item.sellQty}}" sellTime="{{item.sellTime}}" profit="{{item.profit}}"></record-card>
+      <record-card cardItem="{{item}}"></record-card>
     </block>
   </view>
-  <view wx:if="{{transactions.length >= 6}}" class="load-more-btn" bindtap="goToAllRecords">
+  <view wx:if="{{transactions.length >= 4}}" class="load-more-btn" bindtap="goToAllRecords">
     <text>查看更多</text>
     <text class="arrow">›</text>
   </view>

@@ -81,3 +81,19 @@
   createdAt: Date
 }
 
+| 字段                | 说明       |
+| ----------------- | -------- |
+| remainingQuantity | 剩余未卖出数量  |
+| totalProfit       | 已卖出累计收益  |
+| lastSellTime      | 最近一次卖出时间 |
+| buyTime           | 买入时间     |
+| 字段           | 说明     |
+| ------------ | ------ |
+| sellTime     | 卖出时间   |
+| sellPrice    | 卖出价格   |
+| sellQuantity | 卖出数量   |
+| sellFee      | 卖出手续费  |
+| avgCost      | 买入单股均价 |
+| profit       | 该笔卖出收益 |
+
+

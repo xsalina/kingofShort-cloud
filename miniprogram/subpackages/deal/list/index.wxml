@@ -1,32 +1,14 @@
 <view class="page">
-
   <!-- tab 切换 -->
   <view class="tab-bar">
     <block wx:for="{{tabs}}" wx:key="index">
-      <view 
-        class="tab-item {{currentTabIndex === index ? 'active' : ''}}" 
-        bindtap="switchTab" 
-        data-index="{{index}}">
-        {{item}}
+      <view class="tab-item {{currentTabIndex === index ? 'active' : ''}}" bindtap="switchTab" data-index="{{index}}">
+        {{item.label}}
       </view>
     </block>
   </view>
-
   <!-- 列表 -->
-     <block wx:for="{{transactions}}" wx:key="id">
-      <record-card 
-        stockName="{{item.stockName}}"
-        status="{{item.status}}" 
-        currency="{{item.currency}}"
-        buyPrice="{{item.buyPrice}}"
-        buyQty="{{item.buyQty}}"
-        buyTime="{{item.buyTime}}"
-        sold="{{item.sold}}"
-        sellPrice="{{item.sellPrice}}"
-        sellQty="{{item.sellQty}}"
-        sellTime="{{item.sellTime}}"
-        profit="{{item.profit}}">
-      </record-card>
-    </block>
-
+  <block wx:for="{{transactions}}" wx:key="id">
+    <record-card cardItem="{{item}}" />
+  </block>
 </view>

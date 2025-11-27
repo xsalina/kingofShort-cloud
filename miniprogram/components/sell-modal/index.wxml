@@ -4,12 +4,22 @@
         <view class="modal-header">
             <view class="buy-info">买入信息</view>
             <view class="buy-info-detail">
-                价格  <text class="info-number">{{tx.currency}}{{tx.price}},</text>  未卖股数  <text class="info-number">{{tx.remainingQty}},</text>  手续费  <text class="info-number">{{tx.currency}}{{tx.buyFee}},</text>  持仓成本单价 <text class="info-number">{{tx.currency}}{{tx.costPerUnit}}</text>
+                价格
+                <text class="info-number">{{tx.currency}}{{tx.price}} </text>
+                数量
+                <text class="info-number">{{tx.quantity}} </text>
+                手续费
+                <text class="info-number">{{tx.currency}}{{tx.fee}}</text>
             </view>
         </view>
         <!-- 输入区 -->
         <view class="modal-body">
             <view class="buy-info">卖出信息</view>
+            <view class="remain-info">
+                单股均价
+                <text class="info-number">{{tx.currency}}{{tx.avgCost}}</text>
+                还剩<text class="info-number"> {{tx.remainingQuantity}} </text>股
+            </view>
             <!-- <view class="field row wrap">
                 <view class="label">目标收益率 (%)</view>
                 <input class="input-full" type="digit" placeholder="输入目标收益率（选填）" bindinput="onTargetRateInput" />
@@ -20,13 +30,14 @@
             </view>
             <view class="field row wrap">
                 <view class="label">数量</view>
-                <input class="input-full" type="digit" placeholder="输入卖出数量(最大5股)" bindinput="onSellQtyInput" />
+                <input class="input-full" max="{{tx.remainingQuantity}}" type="digit" placeholder="输入卖出数量(最大{{tx.remainingQuantity}}股)" bindinput="onSellQtyInput" />
             </view>
             <view class="field row wrap">
                 <view class="label">手续费{{tx.currency}}</view>
                 <input class="input-full" type="digit" placeholder="输入手续费（选填）" bindinput="onSellFeeInput" />
             </view>
             <view class="estimated-profit">预计收益: {{tx.currency}}{{estimatedProfit}}</view>
+            <view class="tips-text">计算方式：(卖出价格 - 单股均价) * 卖出数量 - 卖出手续费</view>
         </view>
         <!-- 底部按钮 -->
         <view class="modal-footer">

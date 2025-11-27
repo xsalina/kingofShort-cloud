@@ -38,5 +38,5 @@
     <view class="tips">计算方式：((买入价格 * 数量 + 买入手续费) * (1 + 目标收益率)) / 数量</view>
     <view>预期收益: <text class="suggest-price">{{selectedStockObj.currency}} {{suggestedProfit}}</text></view>
   </view>
-  <button bindtap="addTransaction" class="btn">添加交易</button>
+  <button bindtap="addTransaction" disabled="{{disabled}}" class="btn {{disabled?'btn-disabled':''}}">{{disabled ? "添加中..." : "添加交易"}}</button>
 </view>

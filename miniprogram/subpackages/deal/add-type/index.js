@@ -1,10 +1,8 @@
+
 const app = getApp();
 Page({
   data: {
-    stockList: [
-      { name: "特斯拉", market: "美股", currency: "$" },
-      { name: "苹果", market: "美股", currency: "$" },
-    ],
+    stockList: [],
 
     marketOptions: [
       { label: "美股 ($)", market: "美股", currency: "$" },
@@ -20,6 +18,7 @@ Page({
 
     editingIndex: -1,
     userInfo: null,
+    disabled: false,
   },
   async onLoad() {
     const userInfo = await app.globalData.loginPromise;
@@ -103,6 +102,11 @@ Page({
   },
   addType() {
     const { userInfo, form } = this.data;
+    if(!form.name || !form.market || !form.currency){
+      wx.showToast({ title: "请填写完整信息", icon: "none" });
+      return; 
+    }
+    this.setData({ disabled: true });
     wx.cloud
       .callFunction({
         name: "manageStockType",
@@ -113,10 +117,25 @@ Page({
         },
       })
       .then((res) => {
+        this.setData({ disabled: false });
         if (res.result.success) {
           wx.showToast({ title: res.result.message });
           this.queryTypeList();
+          this.clearFormValue();
         }
+      }).catch(() => {
+        this.setData({ disabled: false });
+         wx.showToast({ title: "添加失败", icon: "none" });
       });
   },
+  clearFormValue() {
+    this.setData({
+      form: {
+        name: "",
+        market: "",
+        currency: "",
+      },
+      editingIndex: -1,
+    });
+  }
 });

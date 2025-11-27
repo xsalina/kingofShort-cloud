@@ -16,7 +16,7 @@
   background-color: #d0f0c0;
 }
 
-.tx-record.unsold {
+.tx-record.unSold {
   border-left: 6rpx solid #999;
   background-color: #e0e0e5;
 }
@@ -37,7 +37,7 @@
   color: #fff;
 }
 
-.tx-record.unsold .tx-tag {
+.tx-record.unSold .tx-tag {
   background-color: #999;
   color: #fff;
 }

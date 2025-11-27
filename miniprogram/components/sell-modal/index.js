@@ -1,46 +1,78 @@
+const {
+  safeSubtract,
+  safeMultiply,
+  safeAdd,          
+} = require("../../utils/number.js");
 Component({
   properties: {
     visible: { type: Boolean, value: false },
-    tx: { type: Object, value: {} } // { price, remainingQty, costPerUnit }
+    tx: {
+      avgCost: Number,
+      buyTime: String,
+      currency: String,
+      fee: Number,
+      lastSellTime: String,
+      price: Number,
+      quantity: Number,
+      remainingQuantity: Number,
+      sellRecords: Array,
+      status: String,
+      stockId: String,
+      stockName: String,
+      totalProfit: Number,
+      userId: String,
+    },
   },
   data: {
     targetRate: 0,
     sellPrice: 0,
     sellQty: 0,
     sellFee: 0,
-    estimatedProfit: 0
+    estimatedProfit: 0,
   },
   methods: {
     onTargetRateInput(e) {
-      this.setData({ targetRate: parseFloat(e.detail.value)||0 }, this.updateEstimatedProfit);
+      this.setData(
+        { targetRate: parseFloat(e.detail.value) || 0 },
+        this.updateEstimatedProfit
+      );
     },
     onSellPriceInput(e) {
-      this.setData({ sellPrice: parseFloat(e.detail.value)||0 }, this.updateEstimatedProfit);
+      this.setData(
+        { sellPrice: parseFloat(e.detail.value) || 0 },
+        this.updateEstimatedProfit
+      );
     },
     onSellQtyInput(e) {
-      this.setData({ sellQty: parseFloat(e.detail.value)||0 }, this.updateEstimatedProfit);
+      this.setData(
+        { sellQty: parseFloat(e.detail.value) || 0 },
+        this.updateEstimatedProfit()
+      );
     },
     onSellFeeInput(e) {
-      this.setData({ sellFee: parseFloat(e.detail.value)||0 }, this.updateEstimatedProfit);
+      this.setData(
+        { sellFee: parseFloat(e.detail.value) || 0 },
+        this.updateEstimatedProfit()
+      );
     },
     updateEstimatedProfit() {
-      const { sellPrice, sellQty, sellFee } = this.data;
-      const { costPerUnit } = this.data.tx;
-      const profit = (sellPrice * sellQty) - (costPerUnit * sellQty) - sellFee;
-      this.setData({ estimatedProfit: profit.toFixed(2) });
+      const { sellPrice, sellQty, sellFee,tx } = this.data;
+      const { avgCost } = tx ;
+      const pofit = safeSubtract(safeMultiply(safeSubtract(sellPrice,avgCost),sellQty),sellFee);
+      this.setData({ estimatedProfit: pofit});
     },
     confirmSell() {
-      this.triggerEvent('sell', {
+      this.triggerEvent("sell", {
         sellPrice: this.data.sellPrice,
         sellQty: this.data.sellQty,
         sellFee: this.data.sellFee,
-        estimatedProfit: this.data.estimatedProfit
+        estimatedProfit: this.data.estimatedProfit,
       });
       this.setData({ visible: false });
     },
     cancel() {
       this.setData({ visible: false });
-      this.triggerEvent('cancel');
-    }
-  }
-})
+      this.triggerEvent("cancel");
+    },
+  },
+});

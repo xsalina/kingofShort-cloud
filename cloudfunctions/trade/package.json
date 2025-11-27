@@ -9,6 +9,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "decimal.js": "^10.6.0",
     "wx-server-sdk": "~3.0.1"
   }
 }

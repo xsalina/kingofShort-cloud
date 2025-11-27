@@ -1,81 +1,60 @@
+const app = getApp();
 Page({
   data: {
-    tabs: ["已卖", "未卖", "部分卖"],
+    tabs: [{
+      label: "已卖", value: "sold"
+    },{
+      label: "未卖", value: "unSold"
+    },{
+      label: "部分卖", value: "partial"
+    }],
     currentTabIndex: 0,
-    statusText: {
-      sold: "已卖",
-      unsold: "未卖",
-      partial: "部分卖"
-    },
-    transactions: [
-      {
-        id: 1,
-        stockName: "特斯拉",
-        status: "sold",  // sold / unsold / pending / partial
-        currency: "$",
-        buyPrice: 398.28,
-        buyQty: 5,
-        buyTime: "2025-11-16 10:20",
-        sold: true,
-        sellPrice: 450,
-        sellQty: 5,
-        sellTime: "2025-11-16 14:30",
-        profit: 258.6
-      },
-      {
-        id: 2,
-        stockName: "英伟达",
-        status: "unsold",
-        currency: "$",
-        buyPrice: 310,
-        buyQty: 3,
-        buyTime: "2025-11-17 09:50",
-        sold: false,
-        sellPrice: 0,
-        sellQty: 0,
-        sellTime: "",
-        profit: 0
-      },
-      {
-        id: 3,
-        stockName: "阿里巴巴",
-        status: "pending",
-        currency: "HK$",
-        buyPrice: 200,
-        buyQty: 10,
-        buyTime: "2025-11-18 11:00",
-        sold: false,
-        sellPrice: 0,
-        sellQty: 0,
-        sellTime: "",
-        profit: 0
-      },
-      {
-        id: 4,
-        stockName: "标普100",
-        status: "partial",
-        currency: "$",
-        buyPrice: 400,
-        buyQty: 10,
-        buyTime: "2025-11-19 10:10",
-        sold: true,
-        sellPrice: 420,
-        sellQty: 5,
-        sellTime: "2025-11-19 14:00",
-        profit: 100
-      }
-    ]
+    page:1,
+    pageSize:10,
+    transactions: [],
+    userInfo:null,
+   
   },
-
+  async onLoad() {
+    const userInfo = await app.globalData.loginPromise;
+    this.setData({ userInfo });
+    this.queryTradesList();
+  },
   switchTab(e) {
     this.setData({
-      currentTabIndex: e.currentTarget.dataset.index
+      currentTabIndex: e.currentTarget.dataset.index,
+      page:1,
+    }, () => {
+      this.queryTradesList();
     });
   },
-
-  get filteredTransactions() {
-    const statusMap = ["sold","pending","unsold","partial"];
-    const currentStatus = statusMap[this.data.currentTabIndex];
-    return this.data.transactions.filter(tx => tx.status === currentStatus);
-  }
+  queryTradesList() {
+    wx.showLoading({ title: "加载数据中..." });
+    const {userInfo,currentTabIndex, tabs, page, pageSize} = this.data;
+    wx.cloud
+      .callFunction({
+        name: "trade",
+        data: {
+          action: "list",
+          userId: userInfo.userId,
+          status: tabs[currentTabIndex].value, // 可选
+          page,
+          pageSize,
+        },
+      })
+      .then((res) => {
+        wx.hideLoading();
+        if (res.result.success) {
+          this.setData({ transactions: res.result.data.tradesList });
+          console.log(res.result.data.trades);
+        }
+      });
+  },
+  onReachBottom() {
+    const { page } = this.data;
+    this.setData({ page: page + 1 }, () => {
+      this.queryTradesList();
+    });
+  },
+  
 });

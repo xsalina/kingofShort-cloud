@@ -1,68 +1,70 @@
 const app = getApp();
-const { safeMultiply, safeAdd, safeSubtract, safeDivide } = require('../../../utils/number.js');
+const {
+  safeMultiply,
+  safeAdd,
+  safeSubtract,
+  safeDivide,
+} = require("../../../utils/number.js");
 Page({
-  data:{
-    clickCursorImg:'/assets/images/clickCursor.png',
-    stockOptions:[],
-    selectedStockIndex:-1,
-    selectedStockObj:null,
-    price:0,
-    qty:0,
-    minUnit:0.0001,
-    targetRate:0,
-
+  data: {
+    disabled:false,
+    clickCursorImg: "/assets/images/clickCursor.png",
+    stockOptions: [],
+    selectedStockIndex: -1,
+    selectedStockObj: null,
+    price: 0,
+    qty: 0,
+    minUnit: 0.0001,
+    targetRate: 0,
     // 新增：买入手续费（用户输入）
     buyFeeInput: 0,
-
-    suggestedSellPrice:null,
-    suggestedProfit:null,
-
-    userInfo:null,
-
-    
+    suggestedSellPrice: null,
+    suggestedProfit: null,
+    userInfo: null,
   },
 
-  async onLoad(){
+  async onLoad() {
     const userInfo = await app.globalData.loginPromise;
-    this.setData({ userInfo }); 
-    this.queryTypeList()
+    this.setData({ userInfo });
+    this.queryTypeList();
   },
 
-  onStockChange(e){
-    const index=parseInt(e.detail.value);
-    const stockObj=this.data.stockOptions[index];
+  onStockChange(e) {
+    const index = parseInt(e.detail.value);
+    const stockObj = this.data.stockOptions[index];
     this.setData({
-      selectedStockIndex:index,
-      selectedStockObj:stockObj
+      selectedStockIndex: index,
+      selectedStockObj: stockObj,
     });
     this.updateTargetSellPrice();
   },
 
-  onPriceInput(e){ 
-    this.setData({price:parseFloat(e.detail.value)||0}); 
-    this.updateTargetSellPrice(); 
+  onPriceInput(e) {
+    this.setData({ price: parseFloat(e.detail.value) || 0 });
+    this.updateTargetSellPrice();
   },
 
-  onQtyInput(e){
-    let v=parseFloat(e.detail.value)||0;
-    const minUnit=this.data.minUnit;
-    if(this.data.selectedStockObj?.fractional) v=Math.floor(v/minUnit)*minUnit;
-    else v=Math.floor(v);
+  onQtyInput(e) {
+    let v = parseFloat(e.detail.value) || 0;
+    const minUnit = this.data.minUnit;
+    if (this.data.selectedStockObj?.fractional)
+      v = Math.floor(v / minUnit) * minUnit;
+    else v = Math.floor(v);
 
-    this.setData({qty:v});
+    this.setData({ qty: v });
     this.updateTargetSellPrice();
   },
 
   // 用户输入 目标收益率（例如 10% → 0.1）
-  onTargetRateInput(e){ 
-    this.setData({targetRate:(parseFloat(e.detail.value)||0)/100}); 
-    this.updateTargetSellPrice(); 
+  onTargetRateInput(e) {
+    this.setData({ targetRate: (parseFloat(e.detail.value) || 0) / 100 });
+    this.updateTargetSellPrice();
   },
 
   // 新增：买入手续费输入
-  onBuyFeeInput(e){
+  onBuyFeeInput(e) {
     this.setData({
-      buyFeeInput: parseFloat(e.detail.value) || 0
+      buyFeeInput: parseFloat(e.detail.value) || 0,
     });
     this.updateTargetSellPrice();
   },
@@ -90,68 +92,53 @@ Page({
 
     // 预期收益（不考虑卖出手续费）
     const profit = safeSubtract(safeMultiply(sp, qty), buyCost);
-    console.log('计算建议卖出价:', { buyCost, targetTotal, sp, profit });
+    console.log("计算建议卖出价:", { buyCost, targetTotal, sp, profit });
     this.setData({
       suggestedSellPrice: sp,
-      suggestedProfit: profit
+      suggestedProfit: profit,
     });
   },
 
-  addTransaction(){
-    const {price, qty, selectedStockObj, suggestedSellPrice, buyFeeInput} = this.data;
-
-    if(!price || !qty) 
-      return wx.showToast({title:'请输入价格和数量',icon:'none'});
-
-    const targetPrice = parseFloat(suggestedSellPrice) || 0;
-
-    // 成本 = 买入金额 + 用户输入手续费
-    const buyCost = safeAdd(safeMultiply(price, qty), buyFeeInput);
-
-    // 预期收益
-    const profit = safeSubtract(safeMultiply(qty, targetPrice), buyCost);
-
-    const newTransaction={
-      stockName:selectedStockObj.name,
-      typeClass:'buy',
-      price,
-      qty,
-      targetPrice,
-      profit,
-      currency: selectedStockObj.currency,
-      buyFee: buyFeeInput,
-      createTime:new Date()
-    };
-
-    db.collection('transactions')
-      .add({data:newTransaction})
-      .then(()=>{
-        wx.showToast({title:'添加成功',icon:'success'});
-      })
-      .catch(()=>wx.showToast({title:'添加失败',icon:'none'}));
-  },
-
-  calculateProfits(transactions){
-    let total=0, month=0;
-    const now=new Date();
-    const thisMonth=now.getMonth();
-    const thisYear=now.getFullYear();
-
-    transactions.forEach(tx=>{
-      total=safeAdd(total,tx.profit);
-      const t=new Date(tx.createTime);
-      if(t.getFullYear()===thisYear && t.getMonth()===thisMonth && tx.typeClass==='sell')
-        month=safeAdd(month,tx.profit);
+  addTransaction() {
+    const { price, qty, selectedStockObj, buyFeeInput } = this.data;
+    if (!selectedStockObj)
+      return wx.showToast({ title: "请选择股票名称", icon: "none" });
+    if (!price || !qty)
+      return wx.showToast({ title: "请输入价格和数量", icon: "none" });
+    this.setData({ disabled:true });
+    wx.cloud.callFunction({
+      name: "trade",
+      data: {
+        action: "buy",
+        userId: this.data.userInfo.userId,
+        stockId: selectedStockObj._id,
+        stockName: selectedStockObj.name,
+        market: selectedStockObj.market,
+        currency: selectedStockObj.currency,
+        price,
+        quantity: qty,
+        fee: buyFeeInput,
+      },
+    }).then((res) => {
+      this.setData({ disabled:false });
+      if (res.result.success) {
+        wx.showToast({ title: "添加交易成功", icon: "success" });
+        wx.navigateBack();
+      } else {
+        wx.showToast({ title: res.result.message, icon: "none" });
+      }
+    }).catch((err)=>{
+      this.setData({ disabled:false });
+      wx.showToast({ title: "添加交易失败", icon: "none" });
     });
-
-    this.setData({totalProfit:total, monthProfit:month});
   },
-  onAddType(){
+
+  onAddType() {
     wx.navigateTo({
       url: "/subpackages/deal/add-type/index",
     });
   },
-   queryTypeList(userId) {
+  queryTypeList(userId) {
     wx.cloud
       .callFunction({
         name: "manageStockType",

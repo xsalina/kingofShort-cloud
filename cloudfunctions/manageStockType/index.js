@@ -16,7 +16,7 @@ exports.main = async (event) => {
       // 查询用户股票类型，过滤已删除
       const res = await db.collection('stockTypes')
         .where({ userId, isDeleted: false })
-        .orderBy('createTime', 'asc')
+        .orderBy('createTime', 'desc')
         .get()
       return successResponse({ data: res.data })
 
