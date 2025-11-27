@@ -14,7 +14,6 @@ Page({
     selectedStockObj: null,
     price: 0,
     qty: 0,
-    minUnit: 0.0001,
     targetRate: 0,
     // 新增：买入手续费（用户输入）
     buyFeeInput: 0,
@@ -45,13 +44,8 @@ Page({
   },
 
   onQtyInput(e) {
-    let v = parseFloat(e.detail.value) || 0;
-    const minUnit = this.data.minUnit;
-    if (this.data.selectedStockObj?.fractional)
-      v = Math.floor(v / minUnit) * minUnit;
-    else v = Math.floor(v);
-
-    this.setData({ qty: v });
+    let numberQty = parseFloat(e.detail.value) || 0;
+    this.setData({ qty: numberQty });
     this.updateTargetSellPrice();
   },
 
@@ -106,6 +100,7 @@ Page({
     if (!price || !qty)
       return wx.showToast({ title: "请输入价格和数量", icon: "none" });
     this.setData({ disabled:true });
+    console.log("添加交易：", { price, qty, selectedStockObj, buyFeeInput });
     wx.cloud.callFunction({
       name: "trade",
       data: {
@@ -139,6 +134,7 @@ Page({
     });
   },
   queryTypeList(userId) {
+    wx.showLoading({ title: "加载中..." });
     wx.cloud
       .callFunction({
         name: "manageStockType",
@@ -148,6 +144,7 @@ Page({
         },
       })
       .then((res) => {
+        wx.hideLoading();
         if (res.result.success) {
           this.setData({ stockOptions: res.result.data });
         } else {
