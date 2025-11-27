@@ -12,7 +12,7 @@
   align-items: center;          /* 垂直居中 */
   justify-content: center;      /* 水平居中 */
   box-shadow: 0 6rpx 12rpx rgba(0,0,0,0.2);
-  z-index: 999;
+  z-index: 1000;
 }
 
 .fab-icon {
