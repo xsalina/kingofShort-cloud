@@ -4,15 +4,13 @@
             <text class="mine-title">我的</text>
         </view>
     </block>
-    <block wx:else>
-        <!-- 页面标题 -->
-        <view class="card user-card">
-            <unification-avatar />
-            <view class="title">未登录用户</view>
-            <view class="desc">注册后可同步你的交易数据</view>
-            <button class="login-btn" bindtap="goRegister">注册 / 登录</button>
-        </view>
-    </block>
+    <!-- 页面标题 -->
+    <view class="card user-card">
+        <unification-avatar />
+        <view class="title">{{userInfo.name || "未登录用户"}}</view>
+        <view class="desc">{{userInfo.phone || "注册后可同步你的交易数据"}}</view>
+        <button wx:if="{{!userInfo}}" class="login-btn" bindtap="goRegister">注册 / 登录</button>
+    </view>
     <!-- 菜单卡片 -->
     <view class="mine-card">
         <!-- 我的交易 -->
