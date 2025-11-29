@@ -16,7 +16,7 @@
 /* 卡片 */
 .add-card {
   background-color: #fff;
-  padding: 20rpx;
+  padding: 30rpx;
   border-radius: 16rpx;
   box-shadow: 0 4rpx 10rpx rgba(0, 0, 0, 0.08);
   box-sizing: border-box;
