@@ -1,4 +1,5 @@
 
+const wxCloud = require("../../../utils/cloud.js");
 const app = getApp();
 Page({
   data: {
@@ -64,8 +65,8 @@ Page({
       content: "确认删除该股票名称吗？",
       success(res) {
         if (res.confirm) {
-          wx.cloud
-            .callFunction({
+          wxCloud
+            .call({
               name: "manageStockType",
               data: {
                 userId: userInfo?.userId,
@@ -84,8 +85,8 @@ Page({
     });
   },
   queryTypeList(userId) {
-    wx.cloud
-      .callFunction({
+    wxCloud
+      .call({
         name: "manageStockType",
         data: {
           userId: userId || this.data.userInfo?.userId,
@@ -108,8 +109,8 @@ Page({
       return; 
     }
     this.setData({ disabled: true });
-    wx.cloud
-      .callFunction({
+    wxCloud
+      .call({
         name: "manageStockType",
         data: {
           userId: userInfo?.userId,

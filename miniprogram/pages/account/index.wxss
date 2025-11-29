@@ -5,15 +5,6 @@
   background-color: #f7f8fa;
 }
 
-/* 标题 */
-.mine-header {
-  margin-bottom: 40rpx;
-}
-.mine-title {
-  font-size: 42rpx;
-  font-weight: 700;
-  color: #111;
-}
 
 /* 外部卡片 */
 .mine-card {

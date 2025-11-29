@@ -103,6 +103,27 @@
           "query": "itemId=ab927786692842a7054ecdf747c63598",
           "launchMode": "default",
           "scene": null
+        },
+        {
+          "name": "",
+          "pathName": "subpackages/deal/deal-detail/index",
+          "query": "itemId=4289fa8169287e94054f6eaa78164e73",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
+          "name": "",
+          "pathName": "subpackages/deal/deal-detail/index",
+          "query": "itemId=8656c02469293dac056646655ff03666",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
+          "name": "",
+          "pathName": "pages/register/index",
+          "query": "",
+          "launchMode": "default",
+          "scene": null
         }
       ]
     }

@@ -1,3 +1,4 @@
+const wxCloud = require("../../../utils/cloud.js");
 const { getStatusInfo } = require("../../../utils/status");
 const { safeMultiply, safeAdd } = require("../../../utils/number.js");
 const { formatSmartTime } = require("../../../utils/date.js");
@@ -27,8 +28,8 @@ Page({
     console.log("取消卖出");
   },
   queryTradesDetail(itemId) {
-    wx.cloud
-      .callFunction({
+    wxCloud
+      .call({
         name: "trade",
         data: {
           action: "detail",
@@ -63,8 +64,8 @@ Page({
   handleSell(e) {
     const { sellFee, sellPrice, sellQty } = e.detail;
     const { detailInfo, itemId } = this.data;
-    wx.cloud
-      .callFunction({
+    wxCloud
+      .call({
         name: "trade",
         data: {
           action: "sell",

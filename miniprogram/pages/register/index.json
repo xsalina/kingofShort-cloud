@@ -1,0 +1,6 @@
+{
+  "navigationBarTitleText": "注册",
+  "usingComponents": {
+    "unification-avatar": "/components/unification-avatar/index"
+  }
+}

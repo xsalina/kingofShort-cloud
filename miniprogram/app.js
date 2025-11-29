@@ -42,7 +42,7 @@ App({
       this.globalData.userInfo = res.user
       return res.user
     } else {
-      throw new Error('登录失败')
+      return null
     }
   } 
 });

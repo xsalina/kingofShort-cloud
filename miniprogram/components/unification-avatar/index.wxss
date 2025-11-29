@@ -1,0 +1,18 @@
+.avatar-shadow {
+  width: 140rpx;
+  height: 140rpx;
+  margin:0 auto 16rpx auto;
+  border-radius: 50%;
+  overflow: hidden;
+  box-shadow: 0 8rpx 20rpx rgba(0, 0, 0, 0.12); /* 柔和阴影 */
+  background-color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* 图片本身保持圆形防止拉伸 */
+.avatar-shadow .avatar {
+  width: 60%;
+  height: 60%;
+}

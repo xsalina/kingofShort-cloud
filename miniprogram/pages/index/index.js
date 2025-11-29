@@ -1,3 +1,4 @@
+const wxCloud = require("../../utils/cloud.js");
 const app = getApp();
 Page({
   data: {
@@ -14,6 +15,7 @@ Page({
       });
     }
     const userInfo = await app.globalData.loginPromise;
+    console.log(35475453,userInfo)
     this.setData({ userInfo });
     this.queryTradesList();
     this.queryTradesSummer();
@@ -25,12 +27,11 @@ Page({
   },
   queryTradesList() {
     wx.showLoading({ title: "加载数据中..." });
-    wx.cloud
-      .callFunction({
-        name: "trade",
-        data: {
-          action: "list",
-          userId: this.data.userInfo.userId,
+    wxCloud.call({
+      name: "trade",
+      data: {
+        action: "list",
+        userId: this.data.userInfo?.userId,
           status: "", // 可选
           stockId: "", // 可选
           page: 1,
@@ -38,23 +39,23 @@ Page({
         },
       })
       .then((res) => {
+        console.log("交易列表返回:", res);
         wx.hideLoading();
         this.setData({
           transactions: res?.result?.data?.tradesList,
           loaded: true,
         });
-        console.log(res.result.data.trades);
+        console.log(res.result?.data?.trades);
       });
   },
   queryTradesSummer() {
-    wx.cloud
-      .callFunction({
-        name: "trade",
-        data: {
-          action: "summaryTotal",
-          userId: this.data.userInfo.userId,
-        },
-      })
+    wxCloud.call({
+      name: "trade",
+      data: {
+        action: "summaryTotal",
+        userId: this.data.userInfo?.userId,
+      },
+    })
       .then((res) => {
         if (res.result.success) {
           const { monthProfit, totalProfit } = res.result.data;

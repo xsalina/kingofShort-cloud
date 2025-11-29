@@ -8,7 +8,11 @@ const { successResponse, failResponse } = require("./utils");
 
 exports.main = async (event) => {
   try {
-    const { action, userId } = event;
+    const { action, userId, env } = event;
+
+    const tradesListCollections =
+      env === "prod" ? "tradesList" : "test_tradesList";
+
     if (!action) return failResponse({ message: "缺少参数 action " });
     if (["buy", "list", "summaryTotal"].includes(action) && !userId)
       return failResponse({ message: "缺少参数userId" });
@@ -56,7 +60,9 @@ exports.main = async (event) => {
         sellRecords: [], // 卖出记录列表
       };
 
-      const res = await db.collection("tradesList").add({ data: newTrade });
+      const res = await db
+        .collection(tradesListCollections)
+        .add({ data: newTrade });
       return successResponse({
         message: "买入记录添加成功",
         data: { tradeId: res._id, ...newTrade },
@@ -68,7 +74,10 @@ exports.main = async (event) => {
       }
 
       // 查询买入记录
-      const tradeRes = await db.collection("tradesList").doc(_id).get();
+      const tradeRes = await db
+        .collection(tradesListCollections)
+        .doc(_id)
+        .get();
       const trade = tradeRes.data;
       if (!trade) return failResponse({ message: "买入记录不存在" });
 
@@ -147,7 +156,10 @@ exports.main = async (event) => {
       if (stockId) query.stockId = stockId;
       if (status) query.status = status;
 
-      const totalRes = await db.collection("tradesList").where(query).count();
+      const totalRes = await db
+        .collection(tradesListCollections)
+        .where(query)
+        .count();
       const total = totalRes.total;
 
       const skip = (page - 1) * pageSize;
@@ -183,7 +195,7 @@ exports.main = async (event) => {
         return failResponse({ message: "id 必传" });
       }
       try {
-        const res = await db.collection("tradesList").doc(_id).get();
+        const res = await db.collection(tradesListCollections).doc(_id).get();
         const trade = res.data;
         if (!trade) return failResponse({ message: "未找到该交易记录" });
 

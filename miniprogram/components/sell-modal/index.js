@@ -30,33 +30,32 @@ Component({
     sellFee: 0,
     estimatedProfit: 0,
   },
+  observers: {
+    // 监听 a、b、c 中任意一个发生变化就执行
+    'sellPrice, sellQty, sellFee': function(sellPrice, sellQty, sellFee) {
+      console.log("observer sellPrice, sellQty, sellFee:", { sellPrice, sellQty, sellFee });
+      this.updateEstimatedProfit();
+    }
+  },
   methods: {
     onTargetRateInput(e) {
-      this.setData(
-        { targetRate: parseFloat(e.detail.value) || 0 },
-        this.updateEstimatedProfit
-      );
+      this.setData({ targetRate: parseFloat(e.detail.value) || 0 });
     },
     onSellPriceInput(e) {
-      this.setData(
-        { sellPrice: parseFloat(e.detail.value) || 0 },
-        this.updateEstimatedProfit
-      );
+      this.setData({ sellPrice: parseFloat(e.detail.value) || 0 });
     },
     onSellQtyInput(e) {
-      this.setData(
-        { sellQty: parseFloat(e.detail.value) || 0 },
-        this.updateEstimatedProfit()
-      );
+      this.setData({ sellQty: parseFloat(e.detail.value) || 0 });
     },
     onSellFeeInput(e) {
-      this.setData(
-        { sellFee: parseFloat(e.detail.value) || 0 },
-        this.updateEstimatedProfit()
-      );
+      this.setData({ sellFee: parseFloat(e.detail.value) || 0 });
     },
     updateEstimatedProfit() {
       const { sellPrice, sellQty, sellFee,tx } = this.data;
+      if (!sellPrice || !sellQty) {
+        this.setData({ estimatedProfit: 0 });
+        return;
+      }
       const { avgCost } = tx ;
       const pofit = safeSubtract(safeMultiply(safeSubtract(sellPrice,avgCost),sellQty),sellFee);
       this.setData({ estimatedProfit: pofit});

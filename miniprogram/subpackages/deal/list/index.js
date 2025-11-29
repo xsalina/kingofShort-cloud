@@ -1,3 +1,4 @@
+const wxCloud = require("../../../utils/cloud");
 const app = getApp();
 Page({
   data: {
@@ -33,8 +34,8 @@ Page({
     wx.showLoading({ title: "加载数据中..." });
     this.setData({ loaded: false });
     const { userInfo, currentTabIndex, tabs, page, pageSize } = this.data;
-    wx.cloud
-      .callFunction({
+    wxCloud
+      .call({
         name: "trade",
         data: {
           action: "list",

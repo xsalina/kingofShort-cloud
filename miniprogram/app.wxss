@@ -27,6 +27,7 @@ page {
 }
 
 .row.wrap {
+  width:100%;
   display: flex;
   flex-wrap: wrap;
   align-items: center;
@@ -92,4 +93,14 @@ page {
   background-color: #d9d9d9 !important; /* 灰色背景 */
   color: #a0a0a0 !important; /* 灰色文字 */
   cursor: not-allowed; /* 鼠标提示不可点击 */
+}
+
+/* 标题 */
+.mine-header {
+  margin-bottom: 40rpx;
+}
+.mine-title {
+  font-size: 42rpx;
+  font-weight: 700;
+  color: #111;
 }

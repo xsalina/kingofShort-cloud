@@ -1,4 +1,5 @@
 const app = getApp();
+const wxCloud = require("../../../utils/cloud.js");
 const {
   safeMultiply,
   safeAdd,
@@ -101,7 +102,7 @@ Page({
       return wx.showToast({ title: "请输入价格和数量", icon: "none" });
     this.setData({ disabled:true });
     console.log("添加交易：", { price, qty, selectedStockObj, buyFeeInput });
-    wx.cloud.callFunction({
+    wxCloud.call({
       name: "trade",
       data: {
         action: "buy",
@@ -135,8 +136,8 @@ Page({
   },
   queryTypeList(userId) {
     wx.showLoading({ title: "加载中..." });
-    wx.cloud
-      .callFunction({
+    wxCloud
+      .call({
         name: "manageStockType",
         data: {
           userId: userId || this.data.userInfo?.userId,

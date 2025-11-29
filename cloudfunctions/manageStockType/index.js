@@ -8,13 +8,15 @@ const { successResponse, failResponse } = require('./utils') // utils.js 同级
 
 exports.main = async (event) => {
   try {
-    const { userId, action, stockId, name, market, currency } = event
+    const { userId, action, stockId, name, market, currency,env } = event;
+    
+    const stockTypesCollection = env === 'prod' ? 'stockTypes' : 'test_stockTypes';
 
     if (!userId) return failResponse({ message: "缺少 userId" })
 
     if (action === "list") {
       // 查询用户股票类型，过滤已删除
-      const res = await db.collection('stockTypes')
+      const res = await db.collection(stockTypesCollection)
         .where({ userId, isDeleted: false })
         .orderBy('createTime', 'desc')
         .get()
@@ -24,7 +26,7 @@ exports.main = async (event) => {
       if (!stockId) return failResponse({ message: "缺少 stockId" })
 
       // 查询股票类型是否存在
-      const stockRes = await db.collection('stockTypes')
+      const stockRes = await db.collection(stockTypesCollection)
         .where({ _id: stockId, userId, isDeleted: false })
         .get()
 
@@ -33,7 +35,7 @@ exports.main = async (event) => {
       }
 
       // 软删除
-      await db.collection('stockTypes').doc(stockId).update({
+      await db.collection(stockTypesCollection).doc(stockId).update({
         data: {
           isDeleted: true,
           deleteTime: db.serverDate()
@@ -57,7 +59,7 @@ exports.main = async (event) => {
         createTime: db.serverDate()
       }
 
-      const res = await db.collection('stockTypes').add({
+      const res = await db.collection(stockTypesCollection).add({
         data: newStock
       })
 
