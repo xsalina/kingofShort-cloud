@@ -7,6 +7,11 @@ Page({
     transactions: [],
     loaded: false,
   },
+  onLoad() {
+    this.setData({
+      userInfo: app.globalData.userInfo || null,
+    });
+  },
   async onShow() {
     if (typeof this.getTabBar === "function" && this.getTabBar()) {
       console.log("设置 tabBar 选中项为 0");
@@ -14,11 +19,19 @@ Page({
         selected: 0,
       });
     }
-    const userInfo = await app.globalData.loginPromise;
-    console.log(35475453,userInfo)
-    this.setData({ userInfo });
-    this.queryTradesList();
-    this.queryTradesSummer();
+    if (app.globalData.userInfo) {
+      this.setData({
+        userInfo: app.globalData.userInfo,
+      });
+    }
+    if (this.data.userInfo?.userId) {
+      this.queryTradesList();
+      this.queryTradesSummer();
+    } else {
+      this.setData({
+        loaded: true,
+      });
+    }
   },
   goToAllRecords() {
     wx.navigateTo({
@@ -27,11 +40,12 @@ Page({
   },
   queryTradesList() {
     wx.showLoading({ title: "加载数据中..." });
-    wxCloud.call({
-      name: "trade",
-      data: {
-        action: "list",
-        userId: this.data.userInfo?.userId,
+    wxCloud
+      .call({
+        name: "trade",
+        data: {
+          action: "list",
+          userId: this.data.userInfo?.userId,
           status: "", // 可选
           stockId: "", // 可选
           page: 1,
@@ -49,13 +63,14 @@ Page({
       });
   },
   queryTradesSummer() {
-    wxCloud.call({
-      name: "trade",
-      data: {
-        action: "summaryTotal",
-        userId: this.data.userInfo?.userId,
-      },
-    })
+    wxCloud
+      .call({
+        name: "trade",
+        data: {
+          action: "summaryTotal",
+          userId: this.data.userInfo?.userId,
+        },
+      })
       .then((res) => {
         if (res.result.success) {
           const { monthProfit, totalProfit } = res.result.data;

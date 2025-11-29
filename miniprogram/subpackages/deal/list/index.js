@@ -18,8 +18,7 @@ Page({
 
   },
   async onLoad() {
-    const userInfo = await app.globalData.loginPromise;
-    this.setData({ userInfo });
+    this.setData({ userInfo:app.globalData.userInfo});
     this.queryTradesList();
   },
   switchTab(e) {

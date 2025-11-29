@@ -34,9 +34,10 @@ Page({
   },
 
   async onLoad() {
-    const userInfo = await app.globalData.loginPromise;
-    this.setData({ userInfo });
-    this.queryTypeList();
+    this.setData({ userInfo: app.globalData.userInfo });
+    if (this.data.userInfo?.userId) {
+      this.queryTypeList();
+    }
   },
 
   onStockChange(e) {
@@ -153,13 +154,13 @@ Page({
       url: "/subpackages/deal/add-type/index",
     });
   },
-  queryTypeList(userId) {
+  queryTypeList() {
     wx.showLoading({ title: "加载中..." });
     wxCloud
       .call({
         name: "manageStockType",
         data: {
-          userId: userId || this.data.userInfo?.userId,
+          userId:this.data.userInfo?.userId,
           action: "list",
         },
       })

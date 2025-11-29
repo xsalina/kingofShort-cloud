@@ -22,9 +22,8 @@ Page({
     disabled: false,
   },
   async onLoad() {
-    const userInfo = await app.globalData.loginPromise;
-    this.setData({ userInfo }); 
-    this.queryTypeList(userInfo.userId);
+    this.setData({ userInfo:app.globalData.userInfo});
+    this.queryTypeList();
   },
 
   // 名称输入
@@ -84,12 +83,12 @@ Page({
       },
     });
   },
-  queryTypeList(userId) {
+  queryTypeList() {
     wxCloud
       .call({
         name: "manageStockType",
         data: {
-          userId: userId || this.data.userInfo?.userId,
+          userId: this.data.userInfo?.userId,
           action: "list",
         },
       })

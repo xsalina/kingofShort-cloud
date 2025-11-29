@@ -4,6 +4,12 @@ Page({
     userInfo: null,
     loaded: false,
   },
+  onLoad() {
+    this.setData({
+      userInfo: app.globalData.userInfo || null,
+      loaded: true
+    });
+  },
   async onShow() {
     if (typeof this.getTabBar === "function" && this.getTabBar()) {
       console.log("设置 tabBar 选中项为 1");
@@ -11,16 +17,10 @@ Page({
         selected: 1,
       });
     }
-
-    if (!app.globalData.userInfo || app.globalData.forceRefresh) {
+    if (app.globalData.forceRefresh) {
       this.refreshData();
       app.globalData.forceRefresh = false;
-    } else {
-      this.setData({
-        userInfo: app.globalData.userInfo,
-        loaded: true,
-      });
-    }
+    } 
   },
   // 刷新用户信息
   async refreshData() {
