@@ -1,8 +1,18 @@
 <view class="mine-container">
-    <!-- 页面标题 -->
-    <view class="mine-header">
-        <text class="mine-title">我的</text>
-    </view>
+    <block wx:if="{{userInfo && loaded}}">
+        <view class="mine-header">
+            <text class="mine-title">我的</text>
+        </view>
+    </block>
+    <block wx:else>
+        <!-- 页面标题 -->
+        <view class="card user-card">
+            <unification-avatar />
+            <view class="title">未登录用户</view>
+            <view class="desc">注册后可同步你的交易数据</view>
+            <button class="login-btn" bindtap="goRegister">注册 / 登录</button>
+        </view>
+    </block>
     <!-- 菜单卡片 -->
     <view class="mine-card">
         <!-- 我的交易 -->

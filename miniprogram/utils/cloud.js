@@ -12,9 +12,7 @@ const getEnv = () => {
 };
 
 const call = async ({name, data = {}}) => {
-    console.log("调用云函数:", name, data);
   const env = getEnv();
-  console.log(`[Cloud] 调用云函数: ${name}，环境: ${env}`, data);
   return wx.cloud.callFunction({
     name,
     data: {

@@ -124,6 +124,13 @@
           "query": "",
           "launchMode": "default",
           "scene": null
+        },
+        {
+          "name": "",
+          "pathName": "pages/account/index",
+          "query": "",
+          "launchMode": "default",
+          "scene": null
         }
       ]
     }

@@ -10,7 +10,7 @@ App({
   onLaunch: async function() {
     this.globalData = { ...globalData };
     await this.initCloundFun()
-    this.globalData.loginPromise = this.loginWx()
+    this.globalData.loginPromise = this.refreshUserInfo()
   },
   initCloundFun() {
     if (wx.cloud) {
@@ -36,7 +36,7 @@ App({
       console.log("[Cloud] 当前基础库版本过低，不支持云能力。");
     }
   },
-  async loginWx() {
+  async refreshUserInfo() {
     const res = await user.silentLogin()
     if (res.success) {
       this.globalData.userInfo = res.user
@@ -44,5 +44,5 @@ App({
     } else {
       return null
     }
-  } 
+  }
 });

@@ -1,4 +1,3 @@
-
 const wxCloud = require("../../utils/cloud");
 
 const app = getApp();
@@ -26,27 +25,32 @@ Page({
     // wx.showLoading({ title: "注册中..." });
     // 调用云函数注册
     // 注册用户
-   wxCloud.call({
-      name: "registerUser",
-      data: { name, phone }
-    }).then((res) => {
-      if (res.result.success) {
-        const user = res.result.data;
-        app.globalData.userInfo = user;
-        this.setData({ disabled: false });
-        wx.showToast({ title: res.result.message, icon: "none" });
-        console.log("注册成功:", user);
-        wx.navigateBack();
-      } else {
-        wx.showToast({ title: res.result.message, icon: "none" });
+    wxCloud
+      .call({
+        name: "registerUser",
+        data: { name, phone },
+      })
+      .then((res) => {
+        if (res.result.success) {
+          const user = res.result.data;
+          app.globalData.userInfo = user;
+          this.setData({ disabled: false });
+          // 通知个人中心回来后刷新用户信息
+          app.globalData.forceRefresh = true;
+          wx.showToast({ title: res.result.message, icon: "none" });
+          setTimeout(() => {
+            wx.navigateBack();
+          }, 500);
+        } else {
+          wx.showToast({ title: res.result.message, icon: "none" });
+          this.setData({ disabled: false });
+          // wx.hideLoading();
+        }
+      })
+      .catch((err) => {
+        wx.showToast({ title: err.message, icon: "none" });
         this.setData({ disabled: false });
         // wx.hideLoading();
-      }
-    }).catch((err) => {
-      wx.showToast({ title: err.message, icon: "none" });
-      this.setData({ disabled: false });
-      // wx.hideLoading();
-    });
-
+      });
   },
 });

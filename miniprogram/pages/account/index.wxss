@@ -1,7 +1,7 @@
 .mine-container {
   width: 100%;
   box-sizing: border-box;
-  padding: 40rpx 30rpx;
+  padding: 40rpx 20rpx;
   background-color: #f7f8fa;
 }
 
@@ -47,3 +47,41 @@
   font-size: 38rpx;
   color: #bbb;
 }
+
+.card {
+  background: #ffffff;
+  border-radius: 20rpx;
+  padding: 40rpx 30rpx;
+  margin-bottom: 30rpx;
+  box-shadow: 0 6rpx 20rpx rgba(0,0,0,0.06);
+}
+
+/* 用户卡片 */
+.user-card {
+  text-align: center;
+}
+
+.title {
+  margin: 25rpx 0;
+  font-size: 34rpx;
+  font-weight: 600;
+  color: #333;
+}
+
+.desc {
+  color: #888;
+  margin-top: 10rpx;
+  font-size: 26rpx;
+}
+
+.login-btn {
+  height:70rpx;
+  margin-top: 40rpx;
+  background-color: #1e90ff;
+  color: #fff;
+  border-radius: 50rpx;
+  width: 70%;
+  font-size: 28rpx;
+  box-sizing: border-box;
+}
+
