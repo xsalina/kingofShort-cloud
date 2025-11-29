@@ -8,7 +8,7 @@ const {
 } = require("../../../utils/number.js");
 Page({
   data: {
-    disabled:false,
+    disabled: false,
     clickCursorImg: "/assets/images/clickCursor.png",
     stockOptions: [],
     selectedStockIndex: -1,
@@ -21,6 +21,16 @@ Page({
     suggestedSellPrice: null,
     suggestedProfit: null,
     userInfo: null,
+    unRegisterTypes: [
+      { name: "黄金", market: "A股", currency: "¥" },
+      { name: "特斯拉", market: "美股", currency: "$" },
+      { name: "小米", market: "A股", currency: "¥" },
+      { name: "阿里巴巴", market: "A股", currency: "¥" },
+      { name: "腾讯", market: "A股", currency: "¥" },
+      { name: "苹果", market: "美股", currency: "$" },
+      { name: "英伟达", market: "美股", currency: "$" },
+      { name: "纳指 100 ETF", market: "美股", currency: "$" },
+    ],
   },
 
   async onLoad() {
@@ -30,8 +40,11 @@ Page({
   },
 
   onStockChange(e) {
+    const { userInfo, stockOptions, unRegisterTypes } = this.data;
     const index = parseInt(e.detail.value);
-    const stockObj = this.data.stockOptions[index];
+    const stockObj = userInfo?.userId
+      ? stockOptions[index]
+      : unRegisterTypes[index];
     this.setData({
       selectedStockIndex: index,
       selectedStockObj: stockObj,
@@ -95,38 +108,44 @@ Page({
   },
 
   addTransaction() {
-    const { price, qty, selectedStockObj, buyFeeInput } = this.data;
+    const { price, qty, selectedStockObj, buyFeeInput, userInfo } = this.data;
+    if (!userInfo?.userId)
+      return wx.showToast({ title: "请先去个人中心登录/注册", icon: "none" });
     if (!selectedStockObj)
       return wx.showToast({ title: "请选择股票名称", icon: "none" });
     if (!price || !qty)
       return wx.showToast({ title: "请输入价格和数量", icon: "none" });
-    this.setData({ disabled:true });
+
+    this.setData({ disabled: true });
     console.log("添加交易：", { price, qty, selectedStockObj, buyFeeInput });
-    wxCloud.call({
-      name: "trade",
-      data: {
-        action: "buy",
-        userId: this.data.userInfo.userId,
-        stockId: selectedStockObj._id,
-        stockName: selectedStockObj.name,
-        market: selectedStockObj.market,
-        currency: selectedStockObj.currency,
-        price,
-        quantity: qty,
-        fee: buyFeeInput,
-      },
-    }).then((res) => {
-      this.setData({ disabled:false });
-      if (res.result.success) {
-        wx.showToast({ title: "添加交易成功", icon: "success" });
-        wx.navigateBack();
-      } else {
-        wx.showToast({ title: res.result.message, icon: "none" });
-      }
-    }).catch((err)=>{
-      this.setData({ disabled:false });
-      wx.showToast({ title: "添加交易失败", icon: "none" });
-    });
+    wxCloud
+      .call({
+        name: "trade",
+        data: {
+          action: "buy",
+          userId: this.data.userInfo.userId,
+          stockId: selectedStockObj._id,
+          stockName: selectedStockObj.name,
+          market: selectedStockObj.market,
+          currency: selectedStockObj.currency,
+          price,
+          quantity: qty,
+          fee: buyFeeInput,
+        },
+      })
+      .then((res) => {
+        this.setData({ disabled: false });
+        if (res.result.success) {
+          wx.showToast({ title: "添加交易成功", icon: "success" });
+          wx.navigateBack();
+        } else {
+          wx.showToast({ title: res.result.message, icon: "none" });
+        }
+      })
+      .catch((err) => {
+        this.setData({ disabled: false });
+        wx.showToast({ title: "添加交易失败", icon: "none" });
+      });
   },
 
   onAddType() {
@@ -149,7 +168,7 @@ Page({
         if (res.result.success) {
           this.setData({ stockOptions: res.result.data });
         } else {
-          wx.showToast({ title: res.result.message, icon: "none" });
+          // wx.showToast({ title: res.result.message, icon: "none" });
         }
       });
   },
