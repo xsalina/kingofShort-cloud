@@ -13,6 +13,7 @@
 
 /* 图片本身保持圆形防止拉伸 */
 .avatar-shadow .avatar {
-  width: 60%;
-  height: 60%;
+  width: 90%;
+  height: 90%;
+  border-radius: 50%;
 }

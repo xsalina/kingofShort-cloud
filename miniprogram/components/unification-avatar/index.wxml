@@ -1,3 +1,3 @@
 <view class="avatar-shadow">
-    <!-- <image class="avatar" src="../../assets/images/avatarq.jpg" /> -->
+    <image class="avatar" src="../../assets/images/logo.jpg" />
 </view>
