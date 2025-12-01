@@ -1,15 +1,19 @@
 .page {
-  background: #F5F5F5;
+  background: #f5f5f5;
   min-height: 100vh;
-  padding: 20rpx;
+  padding: 20rpx 0;
   box-sizing: border-box;
 }
 
 .tab-bar {
+  position: sticky;
+  top: 0;
+  z-index: 100;
   display: flex;
   justify-content: space-around;
   margin-bottom: 20rpx;
   border-bottom: 2rpx solid #ddd;
+  background: #f5f5f5;
 }
 
 .tab-item {
@@ -19,7 +23,18 @@
 }
 
 .tab-item.active {
-  color: #3D82FF;
-  border-bottom: 4rpx solid #3D82FF;
+  color: #3d82ff;
+  border-bottom: 4rpx solid #3d82ff;
   font-weight: bold;
+}
+.transactions-list{
+  padding: 0 20rpx;
+  box-sizing: border-box;
+}
+.have-nomore {
+  margin: 20rpx 0;
+  text-align: center;
+  font-size: 28rpx;
+  font-weight: bold;
+  color: #a0a0a0;
 }

@@ -29,6 +29,7 @@ Component({
     sellQty: 0,
     sellFee: 0,
     estimatedProfit: 0,
+    estimatedProfitText:0
   },
   observers: {
     // 监听 a、b、c 中任意一个发生变化就执行
@@ -53,19 +54,25 @@ Component({
     updateEstimatedProfit() {
       const { sellPrice, sellQty, sellFee,tx } = this.data;
       if (!sellPrice || !sellQty) {
-        this.setData({ estimatedProfit: 0 });
+        this.setData({ estimatedProfit: 0,estimatedProfitText:0 });
         return;
       }
       const { avgCost } = tx ;
       const pofit = safeSubtract(safeMultiply(safeSubtract(sellPrice,avgCost),sellQty),sellFee);
-      this.setData({ estimatedProfit: pofit});
+      const pofitValue = parseFloat(pofit)
+      const estimatedProfitText = Math.abs(pofitValue)
+      this.setData({ estimatedProfit:pofitValue,estimatedProfitText});
     },
     confirmSell() {
+      const {sellPrice,sellQty,sellFee,estimatedProfit,tx} = this.data;
+      if(sellQty > tx.remainingQuantity){
+        return wx.showToast({title:`数量不能大于${tx.remainingQuantity}`,icon:'none'})
+      }
       this.triggerEvent("sell", {
-        sellPrice: this.data.sellPrice,
-        sellQty: this.data.sellQty,
-        sellFee: this.data.sellFee,
-        estimatedProfit: this.data.estimatedProfit,
+        sellPrice,
+        sellQty,
+        sellFee,
+        estimatedProfit,
       });
       this.setData({ visible: false });
     },

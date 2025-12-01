@@ -1,5 +1,5 @@
 <!-- pages/index/index.wxml -->
-<view class="container">
+<view class="container {{isIpx ? 'ipxPbottom' : ''}}">
   <!-- 收益统计栏 -->
   <view class="stats-bar">
     <view class="stat-item" bindtap="onMonthProfitTap">
@@ -26,7 +26,7 @@
   </view>
   <view wx:if="{{transactions.length >= 4}}" class="load-more-btn" bindtap="goToAllRecords">
     <text>查看更多</text>
-    <text class="arrow">›</text>
+    <!-- <text class="arrow arrow-left">›</text> -->
   </view>
   <block wx:if="{{transactions.length === 0 && loaded}}">
     <!-- 空状态 -->

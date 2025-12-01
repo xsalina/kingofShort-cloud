@@ -1,0 +1,67 @@
+.coin-container {
+  position: fixed;
+  width: 750rpx;
+  height: 100vh;
+  left: 0;
+  top: 0;
+  pointer-events: none;
+  overflow: hidden;
+  z-index: 999;
+}
+
+.coin {
+  width: 80rpx;
+  height: 80rpx;
+  position: absolute;
+  animation-duration: 2s;
+  animation-fill-mode: forwards;
+  animation-timing-function: cubic-bezier(.25,.46,.45,.94);
+}
+
+/* 浮动收益文案（固定中间） */
+.coin-text {
+  position: fixed;
+  top: 40%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 50rpx;
+  font-weight: bold;
+  color: #FF4D4F; /* 红色收益 */
+  animation-name: floatUpCoin;
+  animation-duration: 1.5s;
+  animation-fill-mode: forwards;
+  animation-timing-function: ease-out;
+}
+
+@keyframes floatUpCoin {
+  0% { transform: translate(-50%, -50%) scale(1.2); opacity: 1; }
+  25% { transform: translate(-50%, -70%) scale(1.35); opacity: 1; }
+  50% { transform: translate(-50%, -90%) scale(1.3); opacity: 0.9; }
+  70% { transform: translate(-50%, -110%) scale(1.25); opacity: 0.8; }
+  100% { transform: translate(-50%, -130%) scale(1); opacity: 0; }
+}
+
+/* -------- 左/中/右金币掉落动画 -------- */
+@keyframes scatterLeft { 0% { transform: translateY(-140rpx) rotate(0deg) scale(0.8); opacity:1 }
+50% { transform: translateY(60vh) rotate(120deg) scale(1.1); opacity:1 }
+60% { transform: translateX(-30rpx) translateY(45vh) rotate(180deg) scale(1.15); opacity:1 }
+70% { transform: translateX(-80rpx) translateY(55vh) rotate(220deg) scale(1.05); opacity:1 }
+80% { transform: translateX(-150rpx) translateY(70vh) rotate(260deg) scale(1); opacity:1 }
+90% { transform: translateX(-200rpx) translateY(90vh) rotate(300deg) scale(0.95); opacity:1 }
+100% { transform: translateX(-220rpx) translateY(115vh) rotate(360deg) scale(1); opacity:0 } }
+
+@keyframes scatterMid { 0% { transform: translateY(-140rpx) rotate(0deg) scale(0.8); opacity:1 }
+50% { transform: translateY(60vh) rotate(120deg) scale(1.1); opacity:1 }
+60% { transform: translateX(0rpx) translateY(45vh) rotate(180deg) scale(1.15); opacity:1 }
+70% { transform: translateX(-20rpx) translateY(55vh) rotate(220deg) scale(1.05); opacity:1 }
+80% { transform: translateX(20rpx) translateY(70vh) rotate(260deg) scale(1); opacity:1 }
+90% { transform: translateX(0rpx) translateY(90vh) rotate(300deg) scale(0.95); opacity:1 }
+100% { transform: translateX(0rpx) translateY(115vh) rotate(360deg) scale(1); opacity:0 } }
+
+@keyframes scatterRight { 0% { transform: translateY(-140rpx) rotate(0deg) scale(0.8); opacity:1 }
+50% { transform: translateY(60vh) rotate(120deg) scale(1.1); opacity:1 }
+60% { transform: translateX(30rpx) translateY(45vh) rotate(180deg) scale(1.15); opacity:1 }
+70% { transform: translateX(80rpx) translateY(55vh) rotate(220deg) scale(1.05); opacity:1 }
+80% { transform: translateX(150rpx) translateY(70vh) rotate(260deg) scale(1); opacity:1 }
+90% { transform: translateX(200rpx) translateY(90vh) rotate(300deg) scale(0.95); opacity:1 }
+100% { transform: translateX(220rpx) translateY(115vh) rotate(360deg) scale(1); opacity:0 } }

@@ -1,5 +1,0 @@
-<view class="fall-container" wx:if="{{show}}">
-  <block wx:for="{{coins}}" wx:key="index">
-    <view class="coin" style="left: {{item.left}}%; animation-delay: {{item.delay}}s;"></view>
-  </block>
-</view>

@@ -41,9 +41,11 @@ Page({
           const trade = res.result.data;
           // 格式化买入时间和最近卖出时间
           trade.buyTimeText = formatSmartTime(trade.buyTime);
+           trade.totalProfitText = Math.abs(trade.totalProfit);
           // 格式化卖出记录里的 sellTime
           trade.sellRecords = (trade.sellRecords || []).map((sell) => ({
             ...sell,
+            profitText:Math.abs(sell.profit),
             sellTimeText: formatSmartTime(sell.sellTime),
           }));
 
@@ -56,13 +58,13 @@ Page({
             detailInfo: trade,
             statusText,
             statusClass,
-            buyTotalMoney,
+            buyTotalMoney:parseFloat(buyTotalMoney),
           });
         }
       });
   },
   handleSell(e) {
-    const { sellFee, sellPrice, sellQty } = e.detail;
+    const { sellFee, sellPrice, sellQty,estimatedProfit } = e.detail;
     const { detailInfo, itemId } = this.data;
     wxCloud
       .call({
@@ -78,6 +80,10 @@ Page({
       .then((res) => {
         if (res.result.success) {
           wx.showToast({ title: "卖出成功", icon: "success" });
+          setTimeout(() => {
+             const count =  Math.floor(Math.random() * (30 - 15 + 1)) + 15
+             this.selectComponent("#coin").start({count,moneyValue:parseFloat(estimatedProfit)}); // 触发 18 枚金币
+          }, 1500);
           this.setData({ showSellModal: false });
           this.queryTradesDetail(itemId);
         } else {

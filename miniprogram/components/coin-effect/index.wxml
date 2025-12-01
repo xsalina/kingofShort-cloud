@@ -1,0 +1,14 @@
+<view class="coin-container">
+  <!-- 金币掉落 -->
+  <block wx:for="{{coins}}" wx:key="id">
+    <image 
+      class="coin" 
+      src="/assets/images/coin1.png" 
+      style="left:{{item.x}}rpx; transform: rotate({{item.rotate}}deg) scale({{item.scale}}); animation-name: {{item.anim}}; animation-delay: {{item.delay}};">
+    </image>
+  </block>
+
+ <!-- 中间浮动收益文案 -->
+  <text wx:if="{{showText}}" class="coin-text" style="color:{{moneyValue >= 0 ?'#FF4D4F':'#32cd32'}}">{{textValue}}</text>
+</view>
+

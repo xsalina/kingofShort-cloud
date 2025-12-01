@@ -37,7 +37,7 @@
                 <view class="label">手续费{{tx.currency}}</view>
                 <input class="input-full" type="digit" placeholder="输入手续费（选填）" bindinput="onSellFeeInput" />
             </view>
-            <view class="estimated-profit">预计收益: {{tx.currency}}{{estimatedProfit}}</view>
+            <view class="estimated-profit">预计收益: {{estimatedProfit >= 0 ? '+' :'-'}}{{tx.currency}}{{estimatedProfitText}}</view>
             <view class="tips-text">计算方式：(卖出价格 - 单股均价) * 卖出数量 - 卖出手续费</view>
         </view>
         <!-- 底部按钮 -->

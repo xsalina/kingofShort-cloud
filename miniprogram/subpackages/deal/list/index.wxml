@@ -8,11 +8,14 @@
     </block>
   </view>
   <!-- 列表 -->
-  <block wx:for="{{transactions}}" wx:key="id">
-    <record-card cardItem="{{item}}" />
-  </block>
+  <view class="transactions-list">
+    <block wx:for="{{transactions}}" wx:key="id">
+      <record-card cardItem="{{item}}" />
+    </block>
+  </view>
   <block wx:if="{{transactions.length === 0 && loaded}}">
     <!-- 空状态 -->
     <empty-tips showClickPoint="{{true}}" />
   </block>
+  <view class="have-nomore" wx:if="{{transactions.length >= 4 && loaded && !hasMore}}">没有更多了</view>
 </view>

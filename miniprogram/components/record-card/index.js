@@ -31,6 +31,7 @@ Component({
     buyTimeText: "",
     sellTimeText: "",
     remianNumber: 0,
+    totalProfitText:null,
   },
   observers: {
     cardItem(cardItem) {
@@ -48,6 +49,7 @@ Component({
         remianNumber,
         buyTimeText: formatSmartTime(cardItem.buyTime),
         sellTimeText: formatSmartTime(cardItem.lastSellTime),
+        totalProfitText:Math.abs(cardItem.totalProfit)
       });
     },
   },

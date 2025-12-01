@@ -6,11 +6,16 @@ Page({
     totalProfit: null,
     transactions: [],
     loaded: false,
+    isIpx:false,
   },
-  onLoad() {
+  async onLoad() {
+    const userInfo = await app.refreshUserInfo();
+    console.log("index onLoad 用户信息:", app.globalData.userInfo);
     this.setData({
-      userInfo: app.globalData.userInfo || null,
+      userInfo,
+      isIpx:app.globalData.isIPX
     });
+    this.queryIndexData();
   },
   async onShow() {
     if (typeof this.getTabBar === "function" && this.getTabBar()) {
@@ -19,11 +24,15 @@ Page({
         selected: 0,
       });
     }
+    console.log("index onShow 用户信息:", app.globalData.userInfo);
     if (app.globalData.userInfo) {
       this.setData({
         userInfo: app.globalData.userInfo,
       });
     }
+    this.queryIndexData();
+  },
+  queryIndexData() {
     if (this.data.userInfo?.userId) {
       this.queryTradesList();
       this.queryTradesSummer();

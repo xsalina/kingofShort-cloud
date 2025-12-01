@@ -15,7 +15,7 @@ Page({
     transactions: [],
     userInfo: null,
     loaded: false,
-
+    hasMore:true,
   },
   async onLoad() {
     this.setData({ userInfo:app.globalData.userInfo});
@@ -25,14 +25,17 @@ Page({
     this.setData({
       currentTabIndex: e.currentTarget.dataset.index,
       page: 1,
+      hasMore:true,
+      transactions:[]
     }, () => {
       this.queryTradesList();
     });
   },
   queryTradesList() {
+    if(!this.data.hasMore)return;
     wx.showLoading({ title: "加载数据中..." });
     this.setData({ loaded: false });
-    const { userInfo, currentTabIndex, tabs, page, pageSize } = this.data;
+    const { userInfo, currentTabIndex, tabs, page, pageSize,transactions } = this.data;
     wxCloud
       .call({
         name: "trade",
@@ -46,7 +49,10 @@ Page({
       })
       .then((res) => {
         wx.hideLoading();
-        this.setData({ transactions: res?.result?.data?.tradesList, loaded: true });
+        const newList = res?.result?.data?.tradesList || []
+        const list = transactions.concat(newList)
+        const hasMore =  newList.length === this.data.pageSize;
+        this.setData({ transactions: list, loaded: true ,hasMore });
       });
   },
   onReachBottom() {

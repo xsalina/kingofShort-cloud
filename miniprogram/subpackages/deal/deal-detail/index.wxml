@@ -1,4 +1,5 @@
 <view class="container">
+  <view class="topView-sticky">
   <!-- 股票名 + 状态标签 -->
   <view class="detail-header">
     <text class="stock-name">{{detailInfo.stockName}}</text>
@@ -18,6 +19,7 @@
       <text>买入单股均价：</text>
       <text class="tip-number">{{detailInfo.currency}}{{detailInfo.avgCost}}</text>
     </view>
+  </view>
   </view>
   <!-- 挂单信息（仅在 status === 'pending' 时显示） -->
   <!-- <view wx:if="{{transaction.status === 'pending'}}" class="detail-section pending-section">
@@ -60,13 +62,19 @@
     </view>
     <view class="detail-row total-row">
       <text>总额</text>
-      <text>{{detailInfo.currency}}{{buyTotalMoney}}</text>
+      <text >{{detailInfo.currency}}{{buyTotalMoney}}</text>
     </view>
     
   </view>
   <!-- 卖出信息 -->
   <view class="detail-section" wx:if="{{detailInfo.sellRecords && detailInfo.sellRecords.length > 0}}">
+    
     <view class="section-title">卖出信息</view>
+     <view class="detail-row total-profit-row font30-bold">
+      <text class="detail-label">总收益</text>
+      <text class="detail-profit "style="color:{{detailInfo.totalProfit>=0?'#ff4500':'#32cd32'}}">{{detailInfo.totalProfit >= 0 ? '+' : '-'}}{{detailInfo.currency}}{{detailInfo.totalProfitText}}</text>
+    </view>
+     <view class="divider"></view>
     <block wx:for="{{detailInfo.sellRecords}}" wx:key="index">
       <view class="detail-row">
         <text>价格</text>
@@ -88,11 +96,11 @@
         <text>总额</text>
         <text>{{transaction.currency}}{{item.sellTotal.toFixed(2)}}</text>
       </view> -->
-      <view class="detail-row">
-        <text>收益</text>
-        <text class="tx-profit" style="color:{{item.profit>=0?'#ff4500':'#32cd32'}}">
-          {{detailInfo.currency}}{{item.profit}}
-        </text>
+      <view class="detail-row font30-bold">
+        <view>收益</view>
+        <view class="tx-profit" style="color:{{item.profit>=0?'#ff4500':'#32cd32'}}">
+          {{item.profit >=0 ? '+' : '-'}}{{detailInfo.currency}}{{item.profitText}}
+        </view>
       </view>
       <!-- <view class="detail-row">
         <text>时间</text>
@@ -101,10 +109,7 @@
       <view class="divider"></view>
     </block>
     <!-- 卖出总收益（仅卖出状态显示） -->
-    <view class="detail-row total-profit-row">
-      <text class="detail-label">总收益</text>
-      <text class="detail-profit">{{detailInfo.currency}}{{detailInfo.totalProfit}}</text>
-    </view>
+   
   </view>
   <!-- 操作按钮 -->
   <view class="detail-actions">
@@ -116,3 +121,4 @@
   </view>
 </view>
 <sell-modal visible="{{showSellModal}}" tx="{{detailInfo}}" bind:sell="handleSell" bind:cancel="handleCancel" />
+<coin-effect id="coin"></coin-effect>

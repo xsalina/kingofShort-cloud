@@ -43,6 +43,6 @@
 
   <!-- 收益 -->
   <view class="tx-record-footer">
-    <text>收益: <text class="tx-profit">{{cardItem.currency}}{{cardItem.totalProfit}}</text></text>
+    <text>收益: <text class="tx-profit" style="color:{{cardItem.totalProfit>=0?'#ff4500':'#32cd32'}}">{{cardItem.totalProfit >= 0 ? '+' : '-'}}{{cardItem.currency}}{{totalProfitText}}</text></text>
   </view>
 </view>
