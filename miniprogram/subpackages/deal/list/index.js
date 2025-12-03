@@ -21,6 +21,12 @@ Page({
     this.setData({ userInfo:app.globalData.userInfo});
     this.queryTradesList();
   },
+  // 分享功能
+  onShareAppMessage() {
+    return {
+      title: "短线必备工具，操作更轻松！",
+    };
+  },
   switchTab(e) {
     this.setData({
       currentTabIndex: e.currentTarget.dataset.index,

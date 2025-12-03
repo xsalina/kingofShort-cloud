@@ -6,14 +6,14 @@ Page({
     totalProfit: null,
     transactions: [],
     loaded: false,
-    isIpx:false,
+    isIpx: false,
   },
   async onLoad() {
     const userInfo = await app.refreshUserInfo();
     console.log("index onLoad 用户信息:", app.globalData.userInfo);
     this.setData({
       userInfo,
-      isIpx:app.globalData.isIPX
+      isIpx: app.globalData.isIPX,
     });
     this.queryIndexData();
   },
@@ -31,6 +31,12 @@ Page({
       });
     }
     this.queryIndexData();
+  },
+  // 分享功能
+  onShareAppMessage() {
+    return {
+      title: "短线必备工具，操作更轻松！",
+    };
   },
   queryIndexData() {
     if (this.data.userInfo?.userId) {

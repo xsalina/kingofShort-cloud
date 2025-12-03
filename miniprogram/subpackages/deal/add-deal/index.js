@@ -39,6 +39,12 @@ Page({
       this.queryTypeList();
     }
   },
+  // 分享功能
+  onShareAppMessage() {
+    return {
+      title: "短线必备工具，操作更轻松！",
+    };
+  },
 
   onStockChange(e) {
     const { userInfo, stockOptions, unRegisterTypes } = this.data;
