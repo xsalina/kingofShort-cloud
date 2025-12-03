@@ -84,4 +84,14 @@
   font-size: 28rpx;
   box-sizing: border-box;
 }
+.service{
+  width:36rpx;
+  height:36rpx;
+  margin:0;
+}
+.service-button{
+  width:100% !important;
+  padding:30rpx 36rpx;
+  margin:0 !important;
+}
 

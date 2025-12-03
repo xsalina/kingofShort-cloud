@@ -29,5 +29,12 @@
             </view>
             <text class="mine-arrow">›</text>
         </view>
+        <button class="mine-item service-button" open-type="contact">
+            <view class="mine-item-left">
+                <image class="service" src="../../assets/images/service.png" />   
+                <text class="mine-item-text">来信交流</text>
+            </view>
+            <text class="mine-arrow">›</text>
+        </button>
     </view>
 </view>
