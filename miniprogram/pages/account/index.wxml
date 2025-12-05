@@ -29,6 +29,13 @@
             </view>
             <text class="mine-arrow">›</text>
         </view>
+        <view class="mine-item" bindtap="goSuggest">
+            <view class="mine-item-left">
+                <image class="service" src="../../assets/images/helpcenter.png" />  
+                <text class="mine-item-text">短线交易助手</text>
+            </view>
+            <text class="mine-arrow">›</text>
+        </view>
         <button class="mine-item service-button" open-type="contact">
             <view class="mine-item-left">
                 <image class="service" src="../../assets/images/service.png" />   

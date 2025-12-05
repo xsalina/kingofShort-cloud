@@ -63,4 +63,9 @@ Page({
       url: "/subpackages/deal/add-type/index",
     });
   },
+  goSuggest() {
+    wx.navigateTo({
+      url: "/subpackages/deal/suggest/index",
+    });
+  },
 });

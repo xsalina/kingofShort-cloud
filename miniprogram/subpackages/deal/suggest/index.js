@@ -10,11 +10,13 @@ Page({
     lastBuyPrice: "423.28",
     cash: "10286",
     hold: "5",
-    todayPrice: "449.25",
+    todayPrice: "454.53",
     mode: "steady",
     buyTable: [],
     sellTable: [],
     tips: "",
+    swiperIndex:0,
+    tabTranslateX: 0 // 背景块位移：0% 或 100%
   },
 
   onLoad() {
@@ -23,7 +25,8 @@ Page({
 
   switchMode(e) {
     const mode = e.currentTarget.dataset.mode;
-    this.setData({ mode }, () => this.calc());
+    const tabTranslateX = mode === 'steady' ? 0 : 100;
+    this.setData({ mode ,tabTranslateX}, () => this.calc());
   },
 
   runCalc(){
@@ -40,7 +43,6 @@ Page({
     const { lastBuyPrice, cash, hold, todayPrice, mode } = this.data;
 
     const cfg = CONFIG[mode];
-    console.log(5468856,'计算')
     const { table: buyTable, highest: highestBuy } = buildBuyTable(
       cfg,
       lastBuyPrice,
@@ -55,12 +57,13 @@ Page({
       todayPrice
     );
 
-    const tips = buildTips(todayPrice, lastBuyPrice, highestBuy, highestSell);
+    const {tipsTextArray,diff} = buildTips(todayPrice, lastBuyPrice, highestBuy, highestSell);
 
     this.setData({
       buyTable,
       sellTable,
-      tips,
+      tips:tipsTextArray,
+      swiperIndex: diff > 0 ? 1 : 0
     });
   },
 });
