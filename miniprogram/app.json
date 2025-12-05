@@ -11,7 +11,8 @@
         "add-deal/index",
         "deal-detail/index",
         "add-type/index",
-        "list/index"
+        "list/index",
+        "suggest/index"
       ]
     }
   ],

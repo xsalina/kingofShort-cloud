@@ -1,0 +1,82 @@
+<view class="container">
+
+  <view class="section">
+    <view class="field">
+      <text>最后买入价</text>
+      <input data-field="lastBuyPrice" value="{{lastBuyPrice}}" bindinput="inputChange" />
+    </view>
+
+    <view class="field">
+      <text>剩余资金</text>
+      <input data-field="cash" value="{{cash}}" bindinput="inputChange" />
+    </view>
+
+    <view class="field">
+      <text>持有股数</text>
+      <input data-field="hold" value="{{hold}}" bindinput="inputChange" />
+    </view>
+
+    <view class="field">
+      <text>今日收盘价</text>
+      <input data-field="todayPrice" value="{{todayPrice}}" bindinput="inputChange" />
+    </view>
+
+    <button bindtap="runCalc" class="btn">计算</button>
+  </view>
+
+  <view class="tabs">
+    <view class="tab {{mode=='steady'?'active':''}}" data-mode="steady" bindtap="switchMode">稳健型</view>
+    <view class="tab {{mode=='aggressive'?'active':''}}" data-mode="aggressive" bindtap="switchMode">激进型</view>
+  </view>
+
+  <view class="tips">{{tips}}</view>
+
+  <view class="title">买入层级</view>
+  <view class="table">
+    <view class="thead">
+      <text>层级</text>
+      <text>占比</text>
+      <text>金额</text>
+      <text>回调</text>
+      <text>价格区间</text>
+      <text>触发</text>
+    </view>
+
+    <block wx:for="{{buyTable}}" wx:key="level">
+      <view class="trow">
+        <text>{{item.level}}</text>
+        <text>{{item.percent}}</text>
+        <text>{{item.buyAmount}}</text>
+        <text>{{item.dropRange}}</text>
+        <text>{{item.triggerRange}}</text>
+        <text>{{item.triggered?'✅':'❌'}}</text>
+      </view>
+    </block>
+  </view>
+
+  <view class="title">卖出层级</view>
+  <view class="table">
+    <view class="thead">
+      <text>层级</text>
+      <text>比例</text>
+      <text>股数</text>
+      <text>金额</text>
+      <text>涨幅</text>
+      <text>价格区间</text>
+      <text>触发</text>
+    </view>
+
+    <block wx:for="{{sellTable}}" wx:key="level">
+      <view class="trow">
+        <text>{{item.level}}</text>
+        <text>{{item.percent}}</text>
+        <text>{{item.sellShares}}</text>
+        <text>{{item.sellAmount}}</text>
+        <text>{{item.riseRange}}</text>
+        <text>{{item.triggerRange}}</text>
+        <text>{{item.triggered?'✅':'❌'}}</text>
+      </view>
+    </block>
+  </view>
+
+</view>
