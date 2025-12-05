@@ -123,6 +123,8 @@ Page({
           wx.showToast({ title: res.result.message });
           this.queryTypeList();
           this.clearFormValue();
+        }else{
+          wx.showToast({ title: res.result.message, icon: "none" });
         }
       }).catch(() => {
         this.setData({ disabled: false });
