@@ -9,6 +9,7 @@ Page({
       userInfo: app.globalData.userInfo || null,
       loaded: true
     });
+    this.refreshData();
   },
   async onShow() {
     if (typeof this.getTabBar === "function" && this.getTabBar()) {
@@ -21,6 +22,13 @@ Page({
       this.refreshData();
       app.globalData.forceRefresh = false;
     } 
+  },
+  // 分享功能
+  onShareAppMessage() {
+    return {
+      title: "短线必备工具，操作更轻松！",
+      imageUrl:app.globalData.shareImageUrl
+    };
   },
   // 刷新用户信息
   async refreshData() {

@@ -1,16 +1,29 @@
-const user = require('/utils/user.js')
+const user = require("/utils/user.js");
 const globalData = require("/utils/globalData.js");
 App({
   data: {
     globalData: {
       userInfo: null, // 存储当前登录用户信息
       loginPromise: null,
+      shareImageUrl: null,
     },
   },
-  onLaunch: async function() {
+  onLaunch: async function () {
     this.globalData = { ...globalData };
-    await this.initCloundFun()
-    this.globalData.loginPromise = this.refreshUserInfo()
+    await this.initCloundFun();
+    this.globalData.loginPromise = this.refreshUserInfo();
+    this.downShareImage();
+  },
+  downShareImage() {
+    const filedImageUrl =
+      "cloud://cloud1-7gdq3emj774ac1dd.636c-cloud1-7gdq3emj774ac1dd-1318657306/share2.png";
+    wx.cloud.downloadFile({
+      fileID: filedImageUrl,
+      success: (res) => {
+        const tempFilePath = res.tempFilePath;
+        this.globalData = { ...globalData, shareImageUrl: tempFilePath };
+      },
+    });
   },
   initCloundFun() {
     if (wx.cloud) {
@@ -37,12 +50,12 @@ App({
     }
   },
   async refreshUserInfo() {
-    const res = await user.silentLogin()
+    const res = await user.silentLogin();
     if (res.success) {
-      this.globalData.userInfo = res.user
-      return res.user
+      this.globalData.userInfo = res.user;
+      return res.user;
     } else {
-      return null
+      return null;
     }
-  }
+  },
 });

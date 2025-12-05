@@ -25,6 +25,7 @@ Page({
   onShareAppMessage() {
     return {
       title: "短线必备工具，操作更轻松！",
+      imageUrl:app.globalData.shareImageUrl
     };
   },
   switchTab(e) {
