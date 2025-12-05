@@ -3,19 +3,19 @@
   <view class="section">
     <view class="field">
       <text>最后买入价</text>
-      <input data-field="lastBuyPrice" value="{{lastBuyPrice}}" bindinput="inputChange" />
+      <input data-field="lastBuyPrice" type="digit" value="{{lastBuyPrice}}" bindinput="inputChange" />
     </view>
     <view class="field">
       <text>剩余资金</text>
-      <input data-field="cash" value="{{cash}}" bindinput="inputChange" />
+      <input data-field="cash" type="digit" value="{{cash}}" bindinput="inputChange" />
     </view>
     <view class="field">
       <text>持有股数</text>
-      <input data-field="hold" value="{{hold}}" bindinput="inputChange" />
+      <input data-field="hold" type="digit" value="{{hold}}" bindinput="inputChange" />
     </view>
     <view class="field">
       <text>今日收盘价</text>
-      <input data-field="todayPrice" value="{{todayPrice}}" bindinput="inputChange" />
+      <input data-field="todayPrice" type="digit" value="{{todayPrice}}" bindinput="inputChange" />
     </view>
     <!-- <button bindtap="runCalc" class="add-btn">计算</button> -->
   </view>
@@ -50,7 +50,7 @@
           <text>金额</text>
         </view>
         <block wx:for="{{buyTable}}" wx:key="level">
-          <view class="trow">
+          <view class="trow {{item.triggered ? 'reduce-money':''}}">
             <text>{{item.triggered?'✅':'❌'}}</text>
             <text>{{item.level}}</text>
             <text>{{item.dropRange}}</text>
@@ -76,7 +76,7 @@
           <text>金额</text>
         </view>
         <block wx:for="{{sellTable}}" wx:key="level">
-          <view class="trow">
+          <view class="trow {{item.triggered ? 'add-money':''}}">
             <text>{{item.triggered?'✅':'❌'}}</text>
             <text>{{item.level}}</text>
             <text>{{item.riseRange}}</text>
