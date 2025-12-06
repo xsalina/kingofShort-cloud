@@ -59,7 +59,7 @@ Page({
         const newList = res?.result?.data?.tradesList || []
         const list = transactions.concat(newList)
         const hasMore =  newList.length === this.data.pageSize;
-        this.setData({ transactions: [], loaded: true ,hasMore });
+        this.setData({ transactions: list, loaded: true ,hasMore });
       });
   },
   onReachBottom() {

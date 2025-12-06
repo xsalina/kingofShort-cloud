@@ -39,11 +39,10 @@ Page({
     this.setData({
       userInfo,
     });
+    this.queryTypeList();
   },
   onShow() {
-    if (this.data.userInfo?.userId) {
-      this.queryTypeList();
-    }
+     this.queryTypeList();
   },
   // 分享功能
   onShareAppMessage() {
@@ -67,7 +66,6 @@ Page({
   },
 
   onInput(e) {
-    console.log(45345, e);
     const key = e.currentTarget.dataset.field;
     this.setData({ [key]: e.detail.value }, () => this.updateTargetSellPrice());
   },
@@ -146,6 +144,7 @@ Page({
     });
   },
   queryTypeList() {
+    if(!this.data.userInfo?.userId)return;
     wx.showLoading({ title: "加载中..." });
     wxCloud
       .call({
