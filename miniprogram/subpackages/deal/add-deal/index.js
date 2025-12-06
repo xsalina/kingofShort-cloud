@@ -117,6 +117,7 @@ Page({
           price,
           quantity: qty,
           fee: buyfee,
+          code:selectedStockObj.code
         },
       })
       .then((res) => {

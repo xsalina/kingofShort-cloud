@@ -26,6 +26,7 @@ exports.main = async (event) => {
         price,
         quantity,
         fee = 0,
+        code
       } = event;
       if (
         !stockId ||
@@ -58,6 +59,7 @@ exports.main = async (event) => {
         totalProfit: 0, // 累计收益
         lastSellTime: null, // 最近卖出时间
         sellRecords: [], // 卖出记录列表
+        code,
       };
 
       const res = await db
