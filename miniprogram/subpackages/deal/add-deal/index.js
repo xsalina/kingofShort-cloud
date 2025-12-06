@@ -33,9 +33,14 @@ Page({
       { name: "纳指 100 ETF", market: "美股", currency: "$", code: "USD" },
     ],
   },
-
   async onLoad() {
-    this.setData({ userInfo: app.globalData.userInfo });
+    const userInfo = await app.refreshUserInfo();
+    console.log("deal onLoad 用户信息:", app.globalData.userInfo);
+    this.setData({
+      userInfo,
+    });
+  },
+  onShow() {
     if (this.data.userInfo?.userId) {
       this.queryTypeList();
     }
