@@ -3,7 +3,7 @@
     <block wx:for="{{coinList}}" wx:key="id">
       <view class="coin type-{{item.type}}" 
         style="left: {{item.startLeft}}%; width: {{item.size}}rpx; height: {{item.size}}rpx; animation-duration: {{item.duration}}s; animation-delay: {{item.delay}}s;">
-        <image class="coin-img" src="https://img.icons8.com/emoji/96/coin-emoji.png" mode="aspectFit"></image>
+        <image class="coin-img" src="/assets/images/coin.png" mode="aspectFit"></image>
       </view>
     </block>
   </view>
