@@ -1,47 +1,89 @@
-<view class="mine-container">
-    <block wx:if="{{userInfo && loaded}}">
-        <view class="mine-header">
-            <text class="mine-title">我的</text>
+<view class="container">
+  <block wx:if="{{userInfo && loaded}}">
+  <view class="user-card" >
+      <view class="user-content-login">
+        <view class="user-info-row row-between">
+          <view class="info-left row-start">
+            <view class="user-avatar-text" >
+             <unification-avatar/>
+            </view>
+            <view class="user-text">
+              <view class="row-start">
+                <text class="user-name">{{userInfo.name || userInfo.nickName}}</text>
+                <view class="vip-tag">交易</view>
+              </view>
+              <text class="user-id">{{userInfo.phone || '未绑定手机'}}</text>
+            </view>
+          </view>
+          <view class="setting-icon">⚙️</view>
         </view>
+
+        <view class="user-stats row-between">
+          <view class="stat-item">
+            <text class="num">{{stats.totalCount || 0}}</text>
+            <text class="label">总交易(笔)</text>
+          </view>
+          <view class="stat-item">
+            <text class="num" style="color: #ff4500;">{{stats.sellPercent || 0}}%</text>
+            <text class="label">实战胜率</text>
+          </view>
+          <view class="stat-item">
+            <text class="num">{{stats.firstTradeDays || 0}}</text>
+            <text class="label">记录天数</text>
+          </view>
+        </view>
+      </view>
+   
+
+ 
+  </view>
+   </block>
+    <block wx:else>
+      <view class="user-content-unlogin" bindtap="goRegister">
+        <unification-avatar/>
+        <view class="unlogin-text">
+          <text class="title">点击登录/注册</text>
+          <text class="desc">同步数据，构建你的交易体系</text>
+        </view>
+        <view class="login-btn-fake">去登录/注册</view>
+      </view>
     </block>
-    <!-- 页面标题 -->
-    <view class="card user-card">
-        <unification-avatar />
-        <view class="title">{{userInfo.name || "未登录用户"}}</view>
-        <view class="desc">{{userInfo.phone || "注册后可同步你的交易数据"}}</view>
-        <button wx:if="{{!userInfo}}" class="login-btn" bindtap="goRegister">注册 / 登录</button>
+
+  <view class="menu-list">
+    
+    <view class="menu-item row-between" bindtap="goSuggest">
+      <view class="row-start">
+        <text class="menu-icon">⚡️</text> 
+        <text class="menu-text">短线交易助手</text>
+      </view>
+      <text class="arrow">➜</text>
     </view>
-    <!-- 菜单卡片 -->
-    <view class="mine-card">
-        <!-- 我的交易 -->
-        <view class="mine-item" bindtap="goMyTrades">
-            <view class="mine-item-left">
-                <text class="mine-icon">📊</text>
-                <text class="mine-item-text">我的交易</text>
-            </view>
-            <text class="mine-arrow">›</text>
-        </view>
-        <!-- 增加股票类型 -->
-        <view class="mine-item" bindtap="goAddStockType">
-            <view class="mine-item-left">
-                <text class="mine-icon">➕</text>
-                <text class="mine-item-text">增加股票类型</text>
-            </view>
-            <text class="mine-arrow">›</text>
-        </view>
-        <view class="mine-item" bindtap="goSuggest">
-            <view class="mine-item-left">
-                <image class="service" src="../../assets/images/helpcenter.png" />  
-                <text class="mine-item-text">短线交易助手</text>
-            </view>
-            <text class="mine-arrow">›</text>
-        </view>
-        <button class="mine-item service-button" open-type="contact">
-            <view class="mine-item-left">
-                <image class="service" src="../../assets/images/service.png" />   
-                <text class="mine-item-text">来信交流</text>
-            </view>
-            <text class="mine-arrow">›</text>
-        </button>
+
+    <view class="menu-item row-between" bindtap="goMyTrades">
+      <view class="row-start">
+        <text class="menu-icon">📄</text>
+        <text class="menu-text">我的交易记录</text>
+      </view>
+      <text class="arrow">➜</text>
     </view>
+    
+    <view class="menu-item row-between" bindtap="goAddStockType">
+      <view class="row-start">
+        <text class="menu-icon">📈</text>
+        <text class="menu-text">股票/币种管理</text>
+      </view>
+      <text class="arrow">➜</text>
+    </view>
+
+
+    <button class="menu-item contact-btn row-between" open-type="contact">
+      <view class="row-start">
+        <text class="menu-icon">💬</text>
+        <text class="menu-text">联系客服 / 建议</text>
+      </view>
+      <text class="arrow">➜</text>
+    </button>
+  </view>
+
+
 </view>

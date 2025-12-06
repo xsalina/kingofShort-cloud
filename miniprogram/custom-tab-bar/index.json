@@ -1,6 +1,5 @@
 {
   "component": true,
   "usingComponents": {
-    "add-transaction-btn": "/components/add-transaction-btn/index"
   }
 }

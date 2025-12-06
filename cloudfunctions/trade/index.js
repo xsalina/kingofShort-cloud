@@ -125,7 +125,7 @@ exports.main = async (event) => {
 
       // 更新数据库
       await db
-        .collection("tradesList")
+        .collection(tradesListCollections)
         .doc(_id)
         .update({
           data: {
@@ -156,6 +156,7 @@ exports.main = async (event) => {
       if (stockId) query.stockId = stockId;
       if (status) query.status = status;
 
+      // 总数统计
       const totalRes = await db
         .collection(tradesListCollections)
         .where(query)
@@ -164,30 +165,58 @@ exports.main = async (event) => {
 
       const skip = (page - 1) * pageSize;
 
+      // 只按 buyTime 粗排一下
       const res = await db
-        .collection("tradesList")
+        .collection(tradesListCollections)
         .where(query)
-        .orderBy("buyTime", "desc") // 买入时间越晚越前
-        .orderBy("lastSellTime", "desc") // 卖出时间越晚越前
+        .orderBy("buyTime", "desc")
         .skip(skip)
         .limit(pageSize)
         .get();
 
-      // 对每条交易的 sellRecords 按 sellTime 倒序
-      res.data.forEach((trade) => {
+      const list = res.data || [];
+
+      // 兼容 Node.js 的写法：不要 ?. 字段
+      list.forEach((trade) => {
+        const ls = trade.lastSellTime;
+        const bt = trade.buyTime;
+
+        trade.sortSell = ls
+          ? ls.toDate
+            ? ls.toDate().getTime()
+            : new Date(ls).getTime()
+          : 0;
+
+        trade.sortBuy = bt
+          ? bt.toDate
+            ? bt.toDate().getTime()
+            : new Date(bt).getTime()
+          : 0;
+      });
+
+      // 排序：先 lastSellTime，后 buyTime
+      list.sort((a, b) => {
+        if (b.sortSell !== a.sortSell) return b.sortSell - a.sortSell;
+        return b.sortBuy - a.sortBuy;
+      });
+
+      // 排 sellRecords
+      list.forEach((trade) => {
         if (trade.sellRecords && trade.sellRecords.length > 0) {
           trade.sellRecords.sort((a, b) => {
             let tA = a.sellTime;
             let tB = b.sellTime;
-            if (tA.toDate) tA = tA.toDate();
-            if (tB.toDate) tB = tB.toDate();
-            return tB - tA; // 越晚的越前面
+
+            tA = tA.toDate ? tA.toDate() : new Date(tA);
+            tB = tB.toDate ? tB.toDate() : new Date(tB);
+
+            return tB - tA;
           });
         }
       });
 
       return successResponse({
-        data: { tradesList: res.data, total, page, pageSize },
+        data: { tradesList: list, total, page, pageSize },
       });
     } else if (action === "detail") {
       const { _id } = event;
@@ -226,7 +255,7 @@ exports.main = async (event) => {
       ); // 本月第一天
 
       const tradesRes = await db
-        .collection("tradesList")
+        .collection(tradesListCollections)
         .where({ userId })
         .get();
       const trades = tradesRes.data;

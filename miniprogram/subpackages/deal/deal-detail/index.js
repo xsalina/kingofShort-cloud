@@ -12,6 +12,7 @@ Page({
     detailInfo: null,
     buyTotalMoney: 0,
     showSellModal: false,
+    showCoinEffect: false,
   },
   formatSmartTime,
   onLoad(options) {
@@ -25,6 +26,7 @@ Page({
     this.setData({ showSellModal: true });
   },
   handleCancel() {
+    this.setData({ showSellModal: false });
     console.log("取消卖出");
   },
   queryTradesDetail(itemId) {
@@ -41,30 +43,30 @@ Page({
           const trade = res.result.data;
           // 格式化买入时间和最近卖出时间
           trade.buyTimeText = formatSmartTime(trade.buyTime);
-           trade.totalProfitText = Math.abs(trade.totalProfit);
+          trade.totalProfitText = Math.abs(trade.totalProfit);
           // 格式化卖出记录里的 sellTime
           trade.sellRecords = (trade.sellRecords || []).map((sell) => ({
             ...sell,
-            profitText:Math.abs(sell.profit),
+            profitText: Math.abs(sell.profit),
             sellTimeText: formatSmartTime(sell.sellTime),
           }));
 
-          const { statusText, statusClass } = getStatusInfo(trade.status);
+          const { detailText, statusClass } = getStatusInfo(trade.status);
           const buyTotalMoney = safeAdd(
             safeMultiply(trade.price, trade.quantity),
             trade.fee
           );
           this.setData({
             detailInfo: trade,
-            statusText,
+            detailText,
             statusClass,
-            buyTotalMoney:parseFloat(buyTotalMoney),
+            buyTotalMoney: parseFloat(buyTotalMoney),
           });
         }
       });
   },
   handleSell(e) {
-    const { sellFee, sellPrice, sellQty,estimatedProfit } = e.detail;
+    const { sellFee, sellPrice, sellQty, estimatedProfit } = e.detail;
     const { detailInfo, itemId } = this.data;
     wxCloud
       .call({
@@ -74,21 +76,33 @@ Page({
           _id: detailInfo._id,
           sellQuantity: sellQty,
           sellPrice,
-          sellFee,
+          sellFee:sellFee || 0,
         },
       })
       .then((res) => {
         if (res.result.success) {
-          wx.showToast({ title: "卖出成功", icon: "success" });
-          setTimeout(() => {
-             const count =  Math.floor(Math.random() * (30 - 15 + 1)) + 15
-             this.selectComponent("#coin").start({count,moneyValue:parseFloat(estimatedProfit)}); // 触发 18 枚金币
-          }, 1500);
+          // 2. 只有正收益才显示金币特效 (亏钱就不庆祝了)
+          if (estimatedProfit > 0) {
+            this.setData({
+              profitAmount: `+${detailInfo.currency}${estimatedProfit}`,
+              showCoinEffect: true,
+            });
+            // 震动一下，增加手感
+            wx.vibrateShort({ type: "medium" });
+          } else {
+            wx.showToast({ title: "卖出成功", icon: "success" });
+          }
           this.setData({ showSellModal: false });
           this.queryTradesDetail(itemId);
         } else {
           wx.showToast({ title: "卖出失败", icon: "error" });
         }
       });
+  },
+  // 特效播放完毕的回调
+  onEffectFinish() {
+    this.setData({ showCoinEffect: false });
+    // 可以在这里刷新页面数据，或者弹个Toast
+    wx.showToast({ title: "收益已落袋", icon: "none" });
   },
 });

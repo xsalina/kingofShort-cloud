@@ -1,44 +1,55 @@
-
-/* ============================
-  空状态
-============================ */
-.empty-state {
-  margin-top: 100rpx;
+.empty-container {
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
+  padding: 60rpx 0;
+  width: 100%;
 }
 
+/* 插画样式 */
 .empty-img {
-  width: 240rpx;
-  height: 240rpx;
-  opacity: 0.7;
+  width: 320rpx;
+  height: 320rpx;
+  margin-bottom: 20rpx;
+  opacity: 0.8; /* 稍微降低透明度，不抢眼 */
 }
 
-.empty-title {
-  font-size: 32rpx;
-  font-weight: bold;
-  color: #a0a0a0;
+/* 文字区域 */
+.empty-text {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 50rpx;
 }
 
-.empty-sub,.click-area {
-  margin-top: 10rpx;
-  font-size: 26rpx;
-  color: #888;
+.main-text {
+  font-size: 30rpx;
+  color: #636e72; /* 深灰 */
+  font-weight: 500;
+  margin-bottom: 12rpx;
 }
 
-.click-area{
-    margin-top: 20rpx;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-.tips-btn {
-  color: #ffb54c;
-  font-weight: bold;
+.sub-text {
   font-size: 24rpx;
+  color: #b2bec3; /* 浅灰 */
 }
-.cli-img {
-  width: 40rpx;
-  height: 40rpx;
+
+/* 按钮样式 - 呼应主题色 */
+.empty-btn {
+  background: #fff;
+  color: #00b894; /* 主题绿 */
+  border: 2rpx solid #00b894;
+  border-radius: 50rpx;
+  font-size: 28rpx;
+  font-weight: 600;
+  padding: 12rpx 60rpx;
+  line-height: 2;
+  box-shadow: 0 4rpx 10rpx rgba(0, 184, 148, 0.1);
+  transition: all 0.2s;
+}
+
+.btn-hover {
+  background: #e3fcef; /* 点击态变浅绿 */
+  transform: scale(0.98);
 }

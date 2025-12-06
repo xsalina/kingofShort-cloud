@@ -1,97 +1,164 @@
-.mine-container {
-  width: 100%;
+/* ---------------- 全局容器 ---------------- */
+.container {
+  padding: 30rpx;
+  background-color: #eff2f5;
+  min-height: 100vh;
   box-sizing: border-box;
-  padding: 40rpx 20rpx;
-  background-color: #f7f8fa;
 }
 
+/* 布局工具 */
+.row-between { display: flex; justify-content: space-between; align-items: center; }
+.row-start { display: flex; justify-content: flex-start; align-items: center; }
 
-/* 外部卡片 */
-.mine-card {
-  background-color: #fff;
-  border-radius: 20rpx;
-  box-shadow: 0 4rpx 12rpx rgba(0,0,0,0.04);
-  padding: 20rpx 0;
-}
-
-/* 单项 */
-.mine-item {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 30rpx 36rpx;
-  border-bottom: 1rpx solid #f2f2f2;
-}
-.mine-item:last-child {
-  border-bottom: none;
-}
-
-.mine-item-left {
-  display: flex;
-  align-items: center;
-  gap: 24rpx;
-}
-
-/* 图标简约版，不再使用背景圆形 */
-.mine-icon {
-  font-size: 36rpx;
-}
-
-.mine-item-text {
-  font-size: 30rpx;
-  color: #222;
-  font-weight: 500;
-}
-
-.mine-arrow {
-  font-size: 38rpx;
-  color: #bbb;
-}
-
-.card {
-  background: #ffffff;
-  border-radius: 20rpx;
-  padding: 40rpx 30rpx;
-  margin-bottom: 30rpx;
-  box-shadow: 0 6rpx 20rpx rgba(0,0,0,0.06);
-}
-
-/* 用户卡片 */
+/* ---------------- 头部用户卡片 ---------------- */
 .user-card {
-  text-align: center;
+  background: #ffffff;
+  border-radius: 24rpx;
+  /* 稍微深一点的阴影，凸显层级 */
+  box-shadow: 0 8rpx 24rpx rgba(149, 157, 165, 0.1); 
+  margin-bottom: 40rpx;
+  overflow: hidden;
+  position: relative;
 }
 
-.title {
-  margin: 25rpx 0;
-  font-size: 34rpx;
-  font-weight: 600;
-  color: #333;
+/* --- 状态 A: 未登录样式 --- */
+.user-content-unlogin {
+  padding: 60rpx 40rpx;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 
-.desc {
-  color: #888;
-  margin-top: 10rpx;
-  font-size: 26rpx;
+.avatar-placeholder {
+  width: 120rpx;
+  height: 120rpx;
+  background: #dfe6e9; /* 灰色背景 */
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  margin-bottom: 24rpx;
 }
+.default-icon { width: 60rpx; height: 60rpx; opacity: 0.5; }
 
-.login-btn {
-  height:70rpx;
-  margin-top: 40rpx;
-  background-color: #1e90ff;
+.unlogin-text { text-align: center; margin-bottom: 40rpx; }
+.unlogin-text .title { font-size: 36rpx; font-weight: bold; color: #2d3436; display: block; margin-bottom: 10rpx; }
+.unlogin-text .desc { font-size: 26rpx; color: #b2bec3; }
+
+.login-btn-fake {
+  padding: 16rpx 60rpx;
+  background: #00b894;
   color: #fff;
-  border-radius: 50rpx;
-  width: 70%;
-  font-size: 28rpx;
-  box-sizing: border-box;
-}
-.service{
-  width:36rpx;
-  height:36rpx;
-  margin:0;
-}
-.service-button{
-  width:100% !important;
-  padding:30rpx 36rpx;
-  margin:0 !important;
+  border-radius: 40rpx;
+  font-size: 30rpx;
+  font-weight: 600;
+  box-shadow: 0 4rpx 10rpx rgba(0, 184, 148, 0.3);
 }
 
+/* --- 状态 B: 已登录样式 --- */
+.user-content-login {
+  padding: 40rpx;
+  /* 给已登录状态加个微渐变背景，显贵 */
+  background: linear-gradient(135deg, #ffffff 0%, #f7fcfc 100%);
+}
+
+.user-avatar {
+  width: 110rpx; height: 110rpx;
+  border-radius: 50%;
+  border: 4rpx solid #fff;
+  box-shadow: 0 4rpx 12rpx rgba(0,0,0,0.1);
+  margin-right: 24rpx;
+}
+
+/* 纯文字头像背景 */
+.user-avatar-text {
+  width: 110rpx; height: 110rpx;
+  border-radius: 50%;
+  background: #00b894; 
+  color: #fff;
+  font-size: 48rpx;
+  font-weight: bold;
+  display: flex; align-items: center; justify-content: center;
+  margin-right: 24rpx;
+  border: 4rpx solid #fff;
+  box-shadow: 0 4rpx 12rpx rgba(0,0,0,0.1);
+}
+
+.user-text { display: flex; flex-direction: column; }
+.user-name { font-size: 36rpx; font-weight: bold; color: #2d3436; margin-right: 16rpx; }
+.user-id { font-size: 24rpx; color: #b2bec3; margin-top: 8rpx; }
+
+/* VIP 标签 */
+.vip-tag {
+  background: #2d3436;
+  color: #ffd700;
+  font-size: 20rpx;
+  padding: 2rpx 10rpx;
+  border-radius: 8rpx;
+  font-weight: 900;
+  font-style: italic;
+  letter-spacing: 1rpx;
+}
+
+.setting-icon { font-size: 40rpx; opacity: 0.6; }
+
+/* 数据统计行 */
+.user-stats {
+  margin-top: 40rpx;
+  padding-top: 30rpx;
+  border-top: 1rpx solid #f0f0f0;
+}
+.stat-item { display: flex; flex-direction: column; align-items: center; flex: 1; }
+.stat-item .num { font-size: 36rpx; font-weight: bold; color: #2d3436; font-family: 'DIN Alternate', sans-serif; }
+.stat-item .label { font-size: 24rpx; color: #999; margin-top: 6rpx; }
+
+
+/* ---------------- 菜单列表 ---------------- */
+.menu-list {
+  background: #fff;
+  border-radius: 24rpx;
+  padding: 10rpx 0; /* 上下留白 */
+  box-shadow: 0 4rpx 16rpx rgba(149, 157, 165, 0.05);
+  margin-bottom: 40rpx;
+}
+
+.menu-item {
+  padding: 30rpx 40rpx;
+  background: #fff;
+  transition: background 0.2s;
+}
+.menu-item:active { background: #f9f9f9; }
+
+.menu-icon { font-size: 36rpx; margin-right: 24rpx; }
+.menu-text { font-size: 30rpx; color: #333; font-weight: 500; }
+.arrow { font-size: 24rpx; color: #ccc; }
+
+/* 修复 Button 默认样式 */
+.contact-btn {
+  width: 100% !important;
+  font-weight: 500;
+  text-align: left;
+  background: #fff;
+  border: none;
+  line-height: normal;
+  margin: 0;
+  border-radius: 0;
+}
+.contact-btn::after { border: none; }
+
+
+/* ---------------- 底部区域 ---------------- */
+.logout-area { margin-bottom: 40rpx; }
+.btn-logout {
+  background: #fff;
+  color: #ff4500;
+  font-size: 30rpx;
+  border-radius: 16rpx;
+  box-shadow: 0 2rpx 10rpx rgba(0,0,0,0.05);
+}
+
+.version-info {
+  text-align: center;
+  font-size: 24rpx;
+  color: #cbd5e0;
+  margin-bottom: 40rpx;
+}

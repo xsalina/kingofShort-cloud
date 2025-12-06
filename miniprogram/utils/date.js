@@ -14,15 +14,15 @@ function formatSmartTime(date) {
   const minute = pad(d.getMinutes());
   const second = pad(d.getSeconds());
 
-  const full = `${year}-${month}-${day} ${hour}:${minute}:${second}`;
+  const full = `${year}/${month}/${day} ${hour}:${minute}:${second}`;
 
   const todayStart = new Date(now.getFullYear(), now.getMonth(), now.getDate());
   const yesterdayStart = new Date(todayStart.getTime() - 86400000);
 
   if (d >= todayStart) {
-    return `今天 ${hour}:${minute}`;
+    return `${hour}:${minute}:${second}`;
   } else if (d >= yesterdayStart) {
-    return `昨天 ${hour}:${minute}`;
+    return `昨天 ${hour}:${minute}:${second}`;
   }
 
   return full;

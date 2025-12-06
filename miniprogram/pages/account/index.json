@@ -1,5 +1,5 @@
 {
-  "navigationBarTitleText": "个人中心",
+  "navigationBarTitleText": "我的档案",
   "usingComponents": {
     "unification-avatar": "/components/unification-avatar/index"
   }

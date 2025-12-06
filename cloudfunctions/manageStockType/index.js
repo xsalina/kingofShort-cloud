@@ -8,7 +8,7 @@ const { successResponse, failResponse } = require("./utils"); // utils.js 同级
 
 exports.main = async (event) => {
   try {
-    const { userId, action, stockId, name, market, currency, env } = event;
+    const { userId, action, stockId, name, market,code, currency, env } = event;
 
     const stockTypesCollection =
       env === "prod" ? "stockTypes" : "test_stockTypes";
@@ -66,6 +66,7 @@ exports.main = async (event) => {
         market,
         currency,
         isDeleted: false,
+        code,
         createTime: db.serverDate(),
       };
 

@@ -1,14 +1,19 @@
-<view class="coin-container">
-  <!-- 金币掉落 -->
-  <block wx:for="{{coins}}" wx:key="id">
-    <image 
-      class="coin" 
-      src="/assets/images/coin1.png" 
-      style="left:{{item.x}}rpx; transform: rotate({{item.rotate}}deg) scale({{item.scale}}); animation-name: {{item.anim}}; animation-delay: {{item.delay}};">
-    </image>
-  </block>
+<view class="container" wx:if="{{show}}">
+  <view class="coin-layer">
+    <block wx:for="{{coinList}}" wx:key="id">
+      <view class="coin type-{{item.type}}" 
+        style="left: {{item.startLeft}}%; width: {{item.size}}rpx; height: {{item.size}}rpx; animation-duration: {{item.duration}}s; animation-delay: {{item.delay}}s;">
+        <image class="coin-img" src="https://img.icons8.com/emoji/96/coin-emoji.png" mode="aspectFit"></image>
+      </view>
+    </block>
+  </view>
 
- <!-- 中间浮动收益文案 -->
-  <text wx:if="{{showText}}" class="coin-text" style="color:{{moneyValue >= 0 ?'#FF4D4F':'#32cd32'}}">{{textValue}}</text>
+  <view class="profit-layer">
+    <view class="profit-main {{animateText ? 'animating' : ''}}">
+      <view class="profit-label">收益到账</view>
+      <view class="profit-num">
+        <text>{{amount}}</text>
+      </view>
+    </view>
+  </view>
 </view>
-

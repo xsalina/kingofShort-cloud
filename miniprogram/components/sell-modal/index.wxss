@@ -1,149 +1,107 @@
-.modal-overlay {
+/* ---------------- 布局工具类 ---------------- */
+.row-between { display: flex; justify-content: space-between; align-items: center; }
+.font-bold { font-weight: bold; }
+.font-lg { font-size: 36rpx; color: #333; }
+.font-xl { font-size: 40rpx; font-weight: bold; font-family: 'DIN Alternate', sans-serif; }
+.text-sub { color: #999; font-size: 26rpx; }
+.text-profit { color: #ff4500; }
+.text-loss { color: #2ecc71; }
+
+/* ---------------- 遮罩层 ---------------- */
+.modal-mask {
   position: fixed;
-  top: 0;
   left: 0;
-  right: 0;
-  bottom: 0;
-  background: rgba(0, 0, 0, 0.5);
-  /* display: flex;
-  justify-content: center;
-  align-items: center; */
-  z-index: 100;
+  width: 100%;
+  height: 100%;
+  
+  /* 【关键修复】默认 top 在屏幕外面，防止上滑看到 */
+  top: 100vh; 
+  
+  background: rgba(0,0,0,0.6);
+  z-index: 1000;
+  
+  /* 透明度动画 */
+  opacity: 0;
+  
+  /* 关闭时：延迟 0.3s 再把 top 移走，等待透明度变完 */
+  transition: opacity 0.3s, top 0s linear 0.3s;
+  
+  display: flex;
+  align-items: flex-end; /* 底部对齐 */
 }
 
-.modal-box {
-  width: calc(100% - 40rpx);
-  background: #fff;
-  border-radius: 20rpx;
-  padding: 30rpx;
-  margin:200rpx auto 0 auto;
-  box-sizing: border-box;
+/* 显示状态 */
+.modal-mask.show {
+  top: 0; /* 移回屏幕 */
+  opacity: 1;
+  /* 打开时：立即把 top 移回来，不延迟 */
+  transition: opacity 0.3s, top 0s linear 0s;
 }
-.modal-header {
+
+/* ---------------- 弹窗内容 ---------------- */
+.modal-content {
+  width: 100%;
+  background: #fff; /* 白色背景 */
+  border-radius: 30rpx 30rpx 0 0;
+  padding: 40rpx;
+  
+  /* 【关键修复】确保 padding 撑开时背景色也是白色的 */
+  box-sizing: border-box; 
+  
+  /* 进场动画：默认藏在底下 */
+  transform: translateY(100%);
+  
+  /* 【关键修复】只对 transform 做动画，不对 padding 做动画！
+     这样键盘弹起时，高度是瞬间变化的，不会出现文字跟不上输入框掉下来的情况 */
+  transition: transform 0.3s cubic-bezier(0.19, 1, 0.22, 1);
+}
+
+.modal-mask.show .modal-content {
+  transform: translateY(0);
+}
+
+/* ---------------- 内部元素样式 ---------------- */
+.modal-header { margin-bottom: 40rpx; }
+.close-btn { font-size: 48rpx; color: #b2bec3; padding: 10rpx; line-height: 0.8; }
+
+.modal-tips {
+  background: #f7f9fc; padding: 24rpx; border-radius: 16rpx;
+  font-size: 26rpx; color: #636e72; margin-bottom: 40rpx;
+  border: 1rpx solid #edf2f7;
+}
+
+.form-group { margin-bottom: 30rpx; }
+.form-row-2 { display: flex; gap: 24rpx; margin-bottom: 30rpx; }
+.form-row-2 input { margin-bottom: 0; }
+
+.form-input {
+  background: #f7f9fc; 
+  padding: 24rpx; 
+  border-radius: 16rpx;
+  font-size: 30rpx; 
+  width: 100%; 
+  box-sizing: border-box; 
+  height: 90rpx;
+}
+
+.calc-result {
+  padding: 30rpx 0;
+  border-top: 1rpx solid #f0f0f0; 
+  border-bottom: 1rpx solid #f0f0f0;
   margin-bottom: 40rpx;
 }
 
-.buy-info {
-  margin-bottom: 10rpx;
-  color: #000;
-  font-weight: bold;
-}
-.buy-info-detail {
-  font-size: 28rpx;
-  color: #000;
-}
-.info-number {
-  /* margin: 0 10rpx 0 3rpx; */
-  color: #d96b00;
-  font-weight: bold;
-}
-.remain-info{
-  margin-bottom:20rpx;
-  font-size: 24rpx;
-  color:#999;
-}
-
-.estimated-profit {
-  font-size: 30rpx;
-  font-weight: bold;
-  color: #d96b00;
-  margin: 20rpx 0 10rpx 0;
-}
-
-.modal-footer {
-  display: flex;
-  justify-content: space-between;
-}
-
-.btn-sell,.btn-cancel {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 48% !important;
-  background: #32cd32;
-  color: #fff;
-  border-radius: 14rpx;
-  font-size: 28rpx;
-  padding: 14rpx;
-  height:70rpx;
-}
-.btn-sell,.btn-cancel {
-  background: #32cd32;
-}
-
-.btn-cancel {
-  background: #ccc;
-}
-.tips-text {
-  font-size: 20rpx;
-  color: #999;
-  margin: 6rpx 0 40rpx 0;
-}
-
-.row.wrap {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  margin-bottom: 30rpx;
-}
-
-.label {
-  font-size: 28rpx;
-  color: #555;
-  min-width: 120rpx; /* label 最小宽度，可以换行 */
-  margin-bottom: 6rpx; /* 如果换行，和输入框保持间距 */
-}
-
-.input-full,.picker-full {
-  flex: 1;
-  border: 1rpx solid #ccc;
-  border-radius: 8rpx;
-  padding: 6rpx 10rpx;
-  font-size: 28rpx;
-  min-width: 150rpx; /* 防止太窄 */
-  height:50rpx;
-}
-.picker-box {
-  padding: 5rpx 0;
-  border-radius: 8rpx;
-  box-sizing: border-box;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-
-.picker-text {
-  font-size: 28rpx;
-}
-.placeholder {
-  color: #808080;
-}
-
-.arrow {
+.modal-footer { display: flex; gap: 30rpx; }
+.btn-cancel, .btn-confirm {
+  flex: 1; 
+  padding: 24rpx 0; 
+  border-radius: 50rpx; 
+  font-weight: 600; 
   font-size: 32rpx;
-  color: var(--sub);
-  margin: 0 10rpx;
-  transform: rotate(90deg); /* 让 > 变成向下 */
-  display: inline-block; /* 必须给它，否则不能旋转 */
-  line-height: 32rpx;
-}
-
-/* 按钮 */
-.add-btn {
-  display: flex;
-  align-items: center;
+  display: flex; 
+  align-items: center; 
   justify-content: center;
-  height:70rpx;
-  margin-top: 40rpx;
-  background-color: #1e90ff;
-  color: #fff;
-  font-size: 30rpx;
-  border-radius: 12rpx;
-  padding: 12rpx 0;
-  text-align: center;
 }
-.btn-disabled {
-  background-color: #d9d9d9 !important; /* 灰色背景 */
-  color: #a0a0a0 !important; /* 灰色文字 */
-  cursor: not-allowed; /* 鼠标提示不可点击 */
-}
+.btn-cancel { background: #f1f2f6; color: #636e72; }
+.btn-confirm { background: #ff4500; color: #fff; box-shadow: 0 6rpx 16rpx rgba(255, 69, 0, 0.25); }
+.btn-confirm.is-loading { opacity: 0.8; background: #e03e00; }

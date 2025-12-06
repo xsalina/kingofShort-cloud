@@ -1,38 +1,61 @@
-<view class="page">
-    <view class="page-header">
-        <text class="page-title">股票类型管理</text>
+<view class="container">
+  
+  <view class="card add-card">
+    <view class="card-title">新增股票类型</view>
+    
+    <view class="form-item">
+      <text class="label">名称/代码</text>
+      <input 
+        class="input" 
+        placeholder="例如：AAPL 或 腾讯控股" 
+        placeholder-class="placeholder"
+        model:value="{{inputName}}" 
+        maxlength="20"
+      />
     </view>
-    <!-- 新增股票卡片 -->
-    <view class="add-card">
-        <view class="row wrap">
-            <text class="label">股票名称</text>
-            <input class="input-full" value="{{form.name}}" maxlength="20" placeholder="请输入股票名称" bindinput="onNameInput" />
-        </view>
-        <view class="row wrap">
-            <text class="label">市场类型</text>
-            <picker class="picker-full" mode="selector" value="{{editingIndex}}" range="{{marketOptions}}" range-key="label" bindchange="onMarketChange">
-                <view class="picker-box">
-                    <view class="picker-text {{!form.market ? 'placeholder':''}}">
-                        {{ form.market ? form.market + ' (' + form.currency + ')' : '请选择类型' }}
-                    </view>
-                    <!-- “>” 旋转后的图标 -->
-                    <text class="arrow">›</text>
-                </view>
-            </picker>
-        </view>
-        <!-- 市场类型（picker 替换版） -->
-        <button class="add-btn {{disabled ? 'btn-disabled' : ''}}" disabled="{{disabled}}" bindtap="addType">
-            {{disabled ? "添加中..." : "添加股票"}}
-        </button>
+
+    <view class="form-item">
+      <text class="label">选择市场</text>
+      <view class="market-selector">
+        <block wx:for="{{marketOptions}}" wx:key="code">
+          <view 
+            class="market-chip {{editingIndex === index ? 'active ' + item.code : ''}}" 
+            bindtap="onMarketChange" 
+            data-index="{{index}}"
+          >
+            <text>{{item.market}}</text>
+            <text class="chip-currency">{{item.code}}</text>
+          </view>
+        </block>
+      </view>
     </view>
-    <view class="section-title">我的股票</view>
-    <view class="stock-item" wx:for="{{stockList}}" wx:key="name">
-        <view class="left">
-            <text class="name">{{item.name}}</text>
-            <text class="market-tag">{{item.market}} {{item.currency}}</text>
+
+    <button class="btn-add {{isAdding ? 'btn-disabled' : ''}}" loading="{{isAdding}}"
+      disabled="{{isAdding}}" bindtap="addType" >{{isAdding ? '添加中...' : '确认添加'}}</button>
+  </view>
+
+  <view class="list-title">已添加列表 ({{stockList.length}})</view>
+  
+  <view class="stock-list">
+    <block wx:for="{{stockList}}" wx:key="id">
+      <view class="card stock-item">
+        <view class="item-left">
+          <view class="stock-name">{{item.name}}</view>
+          <view class="stock-tags">
+            <view class="tag market-tag {{item.code}}">{{item.market}}</view>
+            <view class="tag currency-tag">{{item.code}}</view>
+          </view>
         </view>
-        <view class="actions">
-            <text class="delete-btn" data-index="{{index}}" bindtap="deleteStock">删除</text>
+
+        <view class="item-right" bindtap="deleteStock" data-id="{{item._id}}">
+          <text class="delete-icon">✕</text>
         </view>
+      </view>
+    </block>
+
+    <view wx:if="{{stockList.length === 0}}" class="empty-state">
+      暂无自选股票名称，请在上方添加
     </view>
+  </view>
+
 </view>

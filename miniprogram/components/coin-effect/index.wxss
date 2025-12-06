@@ -1,67 +1,198 @@
-.coin-container {
+/* 容器 */
+.container {
   position: fixed;
-  width: 750rpx;
-  height: 100vh;
-  left: 0;
-  top: 0;
-  pointer-events: none;
-  overflow: hidden;
-  z-index: 999;
+  top: 0; left: 0; width: 100vw; height: 100vh;
+  z-index: 10000; pointer-events: none; overflow: hidden;
 }
 
+/* 金币基础 */
 .coin {
-  width: 80rpx;
-  height: 80rpx;
   position: absolute;
-  animation-duration: 2s;
+  top: -120rpx; /* 起始点 */
+  z-index: 1;
+  opacity: 0;
+  /* 默认使用 ease-in 让下落有重力加速感 */
+  animation-timing-function: cubic-bezier(0.5, 0.05, 1, 0.5);
   animation-fill-mode: forwards;
-  animation-timing-function: cubic-bezier(.25,.46,.45,.94);
 }
 
-/* 浮动收益文案（固定中间） */
-.coin-text {
-  position: fixed;
-  top: 40%;
+.coin-img {
+  width: 100%; height: 100%;
+  filter: drop-shadow(0 4rpx 4rpx rgba(0,0,0,0.3));
+  /* 只有简单的晃动，没有翻转 */
+  animation: wobble 2s ease-in-out infinite;
+}
+
+@keyframes wobble {
+  0%, 100% { transform: rotate(-10deg); }
+  50% { transform: rotate(10deg); }
+}
+
+/* ---------------- 核心轨迹动画 ---------------- */
+/* ... 前面的 .container, .coin, .coin-img 等样式保持不变 ... */
+/* ... 只要替换下面的 @keyframes 动画部分 ... */
+
+/* ---------------- 核心轨迹动画 (修复版：相对位移) ---------------- */
+
+/* 1. 直落 (Type: Straight) */
+.type-straight { animation-name: dropStraight; }
+@keyframes dropStraight {
+  0% { transform: translateY(-100rpx); opacity: 1; }
+  100% { transform: translateY(120vh); opacity: 1; }
+}
+
+/* 2. 左弹 (Type: Left) */
+/* 轨迹：下落 -> 触底 -> 向左上方弹起 -> 掉落 */
+.type-left { animation-name: bounceLeft; }
+@keyframes bounceLeft {
+  0% { 
+    opacity: 1; 
+    transform: translate(0, -100rpx) scale(0.8); 
+  }
+  
+  /* 第一次触底 */
+  40% { 
+    transform: translate(0, 60vh) scale(1); 
+  } 
+  
+  /* 快速反弹 (向左偏移 150rpx) */
+  55% { 
+    /* translate(X, Y) -> X是相对位移 */
+    transform: translate(-150rpx, 35vh) scale(1.1) rotate(-45deg); 
+  } 
+  
+  /* 二次掉落 */
+  100% { 
+    opacity: 0; 
+    transform: translate(-200rpx, 110vh) scale(0.8) rotate(-90deg); 
+  }
+}
+
+/* 3. 右弹 (Type: Right) */
+/* 轨迹：下落 -> 触底 -> 向右上方弹起 -> 掉落 */
+.type-right { animation-name: bounceRight; }
+@keyframes bounceRight {
+  0% { 
+    opacity: 1; 
+    transform: translate(0, -100rpx) scale(0.8); 
+  }
+  
+  /* 第一次触底 */
+  40% { 
+    transform: translate(0, 65vh) scale(1); 
+  }
+  
+  /* 快速反弹 (向右偏移 150rpx) */
+  55% { 
+    transform: translate(150rpx, 40vh) scale(1.1) rotate(45deg); 
+  }
+  
+  /* 二次掉落 */
+  100% { 
+    opacity: 0; 
+    transform: translate(200rpx, 110vh) scale(0.8) rotate(90deg); 
+  }
+}
+
+/* 4. 直线回弹 (Type: Up) */
+.type-up { animation-name: bounceUp; }
+@keyframes bounceUp {
+  0% { 
+    opacity: 1; 
+    transform: translateY(-100rpx); 
+  }
+  
+  /* 第一次触底 */
+  40% { 
+    transform: translateY(70vh) scaleY(0.9); 
+  }
+  
+  /* 快速反弹 (原地向上) */
+  55% { 
+    transform: translateY(30vh) scaleY(1.05); 
+  }
+  
+  /* 二次掉落 */
+  100% { 
+    opacity: 0; 
+    transform: translateY(110vh) scale(0.8); 
+  }
+}
+
+/* ... 后面的收益数字样式保持不变 ... */
+/* ---------------- 收益数字 (保持高级金) ---------------- */
+/* ... 前面的 .container, .coin, .bounce-left 等动画代码保持不变 ... */
+/* ... 只替换下面【收益数字样式】的部分 ... */
+
+/* ---------------- 收益数字样式 (红色盈利版) ---------------- */
+.profit-layer {
+  position: absolute;
+  top: 45%;
   left: 50%;
   transform: translate(-50%, -50%);
-  font-size: 50rpx;
+  z-index: 10;
+  text-align: center;
+  /* 加上一点文字发光效果，让红色更透亮 */
+  text-shadow: 0 0 30rpx rgba(255, 69, 0, 0.2);
+}
+
+.profit-main {
+  opacity: 0; /* 默认隐藏 */
+}
+
+/* "收益到账" 标签 */
+.profit-label {
+  font-size: 32rpx;
+  color: #ff6b6b; /* 浅红色 */
   font-weight: bold;
-  color: #FF4D4F; /* 红色收益 */
-  animation-name: floatUpCoin;
-  animation-duration: 1.5s;
-  animation-fill-mode: forwards;
-  animation-timing-function: ease-out;
+  letter-spacing: 4rpx;
+  margin-bottom: 10rpx;
 }
 
-@keyframes floatUpCoin {
-  0% { transform: translate(-50%, -50%) scale(1.2); opacity: 1; }
-  25% { transform: translate(-50%, -70%) scale(1.35); opacity: 1; }
-  50% { transform: translate(-50%, -90%) scale(1.3); opacity: 0.9; }
-  70% { transform: translate(-50%, -110%) scale(1.25); opacity: 0.8; }
-  100% { transform: translate(-50%, -130%) scale(1); opacity: 0; }
+/* 收益数字 */
+.profit-num {
+  font-family: 'DIN Alternate', sans-serif;
+  font-size: 90rpx; /* 字号够大才爽 */
+  font-weight: 700;
+  
+  /* 【修改点】使用红色渐变，模拟红宝石质感 */
+  background: linear-gradient(180deg, #ff7e5f 0%, #d63031 100%);
+  -webkit-background-clip: text;
+  color: transparent;
+  
+  /* 给文字加深红色的描边，增加立体感 */
+  -webkit-text-stroke: 3rpx #c0392b;
+  /* 底部加投影 */
+  filter: drop-shadow(0 6rpx 0 #a93226);
 }
 
-/* -------- 左/中/右金币掉落动画 -------- */
-@keyframes scatterLeft { 0% { transform: translateY(-140rpx) rotate(0deg) scale(0.8); opacity:1 }
-50% { transform: translateY(60vh) rotate(120deg) scale(1.1); opacity:1 }
-60% { transform: translateX(-30rpx) translateY(45vh) rotate(180deg) scale(1.15); opacity:1 }
-70% { transform: translateX(-80rpx) translateY(55vh) rotate(220deg) scale(1.05); opacity:1 }
-80% { transform: translateX(-150rpx) translateY(70vh) rotate(260deg) scale(1); opacity:1 }
-90% { transform: translateX(-200rpx) translateY(90vh) rotate(300deg) scale(0.95); opacity:1 }
-100% { transform: translateX(-220rpx) translateY(115vh) rotate(360deg) scale(1); opacity:0 } }
+/* 绑定新动画 */
+.animating {
+  /* 3秒完成：变大 -> 停留 -> 变小消失 */
+  animation: growAndShrink 3s ease-in-out forwards;
+}
 
-@keyframes scatterMid { 0% { transform: translateY(-140rpx) rotate(0deg) scale(0.8); opacity:1 }
-50% { transform: translateY(60vh) rotate(120deg) scale(1.1); opacity:1 }
-60% { transform: translateX(0rpx) translateY(45vh) rotate(180deg) scale(1.15); opacity:1 }
-70% { transform: translateX(-20rpx) translateY(55vh) rotate(220deg) scale(1.05); opacity:1 }
-80% { transform: translateX(20rpx) translateY(70vh) rotate(260deg) scale(1); opacity:1 }
-90% { transform: translateX(0rpx) translateY(90vh) rotate(300deg) scale(0.95); opacity:1 }
-100% { transform: translateX(0rpx) translateY(115vh) rotate(360deg) scale(1); opacity:0 } }
-
-@keyframes scatterRight { 0% { transform: translateY(-140rpx) rotate(0deg) scale(0.8); opacity:1 }
-50% { transform: translateY(60vh) rotate(120deg) scale(1.1); opacity:1 }
-60% { transform: translateX(30rpx) translateY(45vh) rotate(180deg) scale(1.15); opacity:1 }
-70% { transform: translateX(80rpx) translateY(55vh) rotate(220deg) scale(1.05); opacity:1 }
-80% { transform: translateX(150rpx) translateY(70vh) rotate(260deg) scale(1); opacity:1 }
-90% { transform: translateX(200rpx) translateY(90vh) rotate(300deg) scale(0.95); opacity:1 }
-100% { transform: translateX(220rpx) translateY(115vh) rotate(360deg) scale(1); opacity:0 } }
+/* 【关键】新动画逻辑 */
+@keyframes growAndShrink {
+  /* 阶段1：慢慢变大 (0% - 30%) */
+  0% {
+    opacity: 0;
+    transform: scale(0);
+  }
+  30% {
+    opacity: 1;
+    transform: scale(1.5); /* 放大到 1.5 倍 */
+  }
+  
+  /* 阶段2：悬停展示 (30% - 70%) */
+  70% {
+    opacity: 1;
+    transform: scale(1.5); /* 保持大小不变，让用户看清楚 */
+  }
+  
+  /* 阶段3：变小消失 (70% - 100%) */
+  100% {
+    opacity: 0;
+    transform: scale(0); /* 缩小至无 */
+  }
+}

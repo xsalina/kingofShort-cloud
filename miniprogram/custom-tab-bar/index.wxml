@@ -1,11 +1,24 @@
-<view class="tabbar-box" >
-<view class="tabbar {{isIPX ? 'bot-area' : ''}}">
-  <block wx:for="{{list}}" wx:key="index">
-    <view class="tab-item {{selected === index ? 'active' : ''}}" bindtap="switchTab" data-index="{{index}}" >
-      <image class="icon" src="{{selected === index ? item.selectedIconPath : item.iconPath}}" mode="aspectFill" />
-      <text class="label">{{item.text}}</text>
-    </view>
-  </block>
-</view>
-<add-transaction-btn />
+<view class="tab-bar">
+  <view class="tab-bar-border"></view>
+  
+  <view class="tab-bar-item" data-path="/pages/index/index" data-index="{{0}}" bindtap="switchTab">
+    <image 
+      class="icon" 
+      src="{{selected === 0 ? '/assets/images/index2.png' : '/assets/images/index1.png'}}" 
+    />
+    <view class="text {{selected === 0 ? 'selected' : ''}}">首页</view>
+  </view>
+
+  <view class="tab-bar-item center-item-wrapper" bindtap="onAddTransaction">
+    <view class="center-circle">
+      <image class="plus-icon" src="/assets/images/add_white.png"></image> </view>
+  </view>
+
+  <view class="tab-bar-item" data-path="/pages/profile/profile" data-index="{{1}}" bindtap="switchTab">
+    <image 
+      class="icon" 
+      src="{{selected === 1 ? '/assets/images/account2.png' : '/assets/images/account1.png'}}" 
+    />
+    <view class="text {{selected === 1 ? 'selected' : ''}}">我的</view>
+  </view>
 </view>

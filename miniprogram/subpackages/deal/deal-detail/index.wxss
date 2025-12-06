@@ -1,215 +1,202 @@
+/* ---------------- 全局容器 ---------------- */
 .container {
-  padding: 20rpx 20rpx 160rpx 20rpx;
-  background-color: #f5f5f5;
-}
-.topView-sticky {
-  position: sticky;
-  left: 0;
-  top: 0;
-  width: 100%;
-  background-color: #f5f5f5;
-  z-index: 6;
-  
-}
-.detail-header {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-bottom: 20rpx;
-}
-.stock-name {
-  font-size: 32rpx;
-  font-weight: bold;
-}
-.tx-tag {
-  padding: 4rpx 14rpx;
-  border-radius: 14rpx;
-  font-size: 24rpx;
-  color: #fff;
-  text-align: center;
-  line-height: 28rpx;
-}
-.tx-tag-sold {
-  background-color: #32cd32;
-}
-.tx-tag-partial {
-  background-color: #ffa500;
-}
-.tx-tag-pending {
-  background-color: #5a9bd4;
-}
-.tx-tag-unSold {
-  background-color: #999;
-}
-
-.highlight-tip {
-  width: 100%;
+  padding: 30rpx;
+  /* 【关键】留出比按钮高度更多的空间，防止内容被遮挡 */
+  padding-bottom: calc(180rpx + env(safe-area-inset-bottom)); 
+  background-color: #eff2f5;
+  min-height: 100vh;
   box-sizing: border-box;
-  padding: 24rpx 28rpx;
-  background: #fff7e6;
-  border: 2rpx solid #ffb54c;
-  border-radius: 14rpx;
-  margin-bottom: 10rpx;
-  
 }
 
-.tip-title {
-  font-size: 30rpx;
+/* ---------------- 通用卡片样式 ---------------- */
+.card {
+  background: #ffffff;
+  border-radius: 20rpx;
+  box-shadow: 0 4rpx 16rpx rgba(149, 157, 165, 0.05); /* 柔和阴影 */
+  margin-bottom: 24rpx;
+  overflow: hidden;
+}
+
+/* 布局工具类 */
+.row-between { display: flex; justify-content: space-between; align-items: center; }
+.font-lg { font-size: 36rpx; }
+.font-xl { font-size: 48rpx; }
+.font-bold { font-weight: bold; }
+.text-sub { color: #999; font-size: 24rpx; }
+
+/* ---------------- 1. 头部状态卡片 ---------------- */
+.status-card {
+  padding: 40rpx;
+}
+
+.stock-title {
+  font-size: 44rpx;
   font-weight: bold;
-  color: #d97a00;
-  margin-bottom: 16rpx;
-}
-
-.tip-line {
-  font-size: 28rpx;
+  color: #2d3436;
   margin-bottom: 8rpx;
-  color: #5a4500;
+  letter-spacing: 1rpx;
 }
-
-.tip-number {
-  color: #d96b00;
-  font-weight: bold;
-}
-
-.detail-section {
-  width: 100%;
-  background-color: #fff;
-  border-radius: 16rpx;
-  padding: 20rpx;
-  margin-top: 30rpx;
-  box-shadow: 0 4rpx 12rpx rgba(0, 0, 0, 0.1);
-  box-sizing: border-box;
-}
-.section-title {
-  font-size: 32rpx;
-  font-weight: bold;
-  margin-bottom: 20rpx;
-}
-
-.detail-row {
-  display: flex;
-  justify-content: space-between;
+.currency-sub {
   font-size: 26rpx;
+  color: #b2bec3;
+  background: #f7f7f7;
+  padding: 4rpx 12rpx;
+  border-radius: 8rpx;
+}
+
+/* --- 状态徽章 (核心修改：功能色) --- */
+.badge {
+  padding: 10rpx 24rpx;
+  border-radius: 12rpx;
+  font-size: 26rpx;
+  font-weight: 600;
+  letter-spacing: 1rpx;
+}
+
+/* 持仓中 -> 蓝色 (冷静、进行中) */
+.badge-unSold {
+  background: #e6f7ff; 
+  color: #1890ff;
+  border: 1rpx solid rgba(24, 144, 255, 0.1);
+}
+
+/* 已卖出 -> 灰色 (历史、结束) */
+.badge-sold {
+  background: #f5f5f5; 
+  color: #8c8c8c;
+  border: 1rpx solid #d9d9d9;
+}
+
+/* 部分卖 -> 橙色 (注意) */
+.badge-partial {
+  background: #fff7e6; 
+  color: #fa8c16;
+  border: 1rpx solid rgba(250, 140, 22, 0.1);
+}
+
+/* ---------------- 2. 信息详情卡片 ---------------- */
+.section-title {
+  font-size: 30rpx;
+  font-weight: bold;
+  color: #636e72;
+  margin: 30rpx 0 20rpx 10rpx;
+}
+
+.info-card {
+  padding: 30rpx;
+}
+
+.info-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr; /* 保持两列布局 */
+  gap: 30rpx 20rpx;
+}
+
+.info-item {
+  display: flex;
+  flex-direction: column;
+}
+/* 占满整行的样式 (用于累计收益) */
+.info-item.full-width {
+  grid-column: span 2; 
+  border-top: 1rpx dashed #e0e0e0; /* 加深一点分割线颜色 */
+  padding-top: 24rpx;
+  margin-top: 10rpx;
+}
+
+/* 字体微调 */
+.font-sm {
+  font-size: 26rpx; /* 时间字体稍微小一点，显得精致 */
+  color: #636e72;   /* 颜色稍微淡一点 */
+  font-weight: 500;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+
+/* 累计收益大字体 */
+.font-xl {
+  font-size: 48rpx;
+  margin-top: 10rpx; /* 数字跟标题拉开点距离 */
+}
+
+
+.info-item .label {
+  font-size: 24rpx;
+  color: #999;
   margin-bottom: 10rpx;
 }
-.total-row {
-  font-weight: bold;
-  font-size: 30rpx;
-}
-.divider {
-  height: 1rpx;
-  background-color: #e0e0e0;
-  margin: 20rpx 0;
-}
 
-.detail-actions {
-  display: flex;
-  margin-top: 12rpx;
-}
-.pending-btn {
-  background-color: #5a9bd4;
-} /* 挂单 */
-.cancel-btn {
-  background-color: #999;
-} /* 取消挂单 */
-.sell-btn {
-  background-color: #32cd32;
-} /* 卖出 */
-.tx-profit {
-  font-weight: bold;
-}
-.detail-actions {
-  display: flex;
-  flex-wrap: wrap;
-  margin-top: 12rpx;
-}
-.action-btn {
-  width: 50% !important;
-  border-radius: 16rpx;
-  font-size: 26rpx;
-  color: #fff;
-  border: none;
-  height: 70rpx;
-}
-
-.modify-btn {
-  background-color: #5a9bd4;
-} /* 修改挂单蓝色 */
-.cancel-btn {
-  background-color: #999;
-} /* 取消挂单灰色 */
-.partial-sell-btn {
-  background-color: #ffa500;
-} /* 部分卖橙色 */
-.pending-btn {
-  background-color: #5a9bd4;
-} /* 挂单蓝色 */
-.sell-btn {
-  background-color: #32cd32;
-} /* 卖出绿色 */
-
-/* 挂单信息区块 */
-.pending-section {
-  background-color: #f0f8ff; /* 淡蓝色区分挂单信息 */
-  border-left: 6rpx solid #1e90ff;
-  margin-top: 20rpx;
-}
-
-/* 区块标题 */
-.detail-title {
-  font-size: 30rpx;
-  font-weight: bold;
-  color: #333;
-  margin-bottom: 20rpx;
-}
-
-/* 每一行 */
-.detail-row {
-  display: flex;
-  justify-content: space-between;
-  margin-bottom: 15rpx;
-  align-items: center;
-}
-
-/* 左标签 */
-.detail-label {
-  font-size: 28rpx;
-  font-weight: bold;
-}
-
-/* 右值 */
-.detail-value {
-  font-size: 28rpx;
-  font-weight: bold;
-  color: #222;
-}
-
-/* 收益高亮 */
-.detail-profit {
+.info-item .value {
   font-size: 32rpx;
-  font-weight: bold;
-  color: #ff4d4f;
-}
-/* 卖出总收益 */
-.total-profit-row {
-  margin-top: 15rpx;
-  padding-top: 10rpx;
+  font-weight: 600;
+  color: #2d3436;
+  font-family: 'DIN Alternate', sans-serif;
 }
 
-.opera-btn {
-  width: 100%;
-  position: fixed;
-  left: 0;
-  bottom: 0;
-  background-color: #fff;
-  padding: 20rpx 0;
-  box-shadow: 0 -4rpx 12rpx rgba(0, 0, 0, 0.1);
-  box-sizing: border-box;
-}
-.ipx-padding {
-  padding-bottom: 68rpx;
-}
-.font30-bold {
-  font-size: 30rpx;
+/* 收益颜色 */
+.info-item .text-primary {
+  color: #ff4500; /* 盈利绿 */
   font-weight: bold;
+}
+
+.info-item .text-warn {
+  color: #00b894; /* 亏损红 */
+  font-weight: bold;
+}
+
+/* 卖出记录主题 (稍微带点背景色区分) */
+.sell-theme {
+  background: #fafafa; 
+  border: 1rpx solid #f0f0f0;
+}
+
+
+
+/* ---------------- 4. 底部按钮栏 (悬浮长方形风格) ---------------- */
+.footer-action {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  
+  /* 1. 背景改为纯白，作为“边距”的底色 */
+  background: #ffffff;
+  border-top: 1rpx solid #f0f0f0;
+  
+  /* 2. 【关键】设置内边距：上下留 20rpx 白边，左右留 30rpx (避免太贴边) */
+  padding: 20rpx 30rpx;
+  
+  /* 3. 适配小黑条：在原有 padding 基础上叠加安全距离 */
+  padding-bottom: calc(20rpx + env(safe-area-inset-bottom));
+  
+  z-index: 999;
+  box-shadow: 0 -4rpx 16rpx rgba(0,0,0,0.05);
+}
+
+.btn-sell {
+  width: 100%;
+  
+  /* 【关键】高度固定为 80rpx */
+  height: 80rpx;
+  
+  /* Flex 居中 */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  
+  background: linear-gradient(135deg, #ff7e5f, #eb4d4b);
+  color: #fff;
+  
+  /* 微圆角长方形 (如果想要完全直角，改成 0) */
+  border-radius: 12rpx; 
+  
+  font-weight: 600;
+  font-size: 32rpx;
+  letter-spacing: 2rpx;
+  border: none;
+  box-shadow: 0 6rpx 16rpx rgba(235, 77, 75, 0.25);
+}
+
+.btn-sell:active {
+  transform: scale(0.98);
+  opacity: 0.9;
 }

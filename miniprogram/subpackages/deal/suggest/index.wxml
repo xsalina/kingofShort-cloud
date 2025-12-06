@@ -1,92 +1,142 @@
 <view class="container">
-  <!-- 输入区域 -->
-  <view class="section">
-    <view class="field">
-      <text>最后买入价</text>
-      <input data-field="lastBuyPrice" type="digit" value="{{lastBuyPrice}}" bindinput="inputChange" />
+  
+  <view class="card input-section">
+    <view class="section-title">基础参数</view>
+    <view class="grid-container">
+      <view class="grid-row">
+        <view class="grid-item">
+          <text class="label">最后买入价</text>
+          <view class="input-wrap">
+            <input class="input" type="digit" placeholder="0.00" data-field="lastBuyPrice" value="{{lastBuyPrice}}" bindinput="inputChange" />
+          </view>
+        </view>
+        <view class="grid-item">
+          <text class="label">今日收盘价</text>
+          <view class="input-wrap">
+            <input class="input" type="digit" placeholder="0.00" data-field="todayPrice" value="{{todayPrice}}" bindinput="inputChange" />
+          </view>
+        </view>
+      </view>
+      
+      <view class="grid-row mt-20">
+        <view class="grid-item">
+          <text class="label">持有股数</text>
+          <view class="input-wrap">
+            <input class="input" type="number" placeholder="0" data-field="hold" value="{{hold}}" bindinput="inputChange" />
+          </view>
+        </view>
+        <view class="grid-item">
+          <text class="label">剩余资金</text>
+          <view class="input-wrap">
+            <input class="input" type="digit" placeholder="0.00" data-field="cash" value="{{cash}}" bindinput="inputChange" />
+          </view>
+        </view>
+      </view>
     </view>
-    <view class="field">
-      <text>剩余资金</text>
-      <input data-field="cash" type="digit" value="{{cash}}" bindinput="inputChange" />
-    </view>
-    <view class="field">
-      <text>持有股数</text>
-      <input data-field="hold" type="digit" value="{{hold}}" bindinput="inputChange" />
-    </view>
-    <view class="field">
-      <text>今日收盘价</text>
-      <input data-field="todayPrice" type="digit" value="{{todayPrice}}" bindinput="inputChange" />
-    </view>
-    <!-- <button bindtap="runCalc" class="add-btn">计算</button> -->
   </view>
-  <!-- TAB 切换 -->
+
   <view class="tab-wrapper">
-    <view class="tab-slider" style="transform: translateX({{tabTranslateX}}%);"></view>
+    <view class="tab-slider" style="transform: translateX({{mode == 'aggressive' ? '100%' : '0%'}});"></view>
+    
     <view class="tab-item {{mode=='steady'?'active':''}}" data-mode="steady" bindtap="switchMode">
-      稳健型
+      稳健型 (保守)
     </view>
+    
     <view class="tab-item {{mode=='aggressive'?'active':''}}" data-mode="aggressive" bindtap="switchMode">
-      激进型
+      激进型 (进取)
     </view>
   </view>
-  <!-- 温馨提示 -->
-  <view class="tips">
-    温馨提示：
-    <text class="tips-text" wx:for="{{tips}}" wx:key="index">{{item}}</text>
+
+  <view class="tips-card" wx:if="{{tips.length > 0}}">
+    <view class="tips-icon">💡</view>
+    <view class="tips-content">
+      <block wx:for="{{tips}}" wx:key="index">
+        <view class="tips-text">{{item}}</view>
+      </block>
+    </view>
   </view>
-  <!-- 横向 Swiper：买入 + 卖出 -->
-  <swiper class="main-swiper" indicator-dots="true" current="{{swiperIndex}}" bindchange="swiperChange" 	indicator-color="rgba(153, 153, 153, 0.3)" 	indicator-active-color="#32cd32">
-    <!-- 买入层级页 -->
+
+  <swiper 
+    class="main-swiper" 
+    indicator-dots="{{true}}" 
+    current="{{swiperIndex}}" 
+    bindchange="swiperChange"   
+    indicator-color="rgba(0, 0, 0, 0.15)" 
+    indicator-active-color="#00b894"
+  >
+    
     <swiper-item>
-      <view class="swiper-title">买入层级</view>
-      <view class="table">
-        <view class="thead">
-          <text>触发</text>
-          <text>层级</text>
-          <text class="tips-down">回调</text>
-          <text>价格</text>
-          <text>股数</text>
-          <text>占比</text>
-          <text>金额</text>
+      <view class="card table-card">
+        <view class="card-header-row">
+          <text class="card-title">⬇️ 低吸策略 (买入)</text>
+          <text class="card-tag green">建仓</text>
         </view>
-        <block wx:for="{{buyTable}}" wx:key="level">
-          <view class="trow {{item.triggered ? 'reduce-money':''}}">
-            <text>{{item.triggered?'✅':'❌'}}</text>
-            <text>{{item.level}}</text>
-            <text>{{item.dropRange}}</text>
-            <text>{{item.triggerRange}}</text>
-            <text>{{item.buySharesDetail}}</text>
-            <text>{{item.percent}}</text>
-            <text>{{item.buyAmount}}</text>
+        
+        <view class="table">
+          <view class="thead">
+            <text class="th col-status">状态</text>
+            <text class="th col-level">层级</text>
+            <text class="th col-rate">回调</text>
+            <text class="th col-price">价格</text>
+            <text class="th col-num">股数</text>
+            <text class="th col-money">金额</text>
           </view>
-        </block>
+          
+          <view class="tbody">
+            <block wx:for="{{buyTable}}" wx:key="level">
+              <view class="trow {{item.triggered ? 'row-triggered-buy' : ''}}">
+                <text class="td col-status">{{item.triggered ? '✅' : '-'}}</text>
+                <text class="td col-level">{{item.level}}</text>
+                <text class="td col-rate">{{item.dropRange}}</text>
+                <text class="td col-price font-bold">{{item.triggerRange}}</text>
+                <text class="td col-num">{{item.buySharesDetail}}</text>
+                <text class="td col-money">{{item.buyAmount}}</text>
+              </view>
+            </block>
+          </view>
+        </view>
       </view>
     </swiper-item>
-    <!-- 卖出层级页 -->
+
     <swiper-item>
-      <view class="swiper-title">卖出层级</view>
-      <view class="table">
-        <view class="thead">
-          <text>触发</text>
-          <text>层级</text>
-          <text class="tips-hight">涨幅</text>
-          <text>价格</text>
-          <text>股数</text>
-          <text>占比</text>
-          <text>金额</text>
+      <view class="card table-card">
+        <view class="card-header-row">
+          <text class="card-title">⬆️ 止盈策略 (卖出)</text>
+          <text class="card-tag red">止盈</text>
         </view>
-        <block wx:for="{{sellTable}}" wx:key="level">
-          <view class="trow {{item.triggered ? 'add-money':''}}">
-            <text>{{item.triggered?'✅':'❌'}}</text>
-            <text>{{item.level}}</text>
-            <text>{{item.riseRange}}</text>
-            <text>{{item.triggerRange}}</text>
-            <text>{{item.sellShares}}</text>
-            <text>{{item.percent}}</text>
-            <text>{{item.sellAmount}}</text>
+
+        <view class="table">
+          <view class="thead">
+            <text class="th col-status">状态</text>
+            <text class="th col-level">层级</text>
+            <text class="th col-rate">涨幅</text>
+            <text class="th col-price">价格</text>
+            <text class="th col-num">股数</text>
+            <text class="th col-money">金额</text>
           </view>
-        </block>
+          
+          <view class="tbody">
+            <block wx:for="{{sellTable}}" wx:key="level">
+              <view class="trow {{item.triggered ? 'row-triggered-sell' : ''}}">
+                <text class="td col-status">{{item.triggered ? '✅' : '-'}}</text>
+                <text class="td col-level">{{item.level}}</text>
+                <text class="td col-rate">{{item.riseRange}}</text>
+                <text class="td col-price font-bold">{{item.triggerRange}}</text>
+                <text class="td col-num">{{item.sellShares}}</text>
+                <text class="td col-money">{{item.sellAmount}}</text>
+              </view>
+            </block>
+          </view>
+        </view>
       </view>
     </swiper-item>
+
   </swiper>
+ 
+
+  <view class="footer-tips">
+    <view class="footer-line">———— 风险揭示 ————</view>
+    <view class="footer-text">本工具仅根据您设定的参数进行数学计算，生成的数据仅供参考，不构成任何投资建议。</view>
+    <view class="footer-text">市场有风险，投资需谨慎。请结合实际情况独立判断。</view>
+  </view>
 </view>

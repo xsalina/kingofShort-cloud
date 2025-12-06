@@ -6,41 +6,36 @@ Page({
     stockList: [],
 
     marketOptions: [
-      { label: "美股 ($)", market: "美股", currency: "$" },
-      { label: "港股 (HK$)", market: "港股", currency: "HK$" },
-      { label: "A股 (¥)", market: "A股", currency: "¥" },
+      { label: "美股 ($)", market: "美股", currency: "$", code: "USD" },
+      { label: "港股 (HK$)", market: "港股", currency: "HK$", code: "HKD" },
+      { label: "A股 (¥)", market: "A股", currency: "¥", code: "CNY" }
     ],
-
+    inputName: '',
     form: {
-      name: "",
       market: "",
       currency: "",
+      code:''
     },
 
     editingIndex: -1,
     userInfo: null,
-    disabled: false,
+    isAdding: false,
   },
   async onLoad() {
     this.setData({ userInfo:app.globalData.userInfo});
     this.queryTypeList();
   },
-
-  // 名称输入
-  onNameInput(e) {
-    this.setData({
-      "form.name": e.detail.value,
-    });
-  },
-
   // picker选择市场
   onMarketChange(e) {
-    const index = e.detail.value;
+    console.log(345345,e)
+    const {index} = e.currentTarget.dataset;
     const item = this.data.marketOptions[index];
 
     this.setData({
       "form.market": item.market,
       "form.currency": item.currency,
+      "form.code": item.code,
+      editingIndex:index
     });
   },
 
@@ -55,8 +50,7 @@ Page({
   },
 
   deleteStock(e) {
-    const index = e.currentTarget.dataset.index;
-    const { _id } = this.data.stockList[index];
+    const id = e.currentTarget.dataset.id;
     const { userInfo } = this.data;
     const that = this;
     wx.showModal({
@@ -70,7 +64,7 @@ Page({
               data: {
                 userId: userInfo?.userId,
                 action: "delete",
-                stockId: _id,
+                stockId: id,
               },
             })
             .then((res) => {
@@ -102,12 +96,12 @@ Page({
       });
   },
   addType() {
-    const { userInfo, form } = this.data;
-    if(!form.name || !form.market || !form.currency){
+    const { userInfo, form,inputName } = this.data;
+    if(!inputName || !form.market || !form.currency){
       wx.showToast({ title: "请填写完整信息", icon: "none" });
       return; 
     }
-    this.setData({ disabled: true });
+    this.setData({ isAdding: true });
     wxCloud
       .call({
         name: "manageStockType",
@@ -115,10 +109,11 @@ Page({
           userId: userInfo?.userId,
           action: "add",
           ...form,
+          name:inputName,
         },
       })
       .then((res) => {
-        this.setData({ disabled: false });
+        this.setData({ isAdding: false });
         if (res.result.success) {
           wx.showToast({ title: res.result.message });
           this.queryTypeList();
@@ -127,7 +122,7 @@ Page({
           wx.showToast({ title: res.result.message, icon: "none" });
         }
       }).catch(() => {
-        this.setData({ disabled: false });
+        this.setData({ isAdding: false });
          wx.showToast({ title: "添加失败", icon: "none" });
       });
   },

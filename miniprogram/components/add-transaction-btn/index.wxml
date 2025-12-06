@@ -1,3 +1,0 @@
- <view class="fab" bindtap="onAddTransaction">
-  <image src="/assets/images/add.png" class="add-img"></image>
-</view>

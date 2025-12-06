@@ -1,50 +1,99 @@
-.tabbar-box {
+.tab-bar {
   position: fixed;
   bottom: 0;
   left: 0;
+  right: 0;
+  
+  /* 【1. 加大】整体高度 */
+  height: 110rpx; 
+  padding-top: 10rpx;
+  background: white;
+  display: flex;
+  padding-bottom: env(safe-area-inset-bottom);
+  box-shadow: 0 -4rpx 16rpx rgba(0, 0, 0, 0.05);
+  z-index: 9999;
+}
+
+.tab-bar-border {
+  position: absolute;
+  left: 0;
+  top: 0;
   width: 100%;
-  background-color: #ffffff;
-}
-.tabbar {
-  height: 120rpx;
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-  box-shadow: 0 -4rpx 20rpx rgba(0, 0, 0, 0.05);
-  z-index: 999;
-  box-sizing: content-box;
-}
-.bot-area {
-  padding-bottom: 68rpx;
+  height: 1rpx;
+  background-color: rgba(0, 0, 0, 0.05);
 }
 
-.tab-item {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
+.tab-bar-item {
   flex: 1;
-  font-size: 26rpx;
-  color: #999999;
-  transition: all 0.2s ease;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
 }
 
-.tab-item.active {
-  color: #1e90ff;
-  font-weight: 600;
-  font-size: 28rpx;
-}
-
+/* --- 两侧 Tab 样式 --- */
 .icon {
-  width: 48rpx;
-  height: 48rpx;
-  margin-bottom: 10rpx;
+  /* 【2. 加大】图标尺寸 */
+  width: 54rpx;
+  height: 54rpx;
+  
+  /* 稍微增加一点底部间距 */
+  margin-bottom: 8rpx; 
+  display: block;
 }
 
-.label {
+.text {
+  /* 【3. 加大】文字大小 */
+  font-size: 24rpx;
+  
+  color: #b2bec3; /* 未选中：莫兰迪灰 */
+  font-weight: 500;
   line-height: 1;
 }
-.ipx-bottom {
-  width: 100%;
-  height: 68rpx;
+
+.text.selected {
+  color: #00b894; /* 选中：主题绿 */
+  font-weight: bold;
+}
+
+/* --- 中间悬浮按钮 (纯圆球) --- */
+.center-item-wrapper {
+  position: relative;
+  z-index: 10;
+}
+
+.center-circle {
+  /* 【4. 加大】中间圆球尺寸 - 变成巨型按钮 */
+  width: 130rpx; 
+  height: 130rpx;
+  
+  background: linear-gradient(135deg, #00b894, #00cec9); 
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  
+  /* 【5. 调整】悬浮定位：向上凸起半径的一半 */
+  position: absolute;
+  top: -65rpx; 
+  
+  /* 增强投影，匹配大按钮的重量感 */
+  box-shadow: 0 12rpx 24rpx rgba(0, 184, 148, 0.45);
+  
+  /* 【6. 加粗】白边加粗，防止和背景混在一起 */
+  border: 10rpx solid #fff; 
+}
+
+/* 加号图标 */
+.plus-icon {
+  /* 图标也对应放大 */
+  width: 64rpx;
+  height: 64rpx;
+}
+
+/* 点击反馈 */
+.center-circle:active {
+  transform: scale(0.95);
+  box-shadow: 0 6rpx 12rpx rgba(0, 184, 148, 0.4);
 }

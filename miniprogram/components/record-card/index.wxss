@@ -1,175 +1,122 @@
-.tx-record {
-  width: 100%;
-  margin: 0 0 30rpx;
-  padding: 16rpx;
+/* 组件容器样式 */
+.card {
+  background: #fff;
   border-radius: 16rpx;
-  background-color: #fff;
-  box-shadow: 0 4rpx 12rpx rgba(0, 0, 0, 0.1);
-  display: flex;
-  flex-direction: column;
-  box-sizing: border-box;
+  margin-bottom: 24rpx;
+  box-shadow: 0 2rpx 10rpx rgba(0, 0, 0, 0.03);
+  overflow: hidden;
 }
 
-/* 状态颜色区分 */
-.tx-record.sold {
-  border-left: 6rpx solid #32cd32;
-  background-color: #d0f0c0;
+.trans-card {
+  padding: 24rpx 30rpx;
+  border: 1rpx solid transparent;
+  transition: all 0.2s;
 }
 
-.tx-record.unSold {
-  border-left: 6rpx solid #999;
-  background-color: #e0e0e5;
+.trans-card:active {
+  background-color: #fafafa;
+  transform: scale(0.99);
 }
 
-.tx-record.pending { /* 挂单 */
-  border-left: 6rpx solid #5a9bd4;
-  background-color: #e6f0fa;
-}
-
-.tx-record.partial { /* 部分卖 */
-  border-left: 6rpx solid #ff9800;
-  background-color: #fff3e0;
-}
-
-/* 标签颜色区分 */
-.tx-record.sold .tx-tag {
-  background-color: #32cd32;
-  color: #fff;
-}
-
-.tx-record.unSold .tx-tag {
-  background-color: #999;
-  color: #fff;
-}
-
-.tx-record.pending .tx-tag {
-  background-color: #5a9bd4;
-  color: #fff;
-}
-
-.tx-record.partial .tx-tag {
-  background-color: #ff9800;
-  color: #fff;
-}
-
-/* 头部 */
-.tx-record-header {
+/* 布局工具类 */
+.row-between {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 12rpx;
 }
 
-.tx-stock-name {
-  font-size: 30rpx;
+.mb-20 {
+  margin-bottom: 20rpx;
+}
+
+.text-center {
+  align-items: center;
+}
+
+.text-right {
+  align-items: flex-end;
+}
+
+.font-bold {
   font-weight: bold;
-  color: #222;
 }
 
-.tx-tag {
-  padding: 4rpx 14rpx;
-  border-radius: 14rpx;
+/* 股票信息 */
+.stock-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.stock-name {
+  font-size: 32rpx;
+  font-weight: 600;
+  margin-bottom: 6rpx;
+  color: #2d3436;
+}
+
+.trans-date {
   font-size: 24rpx;
-  color: #fff;
-  min-width: 70rpx;
-  text-align: center;
-  line-height: 28rpx;
+  color: #b2bec3;
 }
 
-/* 主体布局 */
-.tx-record-body {
-  display: flex;
-  position: relative;
-  align-items: center;
-  margin-bottom: 12rpx;
+/* 状态徽章颜色定义 */
+.badge {
+  padding: 6rpx 18rpx;
+  border-radius: 8rpx; /* 改成圆角矩形，稍微正式一点 */
+  font-size: 22rpx;
+  font-weight: 500;
 }
 
-/* 左侧文案列 */
-.tx-left-labels {
-  width: 80rpx; /* 固定宽度 */
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  margin-right: 8rpx;
-  font-size: 26rpx;
-  color: #333;
+/* status: 0 (未卖 - 绿色) */
+.badge-unSold {
+  background: #e6f7ff; /* 浅蓝底 */
+  color: #1890ff;      /* 蓝字 */
+  border: 1rpx solid rgba(24, 144, 255, 0.2); /* 可选：加个细边框增加精致感 */
 }
 
-.tx-left-labels .trasprent-text {
-  color: transparent;
+/* status: 1 (已卖 - 红色) */
+.badge-sold {
+  background: #f5f5f5; /* 浅灰底 */
+  color: #8c8c8c;      /* 深灰字 */
 }
 
-/* 箭头 */
-.tx-arrow {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  position: absolute;
-  left: calc(50% + 50rpx);
-  transform: translateX(-50%);
-  color: #666;
-}
-.tips{
- font-size: 24rpx;
-}
-.arrow-symbol{
-  font-size: 36rpx;
-}
-.tips-number{
-  color:#ff4500;
-  font-weight: bold;
+/* status: 2 (部分卖 - 橙色) */
+.badge-partial {
+  background: #fff7e6; /* 浅橙底 */
+  color: #fa8c16;      /* 橙字 */
 }
 
-/* 右侧内容区 */
-.tx-right-content {
-  flex: 1;
-  display: flex;
-  justify-content: space-between;
-  /* margin-left: 8rpx; */
+/* 详情区域灰色块 */
+.trans-details {
+  background: #f7f8fa;
+  padding: 24rpx;
+  border-radius: 12rpx;
 }
 
-.tx-col {
-  width: calc(50% - 40rpx);
+.detail-col {
   display: flex;
   flex-direction: column;
-  text-align: center;
 }
 
-/* 左右列文字样式统一 */
-.tx-left-labels text,
-.tx-col text {
-  font-size: 26rpx;
-  font-weight: bold;
-  color: #222;
-  margin: 6rpx 0;
+.label {
+  font-size: 22rpx;
+  color: #636e72;
+  margin-bottom: 8rpx;
 }
 
-/* 标签字体 */
-.tx-label {
-  font-weight: bold;
-  font-size: 26rpx;
-  margin-bottom: 12rpx;
+.value {
+  font-size: 28rpx;
+  font-weight: 600;
+  color: #2d3436;
 }
 
-/* 收益 */
-.tx-record-footer {
-  text-align: right;
-  font-size: 26rpx;
-  margin-top: 8rpx;
-}
-
-.tx-profit {
-  color: #ff4500;
+/* 收益颜色 */
+.text-primary {
+  color: #ff4500; /* 盈利绿 */
   font-weight: bold;
 }
-.detail-btn {
-  margin-left: 20rpx;
-  padding: 4rpx 12rpx;
-  border-radius: 14rpx;
-  background-color: #5a9bd4; /* 蓝色按钮 */
-  color: #fff;
-  font-size: 24rpx;
-  line-height: 28rpx;
-}
 
+.text-warn {
+  color: #00b894; /* 亏损红 */
+  font-weight: bold;
+}

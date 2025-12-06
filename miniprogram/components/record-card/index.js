@@ -6,6 +6,10 @@ const {
 } = require("../../utils/number.js");
 const { formatSmartTime } = require("../../utils/date.js");
 Component({
+  options: {
+    // 启用样式共享：页面 wxss 可以影响组件，组件 wxss 也可以影响页面（通常用于完全去隔离）
+    styleIsolation: 'shared' 
+  },
   properties: {
     cardItem: {
       avgCost: Number,
@@ -32,6 +36,7 @@ Component({
     sellTimeText: "",
     remianNumber: 0,
     totalProfitText:null,
+    buyTotalMoney:0
   },
   observers: {
     cardItem(cardItem) {
@@ -43,13 +48,15 @@ Component({
         cardItem.remainingQuantity,
         0
       );
+      let buyTotalMoney = parseFloat(safeAdd(safeMultiply(cardItem.price,cardItem.quantity),cardItem.fee)) || 0
       this.setData({
         statusText,
         statusClass,
         remianNumber,
         buyTimeText: formatSmartTime(cardItem.buyTime),
         sellTimeText: formatSmartTime(cardItem.lastSellTime),
-        totalProfitText:Math.abs(cardItem.totalProfit)
+        totalProfitText:Math.abs(cardItem.totalProfit),
+        buyTotalMoney,
       });
     },
   },

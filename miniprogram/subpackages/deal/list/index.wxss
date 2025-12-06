@@ -1,34 +1,65 @@
-.page {
-  background: #f5f5f5;
+.container {
+  /* 【关键】去掉固定高度，让页面可以自然滚动，这样 Sticky 才会生效 */
   min-height: 100vh;
-  padding: 20rpx 0;
+  background-color: #eff2f5;
+  padding: 30rpx;
   box-sizing: border-box;
 }
 
-.tab-bar {
+/* ---------------- Tabs (胶囊滑块 + 吸顶) ---------------- */
+.tabs-wrapper {
+  /* 1. 吸顶核心 */
+  position: -webkit-sticky;
   position: sticky;
   top: 0;
-  z-index: 100;
+  z-index: 100; /* 保证浮在列表上面 */
+
+  /* 2. 布局样式 */
   display: flex;
-  justify-content: space-around;
-  margin-bottom: 20rpx;
-  border-bottom: 2rpx solid #ddd;
-  background: #f5f5f5;
+  background: #ffffff;
+  padding: 8rpx;
+  border-radius: 16rpx;
+  margin-bottom: 30rpx;
+  box-shadow: 0 4rpx 16rpx rgba(0,0,0,0.08); /* 吸顶时加深阴影 */
+  overflow: hidden;
 }
 
+/* 动态滑块 (那个移动的浅绿色块) */
+.tab-slider {
+  position: absolute;
+  top: 8rpx;
+  left: 8rpx;
+  bottom: 8rpx;
+  /* 宽度计算：(100% - 左内边距 - 右内边距) / 3个Tab */
+  width: calc((100% - 16rpx) / 3); 
+  background: #e3fcef; /* 浅绿背景 */
+  border-radius: 12rpx;
+  z-index: 1; /* 层级：在背景之上，文字之下 */
+  
+  /* 核心动画属性 */
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1); 
+}
+
+/* Tab 文字项 */
 .tab-item {
+  flex: 1;
+  text-align: center;
+  padding: 16rpx 0;
   font-size: 28rpx;
-  padding: 14rpx 0;
-  color: #555;
+  color: #999;
+  border-radius: 12rpx;
+  position: relative;
+  z-index: 2; /* 层级：必须比滑块高，才能点击且显示文字 */
+  transition: color 0.3s; /* 文字颜色也加个渐变 */
+  font-weight: 500;
 }
 
+/* 选中状态 (只改变文字颜色，背景色由滑块提供) */
 .tab-item.active {
-  color: #3d82ff;
-  border-bottom: 4rpx solid #3d82ff;
+  color: #00b894; /* 主题绿字 */
   font-weight: bold;
 }
 .transactions-list{
-  padding: 0 20rpx;
   box-sizing: border-box;
 }
 .have-nomore {

@@ -1,9 +1,12 @@
-<view class="empty-state">
-    <image src="{{image}}" class="empty-img"></image>
-    <text class="empty-title">{{title}}</text>
-    <view class="click-area" wx:if="{{showClickPoint}}" bindtap="onAddtraions">
-        <image class="cli-img" src="{{clickCursorImg}}" mode="aspectFill" />
-        <text class="tips-btn">我去添加交易</text>
-    </view>
-    <text wx:else class="empty-sub">{{subtitle}}</text>
+<view class="empty-container">
+  <image class="empty-img" src="../../assets/images/empty.png" mode="widthFix"></image>
+  
+  <view class="empty-text">
+    <text class="main-text">暂无交易记录</text>
+    <text class="sub-text">开始记录你的第一笔投资吧</text>
+  </view>
+
+  <button class="empty-btn" hover-class="btn-hover" bindtap="onAddtraions">
+    去记一笔
+  </button>
 </view>

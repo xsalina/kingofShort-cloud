@@ -1,35 +1,55 @@
-<!-- pages/index/index.wxml -->
 <view class="container {{isIpx ? 'ipxPbottom' : ''}}">
-  <!-- 收益统计栏 -->
-  <view class="stats-bar">
-    <view class="stat-item" bindtap="onMonthProfitTap">
-      <view class="stat-title">本月收益</view>
-      <view class="stat-values">
-        <text class="currency">$ {{monthProfit['$'] || 0}}</text>
-        <text class="currency">¥ {{monthProfit['¥'] || 0}}</text>
-        <text class="currency">HK$ {{monthProfit['HK$'] || 0}}</text>
+  <view class="dashboard-container">
+  <view class="bento-wrapper">
+    
+    <view class="bento-main">
+      <view class="bento-header">
+        <text class="label">本月收益 (CNY)</text>
+        <!-- <view class="trend-icon">📈</view> -->
+      </view>
+      <view class="bento-value">
+        <text class="symbol">¥</text>
+        <text class="num">{{monthProfit['¥'] || '0.00'}}</text>
+      </view>
+      <view class="bento-footer">
+        <text class="sub-label">累计</text>
+        <text class="sub-val">¥{{totalProfit['¥'] || '0.00'}}</text>
+      </view>
+      <view class="circle-decor"></view>
+    </view>
+
+    <view class="bento-side">
+      <view class="bento-item usd-item">
+        <view class="side-label">USD ($)</view>
+        <view class="side-val">{{monthProfit['$'] || '0'}}</view>
+      </view>
+      <view class="bento-item hkd-item">
+        <view class="side-label">HKD (HK$)</view>
+        <view class="side-val">{{monthProfit['HK$'] || '0'}}</view>
       </view>
     </view>
-    <view class="stat-item" bindtap="onTotalProfitTap">
-      <view class="stat-title">总收益</view>
-      <view class="stat-values">
-        <text class="currency">$ {{totalProfit['$'] || 0}}</text>
-        <text class="currency">¥ {{totalProfit['¥'] || 0}}</text>
-        <text class="currency">HK$ {{totalProfit['HK$'] || 0}}</text>
-      </view>
-    </view>
+
   </view>
-  <view class="tx-list">
-    <block wx:for="{{transactions}}" wx:key="id">
+</view>
+
+  <view class="section-header row-between">
+    <text class="font-bold font-lg">最近交易</text>
+  </view>
+
+  <view class="transaction-list">
+     <block wx:for="{{transactions}}" wx:key="id">
       <record-card cardItem="{{item}}"></record-card>
     </block>
   </view>
-  <view wx:if="{{transactions.length >= 4}}" class="load-more-btn" bindtap="goToAllRecords">
-    <text>查看更多</text>
-    <!-- <text class="arrow arrow-left">›</text> -->
-  </view>
   <block wx:if="{{transactions.length === 0 && loaded}}">
-    <!-- 空状态 -->
     <empty-tips />
   </block>
+
+  <view wx:if="{{transactions.length >= 10}}" class="more-entry" bindtap="goToAllRecords">
+    <text>查看更多历史交易</text>
+    <text class="more-arrow">➜</text>
+  </view>
+
+  
+
 </view>

@@ -1,48 +1,31 @@
-<view class="tx-record {{statusClass}}" bindtap='gotoDetail'>
-  <!-- 股票名 + 标签 -->
-  <view class="tx-record-header">
-    <text class="tx-stock-name">{{cardItem.stockName}}</text>
-    <view class="tx-tag">{{statusText}}</view>
-  </view>
-
-  <!-- 卡片主体：三列布局 -->
-  <view class="tx-record-body">
-    <!-- 最左侧文案列 -->
-    <view class="tx-left-labels">
-      <text class="trasprent-text">模式</text>
-      <text>价格</text>
-      <text>数量</text>
-      <text>时间</text>
-    </view>
-
-    <!-- 箭头 -->
-    <view class="tx-arrow">
-      <view wx:if="{{cardItem.remainingQuantity}}" class="tips">剩<text class="tips-number"> {{cardItem.remainingQuantity}} </text>股</view>
-      <view class="arrow-symbol">→</view>
-    </view>
-
-    <!-- 右侧内容区 -->
-    <view class="tx-right-content">
-      <!-- 买入列 -->
-      <view class="tx-col tx-buy-col">
-        <text class="tx-label">买入</text>
-        <text>{{cardItem.currency}}{{cardItem.price}}</text>
-        <text>{{cardItem.quantity}}</text>
-        <text>{{buyTimeText}}</text>
+ <view class="card trans-card" bindtap="gotoDetail" data-id="{{item.id || item._id}}">
+        <view class="row-between mb-20">
+          <view class="stock-info">
+            <text class="stock-name">{{cardItem.stockName}}</text>
+            <text class="trans-date">{{buyTimeText}}</text>
+          </view>
+          <view class="badge badge-{{cardItem.status}}">
+            {{statusText}}
+          </view>
+        </view>
+        <view class="trans-details row-between">
+          <view class="detail-col">
+            <view class="label">买入均价</view>
+            <view class="value">{{cardItem.currency}} {{cardItem.avgCost}}</view>
+          </view>
+          <view class="detail-col text-center">
+            <view class="label">持有数量</view>
+            <view class="value font-bold">{{cardItem.remainingQuantity}}</view>
+          </view>
+          <view class="detail-col text-right" wx:if="{{cardItem.totalProfit !== 0}}">
+            <view class="label">累计收益</view>
+            <view class="value {{cardItem.totalProfit >=0 ? 'text-primary' : 'text-warn'}}">
+              {{cardItem.totalProfit >=0 ? '+' : ''}}{{cardItem.currency}}{{cardItem.totalProfit}}
+            </view>
+          </view>
+           <view class="detail-col text-right" wx:else>
+             <view class="label">买入总额</view>
+             <view class="value">{{cardItem.currency}}{{buyTotalMoney}}</view>
+           </view>
+        </view>
       </view>
-
-      <!-- 卖出列 -->
-      <view class="tx-col tx-sell-col">
-        <text class="tx-label">卖出</text>
-        <text>{{cardItem.status === 'unSold' ? '-' : cardItem.currency + cardItem.sellRecords[0].sellPrice }}</text>
-        <text>{{cardItem.status === 'unSold' ? '-' : remianNumber }}</text>
-        <text>{{cardItem.status === 'unSold' ? '-' : sellTimeText }}</text>
-      </view>
-    </view>
-  </view>
-
-  <!-- 收益 -->
-  <view class="tx-record-footer">
-    <text>收益: <text class="tx-profit" style="color:{{cardItem.totalProfit>=0?'#ff4500':'#32cd32'}}">{{cardItem.totalProfit >= 0 ? '+' : '-'}}{{cardItem.currency}}{{totalProfitText}}</text></text>
-  </view>
-</view>

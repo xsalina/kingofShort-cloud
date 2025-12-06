@@ -1,6 +1,7 @@
-<view class="page">
+<view class="container">
   <!-- tab 切换 -->
-  <view class="tab-bar">
+  <view class="tabs-wrapper sticky-top">
+    <view class="tab-slider" style="transform: translateX({{currentTabIndex * 100}}%);"></view>
     <block wx:for="{{tabs}}" wx:key="index">
       <view class="tab-item {{currentTabIndex === index ? 'active' : ''}}" bindtap="switchTab" data-index="{{index}}">
         {{item.label}}
@@ -15,7 +16,7 @@
   </view>
   <block wx:if="{{transactions.length === 0 && loaded}}">
     <!-- 空状态 -->
-    <empty-tips showClickPoint="{{true}}" />
+    <empty-tips  />
   </block>
   <view class="have-nomore" wx:if="{{transactions.length >= 4 && loaded && !hasMore}}">没有更多了</view>
 </view>

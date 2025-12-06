@@ -3,11 +3,11 @@ const app = getApp();
 Page({
   data: {
     tabs: [{
-      label: "已卖", value: "sold"
+      label: "已清仓", value: "sold"
     }, {
-      label: "未卖", value: "unSold"
+      label: "持仓中", value: "unSold"
     }, {
-      label: "部分卖", value: "partial"
+      label: "部分卖出", value: "partial"
     }],
     currentTabIndex: 0,
     page: 1,
@@ -59,7 +59,7 @@ Page({
         const newList = res?.result?.data?.tradesList || []
         const list = transactions.concat(newList)
         const hasMore =  newList.length === this.data.pageSize;
-        this.setData({ transactions: list, loaded: true ,hasMore });
+        this.setData({ transactions: [], loaded: true ,hasMore });
       });
   },
   onReachBottom() {

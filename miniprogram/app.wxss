@@ -1,106 +1,121 @@
-/**app.wxss**/
-.container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  box-sizing: border-box;
-} 
-
-button {
-  background: initial;
-}
-
-button:focus{
-  outline: 0;
-}
-
-button::after{
-  border: none;
-}
-
-
+/* 全局变量定义 */
 page {
-  background: #f6f6f6;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
+  --primary-color: #00b894; /* 主题色 (Teal green) */
+  --secondary-color: #0984e3; /* 辅助色 (Blue) */
+  --warn-color: #d63031; /* 警告/卖出色 (Red) */
+  --success-color: #00b894; /* 成功色 */
+  --text-main: #2d3436; /* 主要文字 */
+  --text-sub: #636e72; /* 次要文字 */
+  --bg-body: #f5f6fa; /* 页面背景 */
+  --bg-card: #ffffff; /* 卡片背景 */
+  --border-radius-lg: 24rpx;
+  --border-radius-md: 16rpx;
+  --shadow-sm: 0 2rpx 8rpx rgba(0,0,0,0.05);
+  --shadow-md: 0 8rpx 24rpx rgba(0,0,0,0.08);
+  
+  background-color: var(--bg-body);
+  font-family: -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Helvetica, Segoe UI, Arial, Roboto, 'PingFang SC', 'Microsoft Yahei', sans-serif;
+  font-size: 28rpx;
+  color: var(--text-main);
+  box-sizing: border-box;
 }
 
-.row.wrap {
-  width:100%;
+/* 通用容器 */
+.container {
+  padding: 30rpx;
+  padding-bottom: 120rpx; /* 为底部 TabBar 或 FAB 留空 */
+}
+
+/* 通用卡片样式 */
+.card {
+  background: var(--bg-card);
+  border-radius: var(--border-radius-md);
+  padding: 30rpx;
+  margin-bottom: 24rpx;
+  box-shadow: var(--shadow-sm);
+}
+
+/* 通用Flex行 */
+.row-between {
   display: flex;
-  flex-wrap: wrap;
+  justify-content: space-between;
   align-items: center;
+}
+.row-start {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+.row-center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* 通用按钮 */
+.btn-primary {
+  background-color: var(--primary-color);
+  color: #fff;
+  border-radius: 50rpx;
+  font-weight: 600;
+  font-size: 32rpx;
+  padding: 24rpx 0;
+  box-shadow: 0 4rpx 12rpx rgba(0, 184, 148, 0.3);
+}
+.btn-primary:active {
+    opacity: 0.9;
+    transform: scale(0.99);
+}
+.btn-danger {
+    background-color: var(--warn-color);
+    color: #fff;
+    border-radius: 50rpx;
+    font-weight: 600;
+    padding: 24rpx 0;
+}
+
+/* 通用输入框组 */
+.form-group {
   margin-bottom: 30rpx;
 }
-
-.label {
-  font-size: 28rpx;
-  color: #555;
-  min-width: 120rpx; /* label 最小宽度，可以换行 */
-  margin-bottom: 6rpx; /* 如果换行，和输入框保持间距 */
+.form-label {
+  font-size: 26rpx;
+  color: var(--text-sub);
+  margin-bottom: 12rpx;
+  display: block;
+  font-weight: 500;
 }
-
-.input-full,.picker-full {
-  flex: 1;
-  border: 1rpx solid #ccc;
-  border-radius: 8rpx;
-  padding: 6rpx 10rpx;
-  font-size: 28rpx;
-  min-width: 150rpx; /* 防止太窄 */
-  height:50rpx;
-}
-.picker-box {
-  padding: 5rpx 0;
-  border-radius: 8rpx;
-  box-sizing: border-box;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-
-.picker-text {
-  font-size: 28rpx;
-}
-.placeholder {
-  color: #808080;
-}
-
-.arrow {
-  font-size: 32rpx;
-  color: var(--sub);
-  margin: 0 10rpx;
-  transform: rotate(90deg); /* 让 > 变成向下 */
-  display: inline-block; /* 必须给它，否则不能旋转 */
-  line-height: 32rpx;
-}
-
-/* 按钮 */
-.add-btn {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height:70rpx;
-  margin-top: 40rpx;
-  background-color: #1e90ff;
-  color: #fff;
-  font-size: 30rpx;
+.form-input {
+  background: #f1f2f6;
+  padding: 24rpx;
   border-radius: 12rpx;
-  padding: 12rpx 0;
-  text-align: center;
+  font-size: 30rpx;
+  color: var(--text-main);
+  width: 100%;
+  box-sizing: border-box;
+  border: 1rpx solid transparent;
+  transition: all 0.3s;
 }
-.btn-disabled {
-  background-color: #d9d9d9 !important; /* 灰色背景 */
-  color: #a0a0a0 !important; /* 灰色文字 */
-  cursor: not-allowed; /* 鼠标提示不可点击 */
+.form-input:focus {
+    border-color: var(--primary-color);
+    background: #fff;
 }
 
-/* 标题 */
-.mine-header {
-  margin-bottom: 40rpx;
+/* 状态标签 */
+.badge {
+  padding: 6rpx 16rpx;
+  border-radius: 30rpx;
+  font-size: 22rpx;
+  font-weight: 600;
 }
-.mine-title {
-  font-size: 42rpx;
-  font-weight: 700;
-  color: #111;
-}
+.badge-holding { background: #e3fcef; color: #00b894; } /* 未卖 */
+.badge-sold { background: #ffeaea; color: #d63031; } /* 已卖 */
+.badge-partial { background: #fff4e6; color: #fdcb6e; } /* 部分卖 */
+
+/* 辅助文本类 */
+.text-sub { color: var(--text-sub); }
+.text-primary { color: var(--primary-color); }
+.text-warn { color: var(--warn-color); }
+.font-bold { font-weight: 600; }
+.font-lg { font-size: 36rpx; }
+.font-xl { font-size: 48rpx; }

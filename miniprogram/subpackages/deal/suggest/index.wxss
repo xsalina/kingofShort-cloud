@@ -1,174 +1,270 @@
+/* ---------------- 全局容器 ---------------- */
 .container {
-  padding: 30rpx 20rpx;
-  background: #f5f6fa;
-  min-height: 100vh;
-}
-
-.section {
-  width: 100%;
-  background: #ffffff;
+  /* 【绝对不能加】overflow: hidden; 否则吸顶失效 */
+  /* 【绝对不能加】height: 100vh; 否则页面无法滚动 */
   padding: 30rpx;
+  background-color: #eff2f5;
+  min-height: 100vh;
+  box-sizing: border-box;
+  padding-bottom: 40rpx;
+}
+
+/* ---------------- 通用卡片 ---------------- */
+.card {
+  background: #ffffff;
   border-radius: 20rpx;
-  box-shadow: 0 6rpx 12rpx rgba(0, 0, 0, 0.05);
-  box-sizing: border-box;
+  box-shadow: 0 4rpx 16rpx rgba(149, 157, 165, 0.05);
+  padding: 30rpx;
+  margin-bottom: 30rpx;
 }
 
-.field {
+.section-title {
+  font-size: 28rpx;
+  font-weight: bold;
+  color: #2d3436;
+  margin-bottom: 24rpx;
+  padding-left: 10rpx;
+  border-left: 6rpx solid #00b894;
+  line-height: 1;
+}
+
+/* ---------------- 1. 输入区域 (网格) ---------------- */
+.grid-container { display: flex; flex-direction: column; }
+.grid-row { display: flex; gap: 30rpx; }
+.mt-20 { margin-top: 30rpx; }
+.grid-item { flex: 1; }
+
+.label {
+  font-size: 24rpx;
+  color: #636e72;
+  margin-bottom: 12rpx;
+  display: block;
+}
+
+.input-wrap {
+  background: #f7f9fc;
+  border-radius: 12rpx;
+  padding: 0 20rpx;
+  height: 80rpx;
   display: flex;
-  justify-content: space-between;
   align-items: center;
-  margin-bottom: 15rpx;
+  border: 1rpx solid transparent;
 }
-
-.field text {
-  font-size: 30rpx;
-  width: 220rpx;
-}
-
-.field input {
-  background: #f0f2f5;
-  padding: 8rpx 16rpx;
-  border-radius: 12rpx;
-  width: 300rpx;
-}
-
-.btn {
-  width: 100%;
-  background: #3a7afe;
-  color: #fff;
-  padding: 22rpx;
-  border-radius: 12rpx;
-  margin-top: 20rpx;
-}
-
-.tabs {
-  width:100%;
-  display: flex;
-  margin-top: 30rpx;
-  justify-content: space-between;
-}
-
-.tab {
-  width:49%;
-  padding: 20rpx 0;
-  text-align: center;
-  background: #d7d9dd;
-  border-radius: 12rpx;
-}
-
-.tab-item.active {
-  /* background: #3a7afe; */
-  color: #fff;
-  font-weight: bold;
-}
-
-.tips {
-  width: 100%;
-  margin-top: 30rpx;
-  background: #fff7e6;
-  padding: 20rpx;
-  border-radius: 12rpx;
-  color: #d97a00;
-  font-size: 30rpx;
-  box-sizing: border-box;
-}
-.tips-text{
-}
-
-.title {
-  margin-top: 40rpx;
-  font-size: 34rpx;
-  font-weight: bold;
-}
-
-.table {
-  margin-top: 20rpx;
+/* 聚焦高亮 */
+.input-wrap:focus-within {
   background: #fff;
-  border-radius: 12rpx;
-  overflow: hidden;
+  border-color: #00b894;
+  box-shadow: 0 0 0 4rpx rgba(0, 184, 148, 0.1);
 }
 
-.thead,
-.trow {
-  display: grid;
-  grid-template-columns: repeat(7, 1fr);
-  padding: 20rpx 8rpx;
-  font-size: 26rpx;
-  text-align: center;
-  border-bottom: 1px solid #eee;
-  align-items: center;
-}
-
-.trow text{
-  white-space: pre-line;
-}
-
-.thead {
-  background: #f0f2f5;
-  font-weight: bold;
-}
-.main-swiper {
+.input {
   width: 100%;
-  height: 800rpx;
-  margin:20rpx 0 100rpx 0;
-}
-.swiper-title{
-  text-align: center;
-  font-size:30rpx;
-  font-weight: bold;
+  height: 100%;
+  font-size: 30rpx;
+  font-weight: 600;
+  color: #2d3436;
 }
 
 .tab-wrapper {
-  width: 100%;
-  height: 80rpx;
-  margin-top:40rpx;
-  position: relative;
+  /* 1. 开启吸顶 */
+  position: -webkit-sticky; /* iOS 兼容 */
+  position: sticky;
+  
+  /* 2. 设置吸顶位置：0 表示贴着屏幕最顶端 */
+  top: 0; 
+  
+  /* 3. 提高层级，防止被表格内容盖住 */
+  z-index: 100;
+  
+  /* 4. 其他样式 */
   display: flex;
-  border-radius: 8px;
+  background: #ffffff;
+  padding: 8rpx;
+  border-radius: 16rpx;
+  margin-bottom: 30rpx;
+  /* 吸顶时加深阴影，更有层次感 */
+  box-shadow: 0 4rpx 16rpx rgba(0,0,0,0.08); 
   overflow: hidden;
-  background: #ccc;
-  color:#fff;
 }
 
-.tab-item {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex: 1;
-  text-align: center;
-  line-height: 100%;
-  font-size: 30rpx;
-  z-index: 2;
-  position: relative;
-  cursor: pointer;
-  user-select: none;
-  transition: color 0.3s;
-  color:#999;
-  font-weight: bold;
-}
-
+/* 动态滑块 (浅绿背景) */
 .tab-slider {
   position: absolute;
-  width: 50%;
-  height: 100%;
-  background: #32cd32;
-  top: 0;
-  left: 0;
-  border-radius: 8px;
-  z-index: 1;
-  transition: transform 0.3s ease;
+  top: 8rpx;
+  left: 8rpx;
+  bottom: 8rpx;
+  /* 【关键修改】这里是除以 2，因为只有两个选项 */
+  width: calc((100% - 16rpx) / 2); 
+  background: #e3fcef; 
+  border-radius: 12rpx;
+  z-index: 1; /* 层级：在背景之上，文字之下 */
+  
+  /* 丝滑动画 */
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1); 
 }
-.tips-down{
-  color:#999;
+
+/* Tab 文字项 */
+.tab-item {
+  flex: 1;
+  text-align: center;
+  padding: 20rpx 0; /* 高度稍微给足一点 */
+  font-size: 28rpx;
+  color: #999;
+  border-radius: 12rpx;
+  position: relative;
+  z-index: 2; /* 必须比滑块高，才能点击 */
+  transition: color 0.3s;
+  font-weight: 500;
 }
-.tips-hight{
-  color:#32cd32;
-}
-.add-money text{
-  color:#32cd32;
+
+/* 选中状态 (文字变绿) */
+.tab-item.active {
+  color: #00b894;
   font-weight: bold;
 }
-.reduce-money text{
-  color:#999;
+/* ---------------- 3. 温馨提示 ---------------- */
+.tips-card {
+  background: #fff8e1; /* 浅黄色背景 */
+  border-radius: 16rpx;
+  padding: 20rpx;
+  margin-bottom: 30rpx;
+  display: flex;
+  align-items: flex-start;
+  border: 1rpx solid #ffe082;
+}
+
+.tips-icon { margin-right: 16rpx; font-size: 30rpx; }
+.tips-content { flex: 1; }
+.tips-text {
+  font-size: 24rpx;
+  color: #f57c00;
+  line-height: 1.5;
+  margin-bottom: 4rpx;
+}
+
+/* ---------------- 4. Swiper & 表格 ---------------- */
+.main-swiper {
+  height: 800rpx; /* 需要给 swiper 一个足够的高度，或者使用自适应方案 */
+}
+
+/* 表格卡片头部 */
+.card-header-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20rpx;
+  padding-bottom: 15rpx;
+  border-bottom: 1rpx solid #f0f0f0;
+}
+.card-title { font-size: 30rpx; font-weight: bold; color: #2d3436; }
+.card-tag {
+  font-size: 22rpx; padding: 4rpx 12rpx; border-radius: 8rpx; font-weight: bold;
+}
+.card-tag.green { background: #e3fcef; color: #00b894; }
+.card-tag.red { background: #ffeaea; color: #ff4500; }
+
+/* 表格结构 */
+.table { width: 100%; font-size: 24rpx; }
+
+.thead {
+  display: flex;
+  background: #f8f9fa;
+  border-radius: 8rpx;
+  padding: 16rpx 0;
+  color: #636e72;
   font-weight: bold;
+  margin-bottom: 10rpx;
+}
+
+.tbody { display: flex; flex-direction: column; }
+
+.trow {
+  display: flex;
+  padding: 20rpx 0;
+  border-bottom: 1rpx dashed #f0f0f0;
+  color: #2d3436;
+  align-items: center;
+}
+
+/* 列宽控制 (根据内容重要性分配) */
+.th, .td { text-align: center; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.col-status { width: 10%; }
+.col-level { width: 12%; color: #999; }
+.col-rate  { width: 15%; }
+.col-price { width: 20%; }
+.col-num   { width: 18%; }
+.col-money { width: 25%; font-family: 'DIN Alternate', sans-serif; } /* 金额给宽点 */
+
+.font-bold { font-weight: bold; }
+
+/* 触发状态高亮 */
+.row-triggered-buy {
+  background-color: #e3fcef; /* 浅绿底 */
+  border-radius: 8rpx;
+}
+.row-triggered-buy .col-price, 
+.row-triggered-buy .col-money { 
+  color: #00b894; font-weight: bold; 
+}
+
+.row-triggered-sell {
+  background-color: #ffeaea; /* 浅红底 */
+  border-radius: 8rpx;
+}
+.row-triggered-sell .col-price, 
+.row-triggered-sell .col-money { 
+  color: #ff4500; font-weight: bold; 
+}
+/* ================= 【新增】策略概览卡片 ================= */
+.summary-panel {
+  background: #fff;
+  margin: 20rpx; /* 上下留出间距 */
+  padding: 30rpx;
+  border-radius: 12rpx;
+  box-shadow: 0 2rpx 10rpx rgba(0,0,0,0.03);
+}
+.summary-title { font-size: 30rpx; font-weight: bold; margin-bottom: 20rpx; border-left: 6rpx solid #1890ff; padding-left: 10rpx; line-height: 1;}
+.summary-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20rpx;
+}
+.summary-item {
+  width: 48%; /* 一行两个 */
+  background: #f9f9f9;
+  padding: 20rpx;
+  border-radius: 8rpx;
+  box-sizing: border-box;
+}
+.summary-item:last-child { width: 100%; } /* 最后一个占满一行 */
+
+.sum-label { font-size: 24rpx; color: #666; display: block; margin-bottom: 8rpx; }
+.sum-value { font-size: 32rpx; font-weight: bold; color: #333; font-family: 'DIN Alternate', sans-serif;}
+.sum-value.profit { color: #ff4d4f; }
+.sum-valuerange { font-size: 28rpx; font-weight: bold; color: #1890ff; }
+
+
+/* ================= 【新增】底部风险提示 ================= */
+.footer-tips {
+  padding: 100rpx 30rpx 60rpx; /* 底部留够空间 */
+  text-align: center;
+}
+.footer-line { font-size: 24rpx; color: #ccc; margin-bottom: 20rpx; }
+.footer-text { font-size: 22rpx; color: #999; line-height: 1.6; }
+
+/* ================= Swiper 指示点美化 (短横线风格) ================= */
+
+/* 默认点：灰色短条 */
+.main-swiper .wx-swiper-dot {
+  width: 12rpx;
+  height: 6rpx;
+  background: rgba(0, 0, 0, 0.15);
+  border-radius: 4rpx;
+  transition: all 0.3s;
+}
+
+/* 选中点：绿色长条 (跟随主题色) */
+.main-swiper .wx-swiper-dot-active {
+  width: 32rpx; /* 选中变长 */
+  background: #00b894;
 }
