@@ -26,7 +26,7 @@ exports.main = async (event) => {
         price,
         quantity,
         fee = 0,
-        code
+        code,
       } = event;
       if (
         !stockId ||
@@ -40,7 +40,7 @@ exports.main = async (event) => {
       }
 
       // 精确计算 avgCost
-      const totalCost = new Decimal(price).times(quantity).plus(fee);
+      const totalCost = new Decimal(price).times(quantity).plus(fee || 0);
       const avgCost = totalCost.div(quantity).toDecimalPlaces(3).toNumber();
 
       const newTrade = {
@@ -167,7 +167,7 @@ exports.main = async (event) => {
 
       const skip = (page - 1) * pageSize;
 
-      // 只按 buyTime 粗排一下
+      // 先按 buyTime 大致排序，后续手动再排序
       const res = await db
         .collection(tradesListCollections)
         .where(query)
@@ -178,29 +178,31 @@ exports.main = async (event) => {
 
       const list = res.data || [];
 
-      // 兼容 Node.js 的写法：不要 ?. 字段
+      // 计算每条记录的排序时间 B
       list.forEach((trade) => {
-        const ls = trade.lastSellTime;
-        const bt = trade.buyTime;
+        let bt = trade.buyTime;
+        let ls = trade.lastSellTime;
 
-        trade.sortSell = ls
-          ? ls.toDate
-            ? ls.toDate().getTime()
-            : new Date(ls).getTime()
-          : 0;
+        // buyTime 处理
+        if (bt) {
+          bt = bt.toDate ? bt.toDate().getTime() : new Date(bt).getTime();
+        } else {
+          bt = 0;
+        }
 
-        trade.sortBuy = bt
-          ? bt.toDate
-            ? bt.toDate().getTime()
-            : new Date(bt).getTime()
-          : 0;
+        // lastSellTime 处理
+        if (ls) {
+          ls = ls.toDate ? ls.toDate().getTime() : new Date(ls).getTime();
+        } else {
+          ls = 0;
+        }
+
+        // B = 两者较晚的那个时间
+        trade.sortB = Math.max(bt, ls);
       });
 
-      // 排序：先 lastSellTime，后 buyTime
-      list.sort((a, b) => {
-        if (b.sortSell !== a.sortSell) return b.sortSell - a.sortSell;
-        return b.sortBuy - a.sortBuy;
-      });
+      // 排序：sortB 越大（时间越晚）越前
+      list.sort((a, b) => b.sortB - a.sortB);
 
       // 排 sellRecords
       list.forEach((trade) => {
@@ -212,7 +214,7 @@ exports.main = async (event) => {
             tA = tA.toDate ? tA.toDate() : new Date(tA);
             tB = tB.toDate ? tB.toDate() : new Date(tB);
 
-            return tB - tA;
+            return tB - tA; // 越晚越前
           });
         }
       });
