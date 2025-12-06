@@ -19,6 +19,6 @@
       class="icon" 
       src="{{selected === 1 ? '/assets/images/account2.png' : '/assets/images/account1.png'}}" 
     />
-    <view class="text {{selected === 1 ? 'selected' : ''}}">我的</view>
+    <view class="text {{selected === 1 ? 'selected' : ''}}">个人中心</view>
   </view>
 </view>
