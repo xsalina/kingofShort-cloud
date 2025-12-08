@@ -16,7 +16,7 @@ App({
   },
   downShareImage() {
     const filedImageUrl =
-      "cloud://cloud1-7gdq3emj774ac1dd.636c-cloud1-7gdq3emj774ac1dd-1318657306/share2.png";
+      "cloud://cloud1-7gdq3emj774ac1dd.636c-cloud1-7gdq3emj774ac1dd-1318657306/WechatIMG2.jpg";
     wx.cloud.downloadFile({
       fileID: filedImageUrl,
       success: (res) => {

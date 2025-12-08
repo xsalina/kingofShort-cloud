@@ -32,7 +32,7 @@
       <view class="form-col">
         <text class="label">买入数量</text>
         <view class="input-wrap">
-          <input class="input" type="number" placeholder="0" value="{{qty}}" data-field="qty" bindinput="onInput" />
+          <input class="input" type="digit" placeholder="0" value="{{qty}}" data-field="qty" bindinput="onInput" />
           <text class="suffix">股</text>
         </view>
       </view>
