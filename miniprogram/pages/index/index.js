@@ -7,6 +7,7 @@ Page({
     transactions: [],
     loaded: false,
     isIpx: false,
+    initData:true,
   },
   async onLoad() {
     const userInfo = await app.refreshUserInfo();
@@ -55,7 +56,12 @@ Page({
     });
   },
   queryTradesList() {
-    wx.showLoading({ title: "加载数据中..." });
+    const {initData} = this.data;
+    if(initData){
+      wx.showLoading({ title: "加载数据中..." });
+      this.setData({initData:false})
+    }
+    
     wxCloud
       .call({
         name: "trade",

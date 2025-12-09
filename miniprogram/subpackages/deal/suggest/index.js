@@ -7,10 +7,10 @@ const {
 
 Page({
   data: {
-    lastBuyPrice: "423.28",
-    cash: "10286",
-    hold: "5",
-    todayPrice: "454.53",
+    lastBuyPrice: "",
+    cash: "",
+    hold: "",
+    todayPrice: "",
     mode: "steady",
     buyTable: [],
     sellTable: [],

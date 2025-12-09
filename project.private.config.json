@@ -180,6 +180,13 @@
           "query": "",
           "launchMode": "default",
           "scene": null
+        },
+        {
+          "name": "",
+          "pathName": "subpackages/deal/add-deal/index",
+          "query": "",
+          "launchMode": "default",
+          "scene": null
         }
       ]
     }

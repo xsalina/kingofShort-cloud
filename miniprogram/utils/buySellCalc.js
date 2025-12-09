@@ -121,7 +121,7 @@ function buildTips(T, P, highestBuy, highestSell) {
       tips += '可等待卖出层级触发后部分止盈'
     }
   } else {
-    tips += `当前价格低于成本 ${format(Math.abs(diff))}%，`;
+    tips += `当前价格低于成本 ${format(Math.abs(diff)) || 0}%，`;
      if(!highestBuy){
       tips += '可在买入层级触发时逐步补仓'
     }

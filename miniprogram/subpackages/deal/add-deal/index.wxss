@@ -1,8 +1,19 @@
 /* ---------------- 全局容器 ---------------- */
+/* 确保页面底色一致 */
+page {
+  background-color: #eff2f5; 
+  /* 如果你的 container 有 min-height: 100vh，这里很重要 */
+  overflow-x: hidden; /* 防止左右晃动 */
+}
+
 .container {
   padding: 30rpx;
   background-color: #eff2f5;
   min-height: 100vh;
+  box-sizing: border-box;
+  
+  /* 加上这一句，保证上移时更流畅 */
+  will-change: transform;
 }
 
 /* ---------------- 通用卡片 ---------------- */

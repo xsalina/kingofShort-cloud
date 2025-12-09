@@ -32,6 +32,7 @@ Page({
       { name: "英伟达", market: "美股", currency: "$", code: "USD" },
       { name: "纳指 100 ETF", market: "美股", currency: "$", code: "USD" },
     ],
+    keyboardHeight: 0
   },
   async onLoad() {
     const userInfo = await app.refreshUserInfo();
@@ -40,6 +41,7 @@ Page({
       userInfo,
     });
     this.queryTypeList();
+    this.wxOnKeyboard()
   },
   onShow() {
      this.queryTypeList();
@@ -51,7 +53,22 @@ Page({
       imageUrl: app.globalData.shareImageUrl,
     };
   },
-
+  onUnload() {
+    wx.offKeyboardHeightChange();
+  },
+  wxOnKeyboard() {
+    // 监听键盘高度变化事件
+    wx.onKeyboardHeightChange(res => {
+      // res.height 即为键盘高度
+      console.log(56834534,res.height)
+      // res.height 是当前键盘高度
+        // 只有当高度真正变化时才更新，避免不必要的渲染
+        if (res.height !== this.data.keyboardHeight) {
+          this.setData({ keyboardHeight: res.height });
+        }
+      
+    })  
+  },
   onStockChange(e) {
     const { userInfo, stockOptions, unRegisterTypes } = this.data;
     const index = parseInt(e.detail.value);

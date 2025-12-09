@@ -4,24 +4,24 @@
     
     <view class="bento-main">
       <view class="bento-header">
-        <text class="label">本月收益 (CNY)</text>
-        <!-- <view class="trend-icon">📈</view> -->
+        <text class="label">本月收益 (USD)</text>
+        <view class="trend-icon">📈</view>
       </view>
       <view class="bento-value">
-        <text class="symbol">¥</text>
-        <text class="num">{{monthProfit['¥'] || '0.00'}}</text>
+        <text class="symbol">$</text>
+        <text class="num">{{monthProfit['$'] || '0.00'}}</text>
       </view>
       <view class="bento-footer">
         <text class="sub-label">累计</text>
-        <text class="sub-val">¥{{totalProfit['¥'] || '0.00'}}</text>
+        <text class="sub-val">${{totalProfit['$'] || '0.00'}}</text>
       </view>
       <view class="circle-decor"></view>
     </view>
 
     <view class="bento-side">
       <view class="bento-item usd-item">
-        <view class="side-label">USD ($)</view>
-        <view class="side-val">{{monthProfit['$'] || '0'}}</view>
+        <view class="side-label">CNY (¥)</view>
+        <view class="side-val">{{monthProfit['¥'] || '0'}}</view>
       </view>
       <view class="bento-item hkd-item">
         <view class="side-label">HKD (HK$)</view>

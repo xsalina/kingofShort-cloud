@@ -42,7 +42,7 @@
   align-items: center;
 }
 .bento-header .label { font-size: 24rpx; opacity: 0.8; }
-.trend-icon { font-size: 32rpx; background: rgba(255,255,255,0.2); border-radius: 50%; padding: 4rpx; }
+.trend-icon { font-size: 32rpx;  border-radius: 50%; padding: 4rpx; }
 
 .bento-value {
   margin-top: 10rpx;

@@ -11,7 +11,10 @@ Page({
       userInfo: app.globalData.userInfo || null,
       // loaded: true
     });
-    this.refreshData();
+    if(!app.globalData.userInfo){
+      this.refreshData();
+    }
+   
   },
   async onShow() {
     if (typeof this.getTabBar === "function" && this.getTabBar()) {
