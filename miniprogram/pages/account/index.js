@@ -4,17 +4,17 @@ Page({
   data: {
     userInfo: null,
     loaded: false,
-    stats:{}
+    stats: {},
   },
   onLoad() {
     this.setData({
       userInfo: app.globalData.userInfo || null,
-      // loaded: true
+      loaded: !!app.globalData.userInfo,
     });
-    if(!app.globalData.userInfo){
+    if (!app.globalData.userInfo) {
       this.refreshData();
+      this.queryData();
     }
-   
   },
   async onShow() {
     if (typeof this.getTabBar === "function" && this.getTabBar()) {
@@ -37,7 +37,6 @@ Page({
   },
   // 刷新用户信息
   async refreshData() {
-    this.setData({ loaded: false });
     wx.showLoading({ title: "更新中..." });
     const userInfo = await app.refreshUserInfo();
     wx.hideLoading();
@@ -45,7 +44,6 @@ Page({
       userInfo,
       loaded: true,
     });
-    this.queryData()
   },
   queryData() {
     wxCloud
@@ -54,8 +52,8 @@ Page({
         data: { userId: this.data.userInfo.userId },
       })
       .then((res) => {
-        if(res.result.code === 0){
-          this.setData({stats:res.result.data})
+        if (res.result.code === 0) {
+          this.setData({ stats: res.result.data });
         }
         console.log("统计数据：", res.result);
       });

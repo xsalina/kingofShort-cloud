@@ -32,7 +32,7 @@ Page({
       { name: "英伟达", market: "美股", currency: "$", code: "USD" },
       { name: "纳指 100 ETF", market: "美股", currency: "$", code: "USD" },
     ],
-    keyboardHeight: 0
+    keyboardHeight: 0,
   },
   async onLoad() {
     const userInfo = await app.refreshUserInfo();
@@ -41,10 +41,18 @@ Page({
       userInfo,
     });
     this.queryTypeList();
-    this.wxOnKeyboard()
+    this.wxOnKeyboard();
   },
-  onShow() {
-     this.queryTypeList();
+  async onShow() {
+    if (app.globalData.forceRefresh) {
+      await this.refreshData();
+      app.globalData.forceRefresh = false;
+      this.setData({
+        selectedStockIndex: -1,
+        selectedStockObj: null,
+      });
+    }
+    this.queryTypeList();
   },
   // 分享功能
   onShareAppMessage() {
@@ -56,18 +64,24 @@ Page({
   onUnload() {
     wx.offKeyboardHeightChange();
   },
+  // 刷新用户信息
+  async refreshData() {
+    wx.showLoading({ title: "更新中..." });
+    const userInfo = await app.refreshUserInfo();
+    wx.hideLoading();
+    this.setData({
+      userInfo,
+    });
+  },
   wxOnKeyboard() {
     // 监听键盘高度变化事件
-    wx.onKeyboardHeightChange(res => {
-      // res.height 即为键盘高度
-      console.log(56834534,res.height)
+    wx.onKeyboardHeightChange((res) => {
       // res.height 是当前键盘高度
-        // 只有当高度真正变化时才更新，避免不必要的渲染
-        if (res.height !== this.data.keyboardHeight) {
-          this.setData({ keyboardHeight: res.height });
-        }
-      
-    })  
+      // 只有当高度真正变化时才更新，避免不必要的渲染
+      if (res.height !== this.data.keyboardHeight) {
+        this.setData({ keyboardHeight: res.height });
+      }
+    });
   },
   onStockChange(e) {
     const { userInfo, stockOptions, unRegisterTypes } = this.data;
@@ -112,11 +126,14 @@ Page({
       buyCost: parseFloat(buyCost),
     });
   },
-
+  goRegister() {
+    wx.navigateTo({
+      url: "/pages/register/index",
+    });
+  },
   addTransaction() {
     const { price, qty, selectedStockObj, buyfee, userInfo } = this.data;
-    if (!userInfo?.userId)
-      return wx.showToast({ title: "请先去个人中心登录/注册", icon: "none" });
+    if (!userInfo?.userId) return this.goRegister();
     if (!selectedStockObj)
       return wx.showToast({ title: "请选择股票名称", icon: "none" });
     if (!price || !qty)
@@ -137,7 +154,7 @@ Page({
           price,
           quantity: qty,
           fee: buyfee,
-          code:selectedStockObj.code
+          code: selectedStockObj.code,
         },
       })
       .then((res) => {
@@ -161,7 +178,7 @@ Page({
     });
   },
   queryTypeList() {
-    if(!this.data.userInfo?.userId)return;
+    if (!this.data.userInfo?.userId) return;
     wx.showLoading({ title: "加载中..." });
     wxCloud
       .call({
