@@ -187,6 +187,13 @@
           "query": "",
           "launchMode": "default",
           "scene": null
+        },
+        {
+          "name": "liest",
+          "pathName": "subpackages/deal/list/index",
+          "query": "",
+          "launchMode": "default",
+          "scene": null
         }
       ]
     }

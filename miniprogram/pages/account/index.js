@@ -13,8 +13,8 @@ Page({
     });
     if (!app.globalData.userInfo) {
       this.refreshData();
-      this.queryData();
     }
+    this.queryData();
   },
   async onShow() {
     if (typeof this.getTabBar === "function" && this.getTabBar()) {
@@ -46,6 +46,7 @@ Page({
     });
   },
   queryData() {
+    if(!this.data.userInfo?.userId)return 
     wxCloud
       .call({
         name: "getUserStats",

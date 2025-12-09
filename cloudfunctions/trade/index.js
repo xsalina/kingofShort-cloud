@@ -152,11 +152,19 @@ exports.main = async (event) => {
       });
     } else if (action === "list") {
       // -------- 查询交易列表 --------
-      let { stockId, status, page = 1, pageSize = 10 } = event;
+      let { stockId, status, stockName, page = 1, pageSize = 10 } = event;
 
       const query = { userId };
       if (stockId) query.stockId = stockId;
       if (status) query.status = status;
+
+      // 【核心新增】模糊查询 stockName
+      if (stockName && stockName.trim()) {
+        query.stockName = db.RegExp({
+          regexp: stockName.trim(), // 你的搜索关键词
+          options: "i", // 'i' 表示不区分大小写
+        });
+      }
 
       // 总数统计
       const totalRes = await db

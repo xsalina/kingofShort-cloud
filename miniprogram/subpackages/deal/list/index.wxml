@@ -1,4 +1,27 @@
 <view class="container">
+  <view class="search-section">
+    <view class="search-bar">
+      <icon class="search-icon" type="search" size="16" color="#b2bec3"></icon>
+      <input class="search-input" placeholder="输入股票名称" placeholder-class="ph-style" confirm-type="search" bindinput="onInputKeyword" bindconfirm="onSearch" value="{{searchKeyword}}" />
+      <view class="clear-icon" wx:if="{{searchKeyword}}" bindtap="onClear">✕</view>
+      <view class="search-btn" bindtap="onSearch">搜索</view>
+    </view>
+  </view>
+  <view class="history-panel" wx:if="{{!searchKeyword && historyList.length > 0}}">
+    <view class="history-header">
+      <text class="h-title">历史搜索</text>
+      <view class="h-delete" bindtap="onClearHistory">
+        <image src="/assets/images/delete.png" class="del-icon" mode="aspectFit"></image>
+      </view>
+    </view>
+    <view class="history-tags">
+      <block wx:for="{{historyList}}" wx:key="*this">
+        <view class="tag" bindtap="onTapHistory"  bindlongpress="onLongPressHistory" 
+          data-val="{{item}}"
+          data-index="{{index}}">{{item}}</view>
+      </block>
+    </view>
+  </view>
   <!-- tab 切换 -->
   <view class="tabs-wrapper sticky-top">
     <view class="tab-slider" style="transform: translateX({{currentTabIndex * 100}}%);"></view>
@@ -16,7 +39,7 @@
   </view>
   <block wx:if="{{transactions.length === 0 && loaded}}">
     <!-- 空状态 -->
-    <empty-tips  />
+    <empty-tips />
   </block>
   <view class="have-nomore" wx:if="{{transactions.length >= 4 && loaded && !hasMore}}">没有更多了</view>
 </view>

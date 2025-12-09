@@ -5,6 +5,122 @@
   padding: 30rpx;
   box-sizing: border-box;
 }
+/* --- 搜索框区域 --- */
+.search-section {
+  background: #eff2f5;
+  padding-bottom: 20rpx;
+  position: relative;
+  z-index: 10;
+}
+
+.search-bar {
+  background: #ffffff;
+  height: 88rpx; /* 稍微加高一点，为了放按钮 */
+  border-radius: 44rpx; /* 全圆角 */
+  display: flex;
+  align-items: center;
+  padding: 0 10rpx 0 30rpx; /* 右边padding小一点，因为放了按钮 */
+  box-shadow: 0 4rpx 16rpx rgba(0,0,0,0.04);
+}
+
+.search-icon {
+  margin-right: 10rpx;
+}
+
+.search-input {
+  flex: 1;
+  font-size: 28rpx;
+  color: #2d3436;
+  height: 100%;
+}
+.ph-style { color: #b2bec3; }
+
+/* 清除小叉叉 */
+.clear-icon {
+  width: 36rpx; height: 36rpx;
+  background: #dfe6e9; color: #fff;
+  border-radius: 50%; font-size: 20rpx;
+  display: flex; align-items: center; justify-content: center;
+  margin-right: 20rpx;
+  z-index: 2; /* 保证能点到 */
+}
+
+/* 【核心】搜索按钮样式 */
+.search-btn {
+  width: 120rpx;
+  height: 68rpx;
+  background: linear-gradient(135deg, #00b894, #00cec9); /* 品牌渐变绿 */
+  color: #fff;
+  font-size: 28rpx;
+  font-weight: bold;
+  border-radius: 34rpx; /* 胶囊圆角 */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+  box-shadow: 0 4rpx 10rpx rgba(0, 184, 148, 0.2);
+}
+
+/* 点击态 */
+.search-btn:active {
+  transform: scale(0.95);
+  opacity: 0.9;
+}
+
+/* --- 历史搜索区域 --- */
+.history-panel {
+  padding: 10rpx 0 30rpx 0; /* 上右下左 */
+  background: #eff2f5; /* 与背景融合 */
+}
+
+.history-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20rpx;
+}
+
+.h-title {
+  font-size: 26rpx;
+  font-weight: bold;
+  color: #2d3436;
+}
+
+.h-delete {
+  padding: 10rpx; /* 增加点击区域 */
+}
+
+.del-icon {
+  width: 30rpx;
+  height: 30rpx;
+  opacity: 0.5; /* 让图标没那么黑，显得高级 */
+}
+
+.history-tags {
+  display: flex;
+  flex-wrap: wrap; /* 自动换行 */
+  gap: 20rpx;      /* 标签间距 */
+}
+
+.tag {
+  font-size: 24rpx;
+  color: #636e72;
+  background: #ffffff;
+  padding: 10rpx 24rpx;
+  border-radius: 30rpx; /* 胶囊形状 */
+  border: 1rpx solid rgba(0,0,0,0.03);
+  box-shadow: 0 2rpx 6rpx rgba(0,0,0,0.02);
+  max-width: 300rpx;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* 点击反馈 */
+.tag:active {
+  background: #e3fcef; /* 浅绿背景 */
+  color: #00b894;
+}
 
 /* ---------------- Tabs (胶囊滑块 + 吸顶) ---------------- */
 .tabs-wrapper {
