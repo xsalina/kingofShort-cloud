@@ -82,4 +82,19 @@
   <button class="btn-submit {{disabled ? 'disabled' : ''}}" bindtap="addTransaction" loading="{{disabled}}" disabled="{{disabled}}">
     {{disabled ? '创建中...' : '确认建仓'}}
   </button>
+
+  <view style="height: 120px;"></view>
+
+<view class="voice-bar">
+  <button 
+    class="voice-btn {{isRecording ? 'recording' : ''}}" 
+    hover-class="none"
+    bindtouchstart="handleTouchStart"
+    bindtouchend="handleTouchEnd"
+  >
+    <text class="icon">{{isRecording ? '🎙️' : '🗣️'}}</text>
+    {{isRecording ? '松开 结束' : '按住 说话'}}
+  </button>
+  <view class="tips">AI 自动识别交易指令</view>
+</view>
 </view>

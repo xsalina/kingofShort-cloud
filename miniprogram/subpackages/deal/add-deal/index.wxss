@@ -201,3 +201,56 @@ page {
 }
 .btn-submit:active { transform: scale(0.98); opacity: 0.9; }
 .btn-submit.disabled { background: #b2bec3; box-shadow: none; opacity: 0.7; }
+
+/* 固定在底部的容器 */
+.voice-bar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background: #ffffff;
+  padding: 20rpx 0rpx;
+  /* 适配 iPhone X 等全面屏底部的黑条 */
+  padding-bottom: calc(20rpx + env(safe-area-inset-bottom));
+  box-shadow: 0 -4rpx 16rpx rgba(0,0,0,0.05);
+  z-index: 100;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* 按钮主体 */
+.voice-btn {
+  width: 100% !important; /* 强制撑满 */
+  height: 90rpx;
+  line-height: 90rpx;
+  background: #07c160; /* 微信绿，也可以换成你的主题色 */
+  color: white;
+  border-radius: 45rpx;
+  font-size: 32rpx;
+  font-weight: bold;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: all 0.2s;
+}
+
+/* 按钮内的图标 */
+.voice-btn .icon {
+  margin-right: 10rpx;
+  font-size: 36rpx;
+}
+
+/* 按住时的样式（变灰） */
+.voice-btn.recording {
+  background: #cfcfcf;
+  color: #555;
+  transform: scale(0.98); /* 微微缩小，有按压感 */
+}
+
+/* 底部小字提示 */
+.tips {
+  font-size: 22rpx;
+  color: #999;
+  margin-top: 10rpx;
+}

@@ -7,7 +7,7 @@ exports.main = async (event, context) => {
   const wxContext = cloud.getWXContext();
   const openid = wxContext.OPENID;
   const { env } = event;
-  const usersCollections = env === 'prod' ? 'users' : 'test_users'
+  const usersCollections = env === 'prod' ? 'userLists' : 'test_userLists'
   try {
     const userRes = await db.collection(usersCollections).where({ openid }).get();
     if (userRes.data.length > 0) {

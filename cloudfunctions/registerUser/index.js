@@ -11,7 +11,7 @@ exports.main = async (event, context) => {
 
   const { name, phone,env} = event;
 
-  const usersCollections = env === 'prod' ? 'users' : 'test_users';
+  const usersCollections = env === 'prod' ? 'userLists' : 'test_userLists';
   const stockTypesCollections = env === 'prod' ? 'stockTypes' : 'test_stockTypes'
 
   if (!name || !phone) {
