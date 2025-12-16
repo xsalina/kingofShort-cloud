@@ -26,6 +26,16 @@ page {
 }
 
 /* =========================================
+   强制隐藏滚动条 (核心代码)
+   ========================================= */
+.stock-scroll::-webkit-scrollbar {
+  display: none;
+  width: 0;
+  height: 0;
+  color: transparent;
+}
+
+/* =========================================
    卡片样式 (横排版)
    ========================================= */
 .stock-card {
@@ -223,9 +233,25 @@ page {
   margin-bottom: 12rpx;
 }
 
+/* ... 原有的 empty-state 样式 ... */
+
 .empty-sub-text {
   font-size: 24rpx;
   color: #999;
+  margin-bottom: 30rpx; /* 稍微加大一点间距，给下面的标签腾位置 */
+}
+
+/* 【新增】AI 标签样式 */
+.ai-tag {
+  font-size: 20rpx;
+  color: #00b894;             /* 字体用主题绿 */
+  background: rgba(0, 184, 148, 0.1); /* 背景用 10% 透明度的主题绿 */
+  padding: 8rpx 20rpx;        /* 内边距 */
+  border-radius: 30rpx;       /* 圆角变成胶囊状 */
+  font-weight: 500;
+  letter-spacing: 1rpx;       /* 字间距稍微拉开一点 */
+  display: flex;
+  align-items: center;
 }
 
 /* 定义跳动动画 */

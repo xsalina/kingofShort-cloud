@@ -27,10 +27,12 @@
     <view style="width: 20rpx; flex-shrink: 0;"></view>
   </scroll-view>
   <view class="result-box">
-    <view wx:if="{{!loading && !result}}" class="empty-state">
+   <view wx:if="{{!loading && !result}}" class="empty-state">
       <view class="empty-icon">👆</view>
       <text class="empty-text">点击上方卡片</text>
       <text class="empty-sub-text">DeepSeek AI 正在待命，随时为您分析趋势</text>
+      
+      <view class="ai-tag">✨ 本内容由人工智能生成</view>
     </view>
     <view wx:if="{{loading}}" class="loading-state">
       <view class="spinner"></view>
