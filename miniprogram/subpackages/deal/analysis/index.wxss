@@ -2,7 +2,7 @@ page {
   background: #f6f7f9;
   padding-bottom: 50rpx;
 }
-.container { padding: 30rpx 0 0 30rpx; }
+.container { padding: 30rpx 30rpx 0 30rpx; }
 
 .header { margin-bottom: 40rpx; }
 .title { font-size: 48rpx; font-weight: bold; color: #333; display: block; }
@@ -154,8 +154,24 @@ page {
 .change.red { color: #ff4d4f; }
 .change.green { color: #00b894; }
 
-.tags { display: flex; gap: 20rpx; margin-bottom: 30rpx; }
-.tag { background: #f0f2f5; color: #666; font-size: 24rpx; padding: 6rpx 16rpx; border-radius: 8rpx; }
+.tags {
+  display: flex;
+  flex-wrap: wrap; /* 允许换行，防止手机屏幕太窄挤出去了 */
+  gap: 16rpx;      /* 标签之间的间距 */
+  margin-bottom: 30rpx;
+}
+
+.tag {
+  background: #f0f2f5;
+  color: #555;     /* 颜色稍微深一点，更清晰 */
+  font-size: 24rpx;
+  padding: 8rpx 16rpx;
+  border-radius: 8rpx;
+  font-weight: 500; /* 字体稍微加粗 */
+  
+  /* 加上一点边框，显得精致 */
+  border: 1rpx solid #e1e4e8;
+}
 
 .divider { height: 1rpx; background: #eee; margin: 30rpx 0; }
 .ai-title { font-size: 30rpx; font-weight: bold; margin-bottom: 16rpx; color: #00b894; }
