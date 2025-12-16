@@ -81,9 +81,50 @@ Page({
   },
 
   // 渲染助手函数
+ // 渲染结果（带打字机效果）
   renderResult(data) {
+    // 1. 先判断涨跌颜色
     const isUp = !data['涨跌幅'].includes('-');
-    this.setData({ result: data, isUp: isUp });
+    
+    // 2. 提取出完整的 AI 回复，并暂时把 result 里的 aiAdvice 设为空，防止一下全显示出来
+    const fullText = data.aiAdvice || "AI 暂时沉默...";
+    data.aiAdvice = ""; // 先清空，准备打字
+
+    // 3. 先把基础数据渲染出来（价格、RSI、均线等），但不显示 AI 文字
+    this.setData({ 
+      result: data, 
+      isUp: isUp 
+    });
+
+    // 4. 开始打字机动画
+    this.typeWriter(fullText);
+  },
+  // 【新增】打字机动画函数
+  typeWriter(fullText) {
+    let index = 0;
+    const length = fullText.length;
+    
+    // 如果之前有定时器在跑，先清除，防止错乱
+    if (this.timer) clearInterval(this.timer);
+
+    // 设置定时器，每 40ms 敲一个字
+    this.timer = setInterval(() => {
+      // 每次多截取一个字
+      const currentText = fullText.substring(0, index + 1);
+      
+      // 更新到界面上
+      // 注意：这里我们只更新 result.aiAdvice 字段，性能更好
+      this.setData({
+        ['result.aiAdvice']: currentText
+      });
+
+      index++;
+
+      // 打完了，清除定时器
+      if (index >= length) {
+        clearInterval(this.timer);
+      }
+    }, 40); // 40ms 是个比较舒服的速度，你可以调快调慢
   },
 
   // 写入缓存
