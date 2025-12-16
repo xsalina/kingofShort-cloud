@@ -1,4 +1,6 @@
-/* ---------------- 全局容器 ---------------- */
+/* =============================================
+   1. 全局容器与工具类
+   ============================================= */
 .container {
   padding: 30rpx;
   background-color: #eff2f5;
@@ -10,7 +12,9 @@
 .row-between { display: flex; justify-content: space-between; align-items: center; }
 .row-start { display: flex; justify-content: flex-start; align-items: center; }
 
-/* ---------------- 头部用户卡片 ---------------- */
+/* =============================================
+   2. 头部用户卡片
+   ============================================= */
 .user-card {
   background: #ffffff;
   border-radius: 24rpx;
@@ -33,7 +37,7 @@
 .avatar-placeholder {
   width: 120rpx;
   height: 120rpx;
-  background: #dfe6e9; /* 灰色背景 */
+  background: #dfe6e9;
   border-radius: 50%;
   display: flex; align-items: center; justify-content: center;
   margin-bottom: 24rpx;
@@ -112,27 +116,95 @@
 .stat-item .label { font-size: 24rpx; color: #999; margin-top: 6rpx; }
 
 
-/* ---------------- 菜单列表 ---------------- */
+/* =============================================
+   3. 菜单列表 (已升级支持左右分栏布局)
+   ============================================= */
 .menu-list {
   background: #fff;
   border-radius: 24rpx;
   padding: 10rpx 0; /* 上下留白 */
   box-shadow: 0 4rpx 16rpx rgba(149, 157, 165, 0.05);
   margin-bottom: 40rpx;
+  overflow: hidden; /* 防止子元素背景溢出圆角 */
 }
 
+/* 菜单行基础样式 */
 .menu-item {
   padding: 30rpx 40rpx;
   background: #fff;
   transition: background 0.2s;
+  
+  /* 【关键布局】开启 Flex 实现左右对齐 */
+  display: flex;
+  justify-content: space-between; 
+  align-items: center;
 }
+
+/* 点击反馈 */
 .menu-item:active { background: #f9f9f9; }
 
-.menu-icon { font-size: 36rpx; margin-right: 24rpx; }
-.menu-text { font-size: 30rpx; color: #333; font-weight: 500; }
-.arrow { font-size: 24rpx; color: #ccc; }
+/* --- 内部布局容器 --- */
+.menu-left { display: flex; align-items: center; }
+.menu-right { display: flex; align-items: center; }
 
-/* 修复 Button 默认样式 */
+/* --- 元素样式 --- */
+
+/* 1. Emoji/字体图标 */
+.menu-icon { 
+  font-size: 36rpx; 
+  margin-right: 24rpx; 
+  width: 40rpx; 
+  text-align: center;
+}
+
+/* 2. 图片图标 (新增，用于AI菜单) */
+.menu-icon-img {
+  width: 40rpx;
+  height: 40rpx;
+  margin-right: 24rpx;
+}
+
+/* 3. 菜单主文字 */
+.menu-text { 
+  font-size: 30rpx; 
+  color: #333; 
+  font-weight: 500; 
+}
+
+/* 4. 右侧箭头 */
+.arrow { 
+  font-size: 26rpx; 
+  color: #ccc; 
+  font-family: monospace; /* 稍微瘦长一点的箭头 */
+  margin-left: 10rpx;
+}
+
+/* 5. 右侧副标题 (新增，用于 DeepSeek 驱动) */
+.menu-desc {
+  font-size: 24rpx;
+  color: #b2bec3;
+  font-weight: normal;
+}
+
+/* 6. NEW 动态标签 (新增) */
+.tag-badge {
+  font-size: 18rpx;
+  color: #fff;
+  /* 珊瑚红渐变 */
+  background: linear-gradient(90deg, #ff7675, #fab1a0); 
+  padding: 2rpx 10rpx;
+  border-radius: 10rpx 10rpx 10rpx 0;
+  margin-left: 16rpx;
+  font-weight: bold;
+  animation: bounce 2s infinite; /* 跳动动画 */
+}
+
+@keyframes bounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-4rpx); }
+}
+
+/* 修复 Button 默认样式 (联系客服按钮) */
 .contact-btn {
   width: 100% !important;
   font-weight: 500;
@@ -142,11 +214,17 @@
   line-height: normal;
   margin: 0;
   border-radius: 0;
+  /* 确保按钮内部也遵循 Flex 布局 */
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 .contact-btn::after { border: none; }
 
 
-/* ---------------- 底部区域 ---------------- */
+/* =============================================
+   4. 底部区域
+   ============================================= */
 .logout-area { margin-bottom: 40rpx; }
 .btn-logout {
   background: #fff;

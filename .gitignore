@@ -23,3 +23,5 @@ Thumbs.db
 # Logs
 logs/
 *.log
+
+config.local.js

@@ -194,6 +194,20 @@
           "query": "",
           "launchMode": "default",
           "scene": null
+        },
+        {
+          "name": "",
+          "pathName": "subpackages/deal/suggest/index",
+          "query": "",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
+          "name": "",
+          "pathName": "subpackages/deal/analysis/index",
+          "query": "",
+          "launchMode": "default",
+          "scene": null
         }
       ]
     }

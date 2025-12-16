@@ -1,11 +1,11 @@
 <view class="container">
   <block wx:if="{{userInfo && loaded}}">
-  <view class="user-card" >
+    <view class="user-card">
       <view class="user-content-login">
         <view class="user-info-row row-between">
           <view class="info-left row-start">
-            <view class="user-avatar-text" >
-             <unification-avatar/>
+            <view class="user-avatar-text">
+              <unification-avatar />
             </view>
             <view class="user-text">
               <view class="row-start">
@@ -33,57 +33,72 @@
           </view>
         </view>
       </view>
-   
-
- 
-  </view>
-   </block>
-    <block wx:else>
-      <view class="user-content-unlogin" bindtap="goRegister">
-        <unification-avatar/>
-        <view class="unlogin-text">
-          <text class="title">点击登录/注册</text>
-          <text class="desc">同步数据，构建你的交易体系</text>
-        </view>
-        <view class="login-btn-fake">去登录/注册</view>
+    </view>
+  </block>
+  <block wx:else>
+    <view class="user-content-unlogin" bindtap="goRegister">
+      <unification-avatar />
+      <view class="unlogin-text">
+        <text class="title">点击登录/注册</text>
+        <text class="desc">同步数据，构建你的交易体系</text>
       </view>
-    </block>
+      <view class="login-btn-fake">去登录/注册</view>
+    </view>
+  </block>
 
   <view class="menu-list">
-    
-    <view class="menu-item row-between" bindtap="goSuggest">
-      <view class="row-start">
-        <text class="menu-icon">⚡️</text> 
-        <text class="menu-text">短线交易助手</text>
+
+    <view class="menu-item" bindtap="onNavToAI">
+      <view class="menu-left">
+        <image class="menu-icon-img" src="/assets/images/gupiao.png" mode="aspectFit"></image>
+        <text class="menu-text">AI 趋势预测</text>
+        <view class="tag-badge">NEW</view>
       </view>
-      <text class="arrow">➜</text>
+      <view class="menu-right">
+        <text class="menu-desc">DeepSeek 驱动</text>
+        <text class="arrow">></text>
+      </view>
     </view>
 
-    <view class="menu-item row-between" bindtap="goMyTrades">
-      <view class="row-start">
+    <view class="menu-item" bindtap="goSuggest">
+      <view class="menu-left">
+        <text class="menu-icon">⚡️</text>
+        <text class="menu-text">短线交易助手</text>
+      </view>
+      <view class="menu-right">
+        <text class="arrow">></text>
+      </view>
+    </view>
+
+    <view class="menu-item" bindtap="goMyTrades">
+      <view class="menu-left">
         <text class="menu-icon">📄</text>
         <text class="menu-text">我的交易记录</text>
       </view>
-      <text class="arrow">➜</text>
+      <view class="menu-right">
+        <text class="arrow">></text>
+      </view>
     </view>
-    
-    <view class="menu-item row-between" bindtap="goAddStockType">
-      <view class="row-start">
+
+    <view class="menu-item" bindtap="goAddStockType">
+      <view class="menu-left">
         <text class="menu-icon">📈</text>
         <text class="menu-text">股票/币种管理</text>
       </view>
-      <text class="arrow">➜</text>
+      <view class="menu-right">
+        <text class="arrow">></text>
+      </view>
     </view>
 
-
-    <button class="menu-item contact-btn row-between" open-type="contact">
-      <view class="row-start">
+    <button class="menu-item contact-btn" open-type="contact">
+      <view class="menu-left">
         <text class="menu-icon">💬</text>
         <text class="menu-text">联系客服 / 建议</text>
       </view>
-      <text class="arrow">➜</text>
+      <view class="menu-right">
+        <text class="arrow">></text>
+      </view>
     </button>
+    
   </view>
-
-
 </view>

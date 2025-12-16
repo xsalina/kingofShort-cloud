@@ -1,0 +1,109 @@
+<view class="container">
+  <view class="header">
+    <text class="title">AI 趋势预测</text>
+    <text class="subtitle">DeepSeek 智能分析 · 缓存5分钟</text>
+  </view>
+
+  <scroll-view 
+    class="stock-scroll {{loading ? 'grid-disabled' : ''}}" 
+    scroll-x="true" 
+    enable-flex="true" 
+    show-scrollbar="false"
+  >
+    
+    <view 
+      class="stock-card {{currentStock === '特斯拉' ? 'active' : ''}}" 
+      bindtap="onAnalyze" 
+      data-name="特斯拉"
+    >
+      <view class="icon">🚗</view>
+      <text class="name">特斯拉</text>
+      <view class="status-dot" wx:if="{{currentStock === '特斯拉'}}"></view>
+    </view>
+    
+    <view 
+      class="stock-card {{currentStock === '英伟达' ? 'active' : ''}}" 
+      bindtap="onAnalyze" 
+      data-name="英伟达"
+    >
+      <view class="icon">⚡️</view>
+      <text class="name">英伟达</text>
+      <view class="status-dot" wx:if="{{currentStock === '英伟达'}}"></view>
+    </view>
+
+    <view 
+      class="stock-card {{currentStock === '苹果' ? 'active' : ''}}" 
+      bindtap="onAnalyze" 
+      data-name="苹果"
+    >
+      <image class="img-icon" src="/assets/images/apple.png" mode="aspectFit"></image>
+      <text class="name">苹果</text>
+      <view class="status-dot" wx:if="{{currentStock === '苹果'}}"></view>
+    </view>
+
+    <view 
+      class="stock-card {{currentStock === '谷歌' ? 'active' : ''}}" 
+      bindtap="onAnalyze" 
+      data-name="谷歌"
+    >
+      <image class="img-icon" src="/assets/images/google.png" mode="aspectFit"></image>
+      <text class="name">谷歌</text>
+      <view class="status-dot" wx:if="{{currentStock === '谷歌'}}"></view>
+    </view>
+
+    <view 
+      class="stock-card gold {{currentStock === '浙商黄金' ? 'active' : ''}}" 
+      bindtap="onAnalyze" 
+      data-name="浙商黄金"
+    >
+      <view class="icon">💰</view>
+      <text class="name">浙商黄金</text>
+      <view class="status-dot" wx:if="{{currentStock === '浙商黄金'}}"></view>
+    </view>
+    
+    <view style="width: 20rpx; flex-shrink: 0;"></view>
+
+  </scroll-view>
+
+  <view class="result-box" >
+    <view wx:if="{{!loading && !result}}" class="empty-state">
+      <view class="empty-icon">👆</view>
+      <text class="empty-text">点击上方卡片</text>
+      <text class="empty-sub-text">DeepSeek AI 正在待命，随时为您分析趋势</text>
+    </view>
+      <view wx:if="{{loading}}" class="loading-state">
+        <view class="spinner"></view>
+        <text>正在连接华尔街获取 {{currentStock}} 数据...</text>
+      </view>
+
+      <view wx:if="{{!loading && result}}" class="content-state">
+        <view class="result-header-bar">
+          <text class="result-label">当前分析目标：</text>
+          <text class="result-target">{{result['名称']}} ({{result['代码']}})</text>
+        </view>
+
+        <view class="data-row">
+          <text class="price">{{result['当前价格']}}</text>
+          <text class="change {{isUp ? 'red' : 'green'}}">{{result['涨跌幅']}}</text>
+        </view>
+        
+        <view class="tags">
+          <view class="tag">RSI: {{result['RSI指标']}}</view>
+          <view class="tag">MA5: {{result['5日均线']}}</view>
+        </view>
+
+        <view class="divider"></view>
+        <view class="ai-title">🤖 AI 投资建议：</view>
+        <text class="ai-text" user-select>{{result.aiAdvice}}</text>
+      </view>
+  </view>
+
+  <view class="disclaimer-footer">
+    <view class="disclaimer-title">⚠️ 免责声明</view>
+    <text class="disclaimer-text">
+      1. 本页面分析结果由人工智能模型基于历史数据生成，仅供技术验证与参考，不构成任何投资建议。
+      2. 市场有风险，投资需谨慎。AI 可能会产生错误或过时的信息。
+      3. 开发者不对因使用本工具产生的任何投资盈亏承担法律责任，据此操作风险自担。
+    </text>
+  </view>
+</view>

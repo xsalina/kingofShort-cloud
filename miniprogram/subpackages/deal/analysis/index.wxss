@@ -1,0 +1,224 @@
+page {
+  background: #f6f7f9;
+  padding-bottom: 50rpx;
+}
+.container { padding: 30rpx 0 0 30rpx; }
+
+.header { margin-bottom: 40rpx; }
+.title { font-size: 48rpx; font-weight: bold; color: #333; display: block; }
+.subtitle { font-size: 26rpx; color: #999; margin-top: 10rpx; }
+
+/* =========================================
+   横向滚动区域 (Scroll View)
+   ========================================= */
+.stock-scroll {
+  display: flex;
+  flex-direction: row;
+  white-space: nowrap;
+  width: 100%;
+  
+  /* 【修改】顶部 padding 改为 0，底部留大一点给阴影 */
+  padding: 0 0 40rpx 0; 
+  
+  margin-bottom: 20rpx;
+  box-sizing: border-box; 
+  -webkit-overflow-scrolling: touch;
+}
+
+/* =========================================
+   卡片样式 (横排版)
+   ========================================= */
+.stock-card {
+ width: 200rpx;
+  height: 200rpx;
+  flex-shrink: 0;
+  
+  /* 【核心修改】给顶部加 12rpx 的安全距离 */
+  /* 这样当它上浮 4rpx 时，离顶部还有 8rpx，绝对不会被切掉 */
+  margin-top: 12rpx; 
+  
+  margin-right: 24rpx;
+  background: #fff;
+  border-radius: 24rpx;
+  
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  
+  box-shadow: 0 8rpx 20rpx rgba(149, 157, 165, 0.08);
+  transition: all 0.2s cubic-bezier(0.25, 0.8, 0.25, 1);
+  
+  /* 【建议加上】把边框算在尺寸内 */
+  box-sizing: border-box; 
+  border: 4rpx solid transparent; 
+  position: relative;
+}
+
+/* 点击时的缩放效果 */
+.stock-card:active { transform: scale(0.95); }
+
+/* --- 选中状态 --- */
+.stock-card.active {
+  border-color: #00b894;
+  background: #e3fcef;
+  transform: translateY(-4rpx); /* 浮起效果 */
+  box-shadow: 0 12rpx 24rpx rgba(0, 184, 148, 0.2);
+}
+
+/* 黄金特别色 */
+.stock-card.gold.active {
+  border-color: #ffd700;
+  background: #fffdf0;
+  box-shadow: 0 12rpx 24rpx rgba(255, 215, 0, 0.2);
+}
+
+/* --- 内容样式 --- */
+.icon, .img-icon {
+  width: 64rpx; 
+  height: 64rpx; 
+  line-height: 64rpx;
+  text-align: center;
+  font-size: 60rpx; /* Emoji 字体大小 */
+  margin-bottom: 20rpx;
+  display: block;
+}
+
+.name {
+  font-size: 28rpx;
+  font-weight: 600;
+  color: #2d3436;
+}
+
+/* 右上角选中指示点 */
+.status-dot {
+  position: absolute; 
+  top: 16rpx; 
+  right: 16rpx;
+  width: 14rpx; 
+  height: 14rpx;
+  background: #00b894; 
+  border-radius: 50%;
+  border: 2rpx solid #fff;
+}
+.stock-card.gold .status-dot { background: #ffd700; }
+
+/* 禁用/加载中状态 */
+.grid-disabled { opacity: 0.7; pointer-events: none; }
+/* 加载中选中的那个卡片呼吸 */
+.grid-disabled .stock-card.active { 
+  opacity: 1; 
+  animation: pulse 1.5s infinite; 
+}
+
+@keyframes pulse { 
+  0% { transform: scale(1); } 
+  50% { transform: scale(1.02); } 
+  100% { transform: scale(1); } 
+}
+
+/* =========================================
+   结果框与底部 (保持你的样式)
+   ========================================= */
+.result-box {
+  background: #fff;
+  border-radius: 24rpx;
+  padding: 40rpx;
+  min-height: 300rpx;
+  box-shadow: 0 10rpx 30rpx rgba(0,0,0,0.05);
+}
+
+.result-header-bar {
+  background: #f0f9eb;
+  padding: 16rpx 24rpx;
+  border-radius: 12rpx;
+  margin-bottom: 30rpx;
+  border-left: 8rpx solid #00b894;
+  display: flex;
+  align-items: center;
+}
+.result-label { font-size: 24rpx; color: #666; margin-right: 10rpx; }
+.result-target { font-size: 32rpx; font-weight: 900; color: #2d3436; }
+
+.loading-state { display: flex; flex-direction: column; align-items: center; padding: 60rpx 0; color: #666; font-size: 28rpx; }
+.spinner {
+  width: 60rpx; height: 60rpx;
+  border: 6rpx solid #f3f3f3; border-top: 6rpx solid #00b894;
+  border-radius: 50%; animation: spin 1s linear infinite; margin-bottom: 30rpx;
+}
+@keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+
+.data-row { display: flex; align-items: baseline; margin-bottom: 20rpx; }
+.price { font-size: 60rpx; font-weight: 900; color: #333; margin-right: 20rpx; }
+.change { font-size: 32rpx; font-weight: bold; }
+.change.red { color: #ff4d4f; }
+.change.green { color: #00b894; }
+
+.tags { display: flex; gap: 20rpx; margin-bottom: 30rpx; }
+.tag { background: #f0f2f5; color: #666; font-size: 24rpx; padding: 6rpx 16rpx; border-radius: 8rpx; }
+
+.divider { height: 1rpx; background: #eee; margin: 30rpx 0; }
+.ai-title { font-size: 30rpx; font-weight: bold; margin-bottom: 16rpx; color: #00b894; }
+.ai-text { font-size: 28rpx; color: #444; line-height: 1.6; white-space: pre-wrap; text-align: left; }
+
+/* 免责声明 */
+.disclaimer-footer {
+  margin-top: 60rpx; padding: 30rpx; background-color: #f0f2f5;
+  border-radius: 12rpx; border: 1rpx solid #e1e4e8;
+}
+.disclaimer-title { font-size: 24rpx; font-weight: bold; color: #909399; margin-bottom: 12rpx; }
+.disclaimer-text { font-size: 22rpx; color: #aeb4c0; line-height: 1.6; display: block; text-align: justify; }
+
+/* ... 原有 result-box 样式保持不变 ... */
+.result-box {
+  background: #fff;
+  border-radius: 24rpx;
+  padding: 40rpx;
+  min-height: 300rpx; /* 保证盒子有高度，不会塌陷 */
+  box-shadow: 0 10rpx 30rpx rgba(0,0,0,0.05);
+  
+  /* 增加 Flex 布局，让空状态垂直居中 */
+  display: flex;
+  flex-direction: column;
+  justify-content: center; 
+}
+
+/* --- 新增：空状态引导样式 --- */
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 40rpx 0;
+}
+
+.empty-icon {
+  font-size: 80rpx; /* 图标大一点 */
+  margin-bottom: 30rpx;
+  
+  /* 加个上下跳动的动画，疯狂暗示用户点上面 */
+  animation: floatUp 1.5s ease-in-out infinite;
+}
+
+.empty-text {
+  font-size: 32rpx;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 12rpx;
+}
+
+.empty-sub-text {
+  font-size: 24rpx;
+  color: #999;
+}
+
+/* 定义跳动动画 */
+@keyframes floatUp {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-15rpx); } /* 往上指 */
+}
+
+/* 兼容性调整：确保内容状态 (content-state) 占满宽度 */
+.content-state {
+  width: 100%;
+}

@@ -97,4 +97,9 @@ Page({
       url: "/subpackages/deal/suggest/index",
     });
   },
+  onNavToAI() {
+    wx.navigateTo({
+      url: "/subpackages/deal/analysis/index",
+    });
+  },
 });
