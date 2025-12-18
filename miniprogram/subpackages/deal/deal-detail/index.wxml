@@ -1,16 +1,50 @@
-<view class="container" >
-  <view class="card status-card">
-    <view class="row-between">
-        <view>
-            <view class="stock-title">{{detailInfo.stockName}}</view>
-            <view class="text-sub">{{detailInfo.code}}</view>
-        </view>
-        <view class="badge badge-{{detailInfo.status}} font-lg">
-            {{detailText}}
-        </view>
+<view class="container">
+  <view class="page-header" wx:if="{{stockName}}">
+    <view class="header-left">
+      <text class="stock-name">{{stockName}}</text>
+      <text class="stock-code" wx:if="{{stockCode}}">{{stockCode}}</text>
     </view>
   </view>
-
+  <view class="card status-card">
+    <view class="row-between">
+      <view>
+        <view class="stock-title">{{detailInfo.stockName}}</view>
+        <view class="text-sub">{{detailInfo.code}}</view>
+      </view>
+      <view class="badge badge-{{detailInfo.status}} font-lg">{{detailText}}</view>
+    </view>
+  </view>
+  <block wx:if="{{detailInfo.status != 'sold'}}">
+    <view class="section-title">实时持仓分析</view>
+    <view class="card market-card">
+      <view class="market-grid">
+        <view class="market-item">
+          <text class="label">实时股价</text>
+          <view class="value-group">
+            <text class="font-xl font-bold">{{detailInfo.currency}}{{currentPrice || '--'}}</text>
+          </view>
+        </view>
+        <view class="market-item text-right">
+          <text class="label">预计卖出收益 (浮动)</text>
+          <view class="font-xl font-bold {{futureEstimatedProfit >= 0 ? 'text-warn' : 'text-primary'}}">
+            {{futureEstimatedProfit >= 0 ? '+' : '-'}}{{detailInfo.currency}}{{futureEstimatedProfitText || '0.00'}}
+          </view>
+        </view>
+        <view class="divider"></view>
+        <view class="market-item">
+          <view class="label">持仓成本 (单股)</view>
+          <view class="value">{{detailInfo.currency}}{{detailInfo.avgCost}}</view>
+        </view>
+        <view class="market-item text-right">
+          <view class="label">剩余持仓量</view>
+          <view class="value">
+            {{detailInfo.remainingQuantity}}
+            <text class="font-sm">股</text>
+          </view>
+        </view>
+      </view>
+    </view>
+  </block>
   <view class="section-title">买入信息</view>
   <view class="card info-card">
     <view class="info-grid">
@@ -36,61 +70,49 @@
       </view>
     </view>
   </view>
-
   <block wx:if="{{detailInfo.status != 'unSold' && detailInfo.sellRecords.length}}">
     <view class="section-title">卖出/收益记录 (最近一次)</view>
     <view class="card info-card sell-theme">
-        <view class="info-grid">
+      <view class="info-grid">
         <view class="info-item">
-            <text class="label">卖出价格</text>
-            <text class="value">{{detailInfo.sellRecords[0].sellPrice}}</text>
+          <text class="label">卖出价格</text>
+          <text class="value">{{detailInfo.sellRecords[0].sellPrice}}</text>
         </view>
         <view class="info-item">
-            <text class="label">卖出数量</text>
-            <text class="value">{{detailInfo.sellRecords[0].sellQuantity}}</text>
+          <text class="label">卖出数量</text>
+          <text class="value">{{detailInfo.sellRecords[0].sellQuantity}}</text>
         </view>
         <view class="info-item">
           <text class="label">卖出手续费</text>
-          <text class="value">{{detailInfo.currency}}{{detailInfo.sellRecords[0].sellFee || 0}}</text>
+          <text class="value">
+            {{detailInfo.currency}}{{detailInfo.sellRecords[0].sellFee || 0}}
+          </text>
         </view>
         <view class="info-item">
           <text class="label">卖出时间</text>
           <text class="value font-sm">{{detailInfo.sellRecords[0].sellTimeText}}</text>
         </view>
         <view class="info-item full-width">
-            <text class="label">累计实现收益</text>
-            <view class="value font-xl {{detailInfo.totalProfit>=0?'text-primary':'text-warn'}}">
-                {{detailInfo.totalProfit >=0 ? '+' : ''}}{{detailInfo.currency}}{{detailInfo.totalProfitText}}
-            </view>
+          <text class="label">累计实现收益</text>
+          <view class="value font-xl {{detailInfo.totalProfit>=0?'text-primary':'text-warn'}}">
+            {{detailInfo.totalProfit >=0 ? '+' : ''}}{{detailInfo.currency}}{{detailInfo.totalProfitText}}
+          </view>
         </view>
-        </view>
+      </view>
     </view>
   </block>
-
-  <view class="card tips-card row-between">
-    <view>
-        <text class="text-sub display-block mb-10">剩余持仓</text>
-        <text class="font-xl font-bold">{{detailInfo.remainingQuantity}} <text class="font-sm">股</text></text>
-    </view>
-    <view class="text-right">
-        <text class="text-sub display-block mb-10">成本均价(单股)</text>
-        <text class="font-lg">{{detailInfo.currency}} {{detailInfo.avgCost}}</text>
-    </view>
-  </view>
-
+  
   <view class="footer-action" wx:if="{{detailInfo.status === 'unSold' || detailInfo.status === 'partial'}}">
-    <button class="btn-sell" bindtap="openSell">卖出操作</button>
+    <view class="strategy-tool" bindtap="goToStrategy">
+      <view class="tool-icon-bg">
+        <text class="icon">🧮</text>
+      </view>
+      <text class="label">策略推演</text>
+    </view>
+    <view class="btn-sell" bindtap="openSell">
+      <text>卖出操作</text>
+    </view>
   </view>
 </view>
-
-<sell-modal 
-  show="{{showSellModal}}" 
-  tx="{{detailInfo}}"
-  bind:close="handleCancel" 
-  bind:confirm="handleSell"
-/>
-<coin-effect 
-  show="{{showCoinEffect}}" 
-  amount="{{profitAmount}}" 
-  bind:finish="onEffectFinish" 
-/>
+<sell-modal show="{{showSellModal}}" tx="{{detailInfo}}" bind:close="handleCancel" bind:confirm="handleSell" />
+<coin-effect show="{{showCoinEffect}}" amount="{{profitAmount}}" bind:finish="onEffectFinish" />

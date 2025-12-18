@@ -194,6 +194,76 @@
           "query": "",
           "launchMode": "default",
           "scene": null
+        },
+        {
+          "name": "",
+          "pathName": "subpackages/deal/deal-detail/index",
+          "query": "itemId=cd349d8f693e9ea107a596851ef88571",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
+          "name": "",
+          "pathName": "subpackages/deal/suggest/index",
+          "query": "name=undefined&remainingQuantity=10&price=453.106",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
+          "name": "",
+          "pathName": "subpackages/deal/suggest/index",
+          "query": "name=%E7%89%B9%E6%96%AF%E6%8B%89&remainingQuantity=10&price=453.106",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
+          "name": "",
+          "pathName": "subpackages/deal/add-type/index",
+          "query": "",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
+          "name": "",
+          "pathName": "subpackages/deal/deal-detail/index",
+          "query": "itemId=7f4b6713694280d8081cd0b91f182320",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
+          "name": "",
+          "pathName": "subpackages/deal/deal-detail/index",
+          "query": "itemId=da8988ea69428ddc081e68f86779ffce",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
+          "name": "",
+          "pathName": "subpackages/deal/suggest/index",
+          "query": "symbol=gb_tsla&remainingQuantity=5&price=410.398",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
+          "name": "",
+          "pathName": "subpackages/deal/suggest/index",
+          "query": "symbol=gb_tsla&name=特斯拉&remainingQuantity=5&price=410.398",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
+          "name": "",
+          "pathName": "subpackages/deal/list/index",
+          "query": "",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
+          "name": "",
+          "pathName": "subpackages/deal/deal-detail/index",
+          "query": "itemId=cd349d8f6942acc708195aa32865002e",
+          "launchMode": "default",
+          "scene": null
         }
       ]
     }

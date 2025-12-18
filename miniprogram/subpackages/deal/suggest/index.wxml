@@ -1,7 +1,14 @@
 <view class="container">
   
   <view class="card input-section">
-    <view class="section-title">基础参数</view>
+   <view class="section-header">
+      <view class="section-title">基础参数</view>
+      
+      <view class="stock-info-mini" >
+        <text class="mini-name">{{stockName}}</text>
+        <text class="mini-code" >{{stockCode}}</text>
+      </view>
+    </view>
     <view class="grid-container">
       <view class="grid-row">
         <view class="grid-item">
@@ -112,7 +119,7 @@
             <text class="th col-rate">涨幅</text>
             <text class="th col-price">价格</text>
             <text class="th col-num">股数</text>
-            <text class="th col-money">金额</text>
+            <text class="th col-money">收益</text>
           </view>
           
           <view class="tbody">

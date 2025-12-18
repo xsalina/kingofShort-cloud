@@ -24,10 +24,11 @@
   padding-left: 20rpx;
   line-height: 1;
 }
-
-/* ---------------- 1. 添加区域样式 ---------------- */
+/* ---------------- 1. 添加区域样式 (保持原有) ---------------- */
 .form-item {
   margin-bottom: 30rpx;
+  /* 【关键】给父容器设置 relative，限制下拉框的位置基准 */
+  position: relative; 
 }
 
 .label {
@@ -38,20 +39,113 @@
   font-weight: 500;
 }
 
+/* --- 新增：输入框容器 (用于包裹 input 和 清空按钮) --- */
+.input-wrapper {
+  position: relative;
+  width: 100%;
+}
+
 .input {
   background: #f7f9fc;
   height: 88rpx;
   border-radius: 12rpx;
   padding: 0 24rpx;
+  /* 右边留出空间给清空按钮，防止文字重叠 */
+  padding-right: 80rpx; 
   font-size: 30rpx;
   color: #2d3436;
+  width: 100%; /* 确保填满容器 */
+  box-sizing: border-box; /* 包含 padding */
 }
 .placeholder { color: #b2bec3; }
 
-/* 市场选择器 (胶囊) */
+/* --- 新增：清空按钮 (悬浮在 input 内部右侧) --- */
+.clear-btn {
+  position: absolute;
+  right: 0;
+  top: 0;
+  height: 100%; /* 高度与 input 一致，垂直居中 */
+  width: 80rpx; /* 点击区域大一点 */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #b2bec3;
+  font-size: 32rpx;
+  z-index: 10;
+}
+
+/* ---------------- 2. 搜索联想下拉框 (核心新增) ---------------- */
+.search-dropdown {
+  position: absolute; /* 绝对定位，实现悬浮 */
+  top: 100%; /* 紧贴输入框底部 */
+  left: 0;
+  right: 0; /* 宽度撑满 */
+  margin-top: 12rpx; /* 稍微留点空隙 */
+  
+  background: #fff;
+  border-radius: 12rpx;
+  /* 强烈的阴影，营造悬浮感 */
+  box-shadow: 0 8rpx 30rpx rgba(0,0,0,0.12);
+  border: 1rpx solid #edf2f7;
+  
+  max-height: 450rpx; /* 限制高度 */
+  overflow-y: auto;   /* 内容过多时滚动 */
+  z-index: 999;       /* 【最关键】必须比下面的市场选择器层级高 */
+}
+
+.search-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 24rpx 30rpx;
+  border-bottom: 1rpx solid #f7f9fc;
+  transition: background 0.2s;
+}
+
+/* 最后一个去掉底边框 */
+.search-item:last-child {
+  border-bottom: none;
+}
+
+.search-item:active {
+  background-color: #f7f9fc; /* 点击反馈 */
+}
+
+.search-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.search-name {
+  font-size: 28rpx;
+  color: #2d3436;
+  font-weight: 500;
+  margin-bottom: 4rpx;
+}
+
+.search-code {
+  font-size: 22rpx;
+  color: #b2bec3;
+}
+
+/* 搜索结果里的市场标签 */
+.search-market {
+  font-size: 20rpx;
+  padding: 6rpx 14rpx;
+  border-radius: 8rpx;
+  font-weight: 500;
+}
+/* 对应 JS 里的 class */
+.search-market.blue { background: #e6f7ff; color: #0984e3; } /* 美股蓝 */
+.search-market.red  { background: #ffeaa7; color: #d35400; } /* 港股橙红 */
+.search-market.orange { background: #fff1f0; color: #e17055; } /* A股红 */
+
+
+/* ---------------- 3. 市场选择器 (你原有的样式，稍微美化选中色) ---------------- */
 .market-selector {
   display: flex;
   gap: 20rpx;
+  /* 如果怕被下拉框挡住不好看，可以加一点 margin-top，但一般不用 */
 }
 
 .market-chip {
@@ -74,16 +168,17 @@
   opacity: 0.6;
 }
 
-/* 选中状态 - 根据不同市场变色 */
+/* 选中状态 - 针对不同市场给不同边框色，体验更好 */
 .market-chip.active {
   background: #fff;
   font-weight: bold;
-  box-shadow: 0 4rpx 12rpx rgba(0,0,0,0.1);
+  box-shadow: 0 4rpx 12rpx rgba(0,0,0,0.08);
 }
 
-.market-chip.active.USD { border-color: #0984e3; color: #0984e3; background: #e7f5ff; }
-.market-chip.active.HKD { border-color: #6c5ce7; color: #6c5ce7; background: #f3f0ff; }
-.market-chip.active.CNY { border-color: #ff7675; color: #ff7675; background: #fff0f0; }
+/* 分别对应你的 USD, HKD, CNY 类名 */
+.market-chip.active.USD { border-color: #0984e3; color: #0984e3; }
+.market-chip.active.HKD { border-color: #e17055; color: #e17055; }
+.market-chip.active.CNY { border-color: #d63031; color: #d63031; }
 
 .btn-add {
   background: #00b894;

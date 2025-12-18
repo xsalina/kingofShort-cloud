@@ -17,15 +17,42 @@
   padding: 30rpx;
   margin-bottom: 30rpx;
 }
+.section-header {
+  display: flex;
+  justify-content: space-between; /* 一左一右 */
+  align-items: center; /* 垂直居中 */
+  margin-bottom: 24rpx;
+  /* 只有这个容器底部需要一点间距，原来的 section-title margin-bottom 可以去掉了 */
+}
 
+/* 左边的蓝色竖条标题 */
 .section-title {
   font-size: 28rpx;
   font-weight: bold;
   color: #2d3436;
-  margin-bottom: 24rpx;
   padding-left: 10rpx;
   border-left: 6rpx solid #00b894;
   line-height: 1;
+  /* margin-bottom: 24rpx;  <-- 这行删掉，交给父容器控制 */
+}
+
+/* 右边的股票信息 */
+.stock-info-mini {
+  display: flex;
+  align-items: baseline;
+}
+
+.mini-name {
+  font-size: 28rpx;
+  font-weight: bold;
+  color: #2d3436;
+  margin-right: 10rpx;
+}
+
+.mini-code {
+  font-size: 24rpx;
+  color: #b2bec3;
+  font-family: Arial, Helvetica, sans-serif;
 }
 
 /* ---------------- 1. 输入区域 (网格) ---------------- */
@@ -267,4 +294,27 @@
 .main-swiper .wx-swiper-dot-active {
   width: 32rpx; /* 选中变长 */
   background: #00b894;
+}
+
+.page-header {
+  display: flex;
+  align-items: baseline; /* 关键：让大字和小字底部对齐，视觉最舒服 */
+  padding: 10rpx 10rpx 30rpx 10rpx; /* 下方留空隙 */
+}
+
+/* 股票中文名 */
+.stock-name {
+  font-size: 44rpx; /* 字大一点 */
+  font-weight: 800; /* 特粗，显眼 */
+  color: #333;
+  margin-right: 16rpx; /* 名字和代码之间的距离 */
+  letter-spacing: 1rpx;
+}
+
+/* 股票代码 */
+.stock-code {
+  font-size: 30rpx;
+  color: #999; /* 灰色，弱化显示 */
+  font-family: Arial, Helvetica, sans-serif; /* 英文用无衬线字体 */
+  font-weight: 500;
 }

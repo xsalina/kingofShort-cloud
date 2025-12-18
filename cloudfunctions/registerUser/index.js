@@ -60,9 +60,9 @@ exports.main = async (event, context) => {
       // 默认股票类型
       const defaultStockTypes = [
         
-        { name: "特斯拉",label: "美股 ($)", market: "美股", currency: "$", code: "USD" },
-        { name: "英伟达",label: "美股 ($)", market: "美股", currency: "$", code: "USD" },
-        { name: "纳指 100 ETF", label: "美股 ($)", market: "美股", currency: "$", code: "USD" },
+        { name: "特斯拉",label: "美股 ($)", market: "美股", currency: "$", code: "USD",symbol:'gb_tsla' },
+        { name: "英伟达",label: "美股 ($)", market: "美股", currency: "$", code: "USD",symbol:'gb_nvda' },
+        { name: "纳指 100 ETF", label: "美股 ($)", market: "美股", currency: "$", code: "USD" ,symbol:'gb_qqq'},
       ];
       await Promise.all(defaultStockTypes.map(item =>
         db.collection(stockTypesCollections).add({

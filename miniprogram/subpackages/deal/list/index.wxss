@@ -1,187 +1,124 @@
-.container {
-  /* 【关键】去掉固定高度，让页面可以自然滚动，这样 Sticky 才会生效 */
+/* ================= 全局布局核心 ================= */
+page {
+  /* 去掉 height: 100% 和 overflow: hidden */
   min-height: 100vh;
   background-color: #eff2f5;
-  padding: 30rpx;
-  box-sizing: border-box;
-}
-/* --- 搜索框区域 --- */
-.search-section {
-  background: #eff2f5;
-  padding-bottom: 20rpx;
-  position: relative;
-  z-index: 10;
 }
 
+.container {
+  /* 去掉 flex 布局，恢复默认文档流 */
+  display: block; 
+  padding: 0 30rpx;
+  box-sizing: border-box;
+  padding-bottom: 40rpx;
+}
+
+/* ================= 1. 头部区域 (不伸缩) ================= */
+.search-section {
+  padding-top: 30rpx;
+  padding-bottom: 20rpx;
+  /* 去掉 flex-shrink，让它自然占位 */
+}
+
+/* 搜索框 */
 .search-bar {
   background: #ffffff;
-  height: 88rpx; /* 稍微加高一点，为了放按钮 */
-  border-radius: 44rpx; /* 全圆角 */
+  height: 88rpx;
+  border-radius: 44rpx;
   display: flex;
   align-items: center;
-  padding: 0 10rpx 0 30rpx; /* 右边padding小一点，因为放了按钮 */
+  padding: 0 10rpx 0 30rpx;
   box-shadow: 0 4rpx 16rpx rgba(0,0,0,0.04);
 }
-
-.search-icon {
-  margin-right: 10rpx;
-}
-
-.search-input {
-  flex: 1;
-  font-size: 28rpx;
-  color: #2d3436;
-  height: 100%;
-}
+.search-icon { margin-right: 10rpx; }
+.search-input { flex: 1; font-size: 28rpx; color: #2d3436; height: 100%; }
 .ph-style { color: #b2bec3; }
-
-/* 清除小叉叉 */
 .clear-icon {
-  width: 36rpx; height: 36rpx;
-  background: #dfe6e9; color: #fff;
-  border-radius: 50%; font-size: 20rpx;
-  display: flex; align-items: center; justify-content: center;
-  margin-right: 20rpx;
-  z-index: 2; /* 保证能点到 */
+  width: 36rpx; height: 36rpx; background: #dfe6e9; color: #fff;
+  border-radius: 50%; font-size: 20rpx; display: flex; align-items: center; justify-content: center;
+  margin-right: 20rpx; z-index: 2;
 }
-
-/* 【核心】搜索按钮样式 */
 .search-btn {
-  width: 120rpx;
-  height: 68rpx;
-  background: linear-gradient(135deg, #00b894, #00cec9); /* 品牌渐变绿 */
-  color: #fff;
-  font-size: 28rpx;
-  font-weight: bold;
-  border-radius: 34rpx; /* 胶囊圆角 */
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: all 0.2s;
-  box-shadow: 0 4rpx 10rpx rgba(0, 184, 148, 0.2);
+  width: 120rpx; height: 68rpx;
+  background: linear-gradient(135deg, #00b894, #00cec9);
+  color: #fff; font-size: 28rpx; font-weight: bold;
+  border-radius: 34rpx; display: flex; align-items: center; justify-content: center;
+  transition: all 0.2s; box-shadow: 0 4rpx 10rpx rgba(0, 184, 148, 0.2);
 }
+.search-btn:active { transform: scale(0.95); opacity: 0.9; }
 
-/* 点击态 */
-.search-btn:active {
-  transform: scale(0.95);
-  opacity: 0.9;
-}
-
-/* --- 历史搜索区域 --- */
+/* 历史记录 */
 .history-panel {
-  padding: 10rpx 0 30rpx 0; /* 上右下左 */
-  background: #eff2f5; /* 与背景融合 */
+  padding-bottom: 30rpx;
+  flex-shrink: 0;
 }
-
-.history-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 20rpx;
-}
-
-.h-title {
-  font-size: 26rpx;
-  font-weight: bold;
-  color: #2d3436;
-}
-
-.h-delete {
-  padding: 10rpx; /* 增加点击区域 */
-}
-
-.del-icon {
-  width: 30rpx;
-  height: 30rpx;
-  opacity: 0.5; /* 让图标没那么黑，显得高级 */
-}
-
-.history-tags {
-  display: flex;
-  flex-wrap: wrap; /* 自动换行 */
-  gap: 20rpx;      /* 标签间距 */
-}
-
+.history-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20rpx; }
+.h-title { font-size: 26rpx; font-weight: bold; color: #2d3436; }
+.h-delete { padding: 10rpx; }
+.del-icon { width: 30rpx; height: 30rpx; opacity: 0.5; }
+.history-tags { display: flex; flex-wrap: wrap; gap: 20rpx; }
 .tag {
-  font-size: 24rpx;
-  color: #636e72;
-  background: #ffffff;
-  padding: 10rpx 24rpx;
-  border-radius: 30rpx; /* 胶囊形状 */
-  border: 1rpx solid rgba(0,0,0,0.03);
-  box-shadow: 0 2rpx 6rpx rgba(0,0,0,0.02);
-  max-width: 300rpx;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+  font-size: 24rpx; color: #636e72; background: #ffffff;
+  padding: 10rpx 24rpx; border-radius: 30rpx;
+  border: 1rpx solid rgba(0,0,0,0.03); box-shadow: 0 2rpx 6rpx rgba(0,0,0,0.02);
+  max-width: 300rpx; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
 }
+.tag:active { background: #e3fcef; color: #00b894; }
 
-/* 点击反馈 */
-.tag:active {
-  background: #e3fcef; /* 浅绿背景 */
-  color: #00b894;
-}
-
-/* ---------------- Tabs (胶囊滑块 + 吸顶) ---------------- */
+/* Tabs */
 .tabs-wrapper {
-  /* 1. 吸顶核心 */
+  /* 核心：使用 sticky 吸顶 */
   position: -webkit-sticky;
   position: sticky;
-  top: 0;
-  z-index: 100; /* 保证浮在列表上面 */
-
-  /* 2. 布局样式 */
+  top: 0; /* 吸附在顶部 0px 处 */
+  
+  z-index: 999; /* 保证盖住列表 */
+  
+  /* 原有样式保持不变 */
   display: flex;
   background: #ffffff;
   padding: 8rpx;
   border-radius: 16rpx;
-  margin-bottom: 30rpx;
-  box-shadow: 0 4rpx 16rpx rgba(0,0,0,0.08); /* 吸顶时加深阴影 */
+  margin-bottom: 20rpx;
+  box-shadow: 0 4rpx 16rpx rgba(0,0,0,0.08);
   overflow: hidden;
 }
-
-/* 动态滑块 (那个移动的浅绿色块) */
 .tab-slider {
-  position: absolute;
-  top: 8rpx;
-  left: 8rpx;
-  bottom: 8rpx;
-  /* 宽度计算：(100% - 左内边距 - 右内边距) / 3个Tab */
-  width: calc((100% - 16rpx) / 3); 
-  background: #e3fcef; /* 浅绿背景 */
-  border-radius: 12rpx;
-  z-index: 1; /* 层级：在背景之上，文字之下 */
-  
-  /* 核心动画属性 */
-  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1); 
+  position: absolute; top: 8rpx; left: 8rpx; bottom: 8rpx;
+  width: calc((100% - 16rpx) / 3); /* 假设是3个Tab */
+  background: #e3fcef; border-radius: 12rpx; z-index: 1;
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
-
-/* Tab 文字项 */
 .tab-item {
-  flex: 1;
-  text-align: center;
-  padding: 16rpx 0;
-  font-size: 28rpx;
-  color: #999;
-  border-radius: 12rpx;
-  position: relative;
-  z-index: 2; /* 层级：必须比滑块高，才能点击且显示文字 */
-  transition: color 0.3s; /* 文字颜色也加个渐变 */
-  font-weight: 500;
+  flex: 1; text-align: center; padding: 16rpx 0;
+  font-size: 28rpx; color: #999; border-radius: 12rpx;
+  position: relative; z-index: 2; transition: color 0.3s; font-weight: 500;
+}
+.tab-item.active { color: #00b894; font-weight: bold; }
+
+
+/* ================= 2. 列表区域 (Swiper 自适应) ================= */
+.content-swiper {
+ width: 100%;
 }
 
-/* 选中状态 (只改变文字颜色，背景色由滑块提供) */
-.tab-item.active {
-  color: #00b894; /* 主题绿字 */
-  font-weight: bold;
+.list-scroll-view {
+  height: 100%;
+  width: 100%;
 }
-.transactions-list{
-  box-sizing: border-box;
+
+/* 列表内容容器，padding在这里加，以免滚动条也被挤进去 */
+.list-content-wrapper {
+  padding-bottom: 40rpx;
 }
+
+.transactions-list {
+  /* 这里不需要 padding，因为 container 已经有了左右 padding */
+}
+
 .have-nomore {
-  margin: 20rpx 0;
+  margin: 30rpx 0;
   text-align: center;
-  font-size: 28rpx;
-  font-weight: bold;
+  font-size: 26rpx;
   color: #a0a0a0;
 }

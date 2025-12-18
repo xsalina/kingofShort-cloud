@@ -155,6 +155,7 @@ Page({
           quantity: qty,
           fee: buyfee,
           code: selectedStockObj.code,
+          symbol:selectedStockObj.symbol
         },
       })
       .then((res) => {

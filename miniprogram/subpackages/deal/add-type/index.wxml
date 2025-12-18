@@ -1,41 +1,43 @@
 <view class="container">
-  
   <view class="card add-card">
     <view class="card-title">新增股票类型</view>
-    
-    <view class="form-item">
-      <text class="label">名称/代码</text>
-      <input 
-        class="input" 
-        placeholder="例如：AAPL 或 腾讯控股" 
-        placeholder-class="placeholder"
-        model:value="{{inputName}}" 
-        maxlength="20"
-      />
+    <view class="form-item" style="position: relative; z-index: 100;">
+      <text class="label">股票名称/代码</text>
+      <view class="input-wrapper">
+        <input class="input" placeholder="输入名称或代码搜索(如: TSLA 或 特斯拉)" placeholder-class="placeholder" value="{{inputName}}" bindinput="onInputSearch" bindfocus="onInputFocus" />
+        <view wx:if="{{isSearching}}" class="search-loading"></view>
+        <view wx:if="{{inputName.length > 0}}" class="clear-btn" bindtap="clearInput">✕</view>
+      </view>
+      <view class="search-dropdown" wx:if="{{searchResults.length > 0}}">
+        <block wx:for="{{searchResults}}" wx:key="symbol">
+          <view class="search-item" bindtap="selectStock" data-item="{{item}}">
+            <view class="search-info">
+              <text class="search-name">{{item.name}}</text>
+              <text class="search-code">{{item.code}}</text>
+            </view>
+            <view class="search-market tag {{item.market === 'US' ? 'blue' : (item.market === 'HK' ? 'red' : 'orange')}}">
+              {{item.market === 'US' ? '美股' : (item.market === 'HK' ? '港股' : 'A股')}}
+            </view>
+          </view>
+        </block>
+      </view>
     </view>
-
     <view class="form-item">
-      <text class="label">选择市场</text>
+      <text class="label">所属市场 (自动识别)</text>
       <view class="market-selector">
         <block wx:for="{{marketOptions}}" wx:key="code">
-          <view 
-            class="market-chip {{editingIndex === index ? 'active ' + item.code : ''}}" 
-            bindtap="onMarketChange" 
-            data-index="{{index}}"
-          >
+          <view class="market-chip {{editingIndex === index ? 'active ' + item.code : ''}}"  data-index="{{index}}">
             <text>{{item.market}}</text>
             <text class="chip-currency">{{item.code}}</text>
           </view>
         </block>
       </view>
     </view>
-
-    <button class="btn-add {{isAdding ? 'btn-disabled' : ''}}" loading="{{isAdding}}"
-      disabled="{{isAdding}}" bindtap="addType" >{{isAdding ? '添加中...' : '确认添加'}}</button>
+    <button class="btn-add {{isAdding ? 'btn-disabled' : ''}}" loading="{{isAdding}}" disabled="{{isAdding}}" bindtap="addType">
+      {{isAdding ? '添加中...' : '确认添加'}}
+    </button>
   </view>
-
   <view class="list-title">已添加列表 ({{stockList.length}})</view>
-  
   <view class="stock-list">
     <block wx:for="{{stockList}}" wx:key="id">
       <view class="card stock-item">
@@ -46,16 +48,11 @@
             <view class="tag currency-tag">{{item.code}}</view>
           </view>
         </view>
-
         <view class="item-right" bindtap="deleteStock" data-id="{{item._id}}">
           <text class="delete-icon">✕</text>
         </view>
       </view>
     </block>
-
-    <view wx:if="{{stockList.length === 0}}" class="empty-state">
-      暂无自选股票名称，请在上方添加
-    </view>
+    <view wx:if="{{stockList.length === 0}}" class="empty-state">暂无自选股票名称，请在上方添加</view>
   </view>
-
 </view>

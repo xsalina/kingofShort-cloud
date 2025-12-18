@@ -27,6 +27,7 @@ exports.main = async (event) => {
         quantity,
         fee = 0,
         code,
+        symbol,
       } = event;
       if (
         !stockId ||
@@ -34,7 +35,8 @@ exports.main = async (event) => {
         !market ||
         !currency ||
         !price ||
-        !quantity
+        !quantity ||
+        !symbol
       ) {
         return failResponse({ message: "缺少买入必要参数" });
       }
@@ -60,6 +62,7 @@ exports.main = async (event) => {
         lastSellTime: null, // 最近卖出时间
         sellRecords: [], // 卖出记录列表
         code,
+        symbol,
       };
 
       const res = await db
