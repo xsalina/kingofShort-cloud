@@ -264,6 +264,20 @@
           "query": "itemId=cd349d8f6942acc708195aa32865002e",
           "launchMode": "default",
           "scene": null
+        },
+        {
+          "name": "",
+          "pathName": "subpackages/deal/add-deal/index",
+          "query": "",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
+          "name": "",
+          "pathName": "pages/register/index",
+          "query": "",
+          "launchMode": "default",
+          "scene": null
         }
       ]
     }

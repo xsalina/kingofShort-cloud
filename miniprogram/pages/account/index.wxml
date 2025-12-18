@@ -10,7 +10,6 @@
             <view class="user-text">
               <view class="row-start">
                 <text class="user-name">{{userInfo.name || userInfo.nickName}}</text>
-                <view class="vip-tag">交易</view>
               </view>
               <text class="user-id">{{userInfo.phone || '未绑定手机'}}</text>
             </view>
@@ -43,7 +42,7 @@
         <unification-avatar/>
         <view class="unlogin-text">
           <text class="title">点击登录/注册</text>
-          <text class="desc">同步数据，构建你的交易体系</text>
+          <text class="desc">同步数据，构建你的记录体系</text>
         </view>
         <view class="login-btn-fake">去登录/注册</view>
       </view>
@@ -70,7 +69,7 @@
     <view class="menu-item row-between" bindtap="goAddStockType">
       <view class="row-start">
         <text class="menu-icon">📈</text>
-        <text class="menu-text">股票/币种管理</text>
+        <text class="menu-text">记录名称/币种管理</text>
       </view>
       <text class="arrow">➜</text>
     </view>

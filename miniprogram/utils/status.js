@@ -8,7 +8,7 @@ function getStatusInfo(status) {
       break;
     case "unSold":
       statusInfo.statusText = "未卖";
-      statusInfo.detailText = "持仓中";
+      statusInfo.detailText = "持有中";
       break;
     case "pending":
       statusInfo.statusText = "挂单";

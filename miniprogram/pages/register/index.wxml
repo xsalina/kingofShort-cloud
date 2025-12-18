@@ -16,8 +16,8 @@
       <input class="input" type="text" placeholder="请输入昵称" placeholder-class="placeholder" maxlength="10" value="{{name}}" bindinput="onNameInput" />
     </view>
     <view class="input-group">
-      <text class="label">手机号码</text>
-      <input class="input" type="number" maxlength="11" placeholder="请输入手机号" placeholder-class="placeholder" maxlength="11" value="{{phone}}" bindinput="onPhoneInput" />
+      <text class="label">数据记号</text>
+      <input class="input" type="number" maxlength="11" placeholder="请输入任意数字" placeholder-class="placeholder" maxlength="11" value="{{phone}}" bindinput="onPhoneInput" />
     </view>
   </view>
   <view class="action-area">

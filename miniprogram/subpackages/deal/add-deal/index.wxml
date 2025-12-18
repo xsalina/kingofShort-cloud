@@ -1,7 +1,7 @@
 <view class="container" style="transform: translateY({{keyboardHeight > 0 ? -(keyboardHeight / 4) : 0}}px);">
   <view class="card stock-section">
     <view class="section-header-row">
-      <view class="section-title">交易股票</view>
+      <view class="section-title">名称</view>
       <view class="link-btn" bindtap="onAddType" wx:if="{{userInfo.userId}}">
         找不到? 去添加
         <text class="arrow">></text>
@@ -10,7 +10,7 @@
     <picker bindchange="onStockChange" value="{{selectedStockIndex}}" range="{{userInfo.userId ? stockOptions : unRegisterTypes}}" range-key="name">
       <view class="picker-row">
         <view class="picker-val {{selectedStockObj !== null ? 'active' : ''}}">
-          {{selectedStockObj !== null ? selectedStockObj.name : '请点击选择交易股票'}}
+          {{selectedStockObj !== null ? selectedStockObj.name : '请点击选择记录名称'}}
         </view>
         <view class="picker-tag {{selectedStockObj.code}}" wx:if="{{selectedStockObj !== null}}">
           {{selectedStockObj.market}} {{selectedStockObj.currency}}
@@ -80,6 +80,6 @@
 
   </view>
   <button class="btn-submit {{disabled ? 'disabled' : ''}}" bindtap="addTransaction" loading="{{disabled}}" disabled="{{disabled}}">
-    {{disabled ? '创建中...' : '确认建仓'}}
+    {{disabled ? '新增中...' : '记一笔'}}
   </button>
 </view>

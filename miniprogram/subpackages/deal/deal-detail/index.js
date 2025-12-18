@@ -178,11 +178,12 @@ Page({
     const standardMarket = this.getStandardMarket(this.data.detailInfo);
 
     // 4. 判断是否休市
-    const isTrading = tradingUtils.isTradingTime(standardMarket);
+    // const isTrading = tradingUtils.isTradingTime(standardMarket);
+    const isTrading = true;
 
     if (!isTrading) {
       console.log(
-        `💤 ${standardMarket} 休市中 (货币:${this.data.detailInfo.market})，不启用定时器`
+        `💤 ${standardMarket} 休息中 (${this.data.detailInfo.market})，不启用定时器`
       );
       return;
     }

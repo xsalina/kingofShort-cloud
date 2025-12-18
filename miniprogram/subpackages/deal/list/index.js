@@ -5,7 +5,7 @@ Page({
   data: {
     tabs: [
       {
-        label: "持仓中",
+        label: "持有中",
         value: "unSold",
       },
       {

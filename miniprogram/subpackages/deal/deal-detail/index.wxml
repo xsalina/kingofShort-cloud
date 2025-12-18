@@ -15,28 +15,28 @@
     </view>
   </view>
   <block wx:if="{{detailInfo.status != 'sold'}}">
-    <view class="section-title">实时持仓分析</view>
+    <view class="section-title">数值趋势</view>
     <view class="card market-card">
       <view class="market-grid">
         <view class="market-item">
-          <text class="label">实时股价</text>
+          <text class="label">动态参考值</text>
           <view class="value-group">
             <text class="font-xl font-bold">{{detailInfo.currency}}{{currentPrice || '--'}}</text>
           </view>
         </view>
         <view class="market-item text-right">
-          <text class="label">预计卖出收益 (浮动)</text>
+          <text class="label">预计差值 (浮动)</text>
           <view class="font-xl font-bold {{futureEstimatedProfit >= 0 ? 'text-warn' : 'text-primary'}}">
             {{futureEstimatedProfit >= 0 ? '+' : '-'}}{{detailInfo.currency}}{{futureEstimatedProfitText || '0.00'}}
           </view>
         </view>
         <view class="divider"></view>
         <view class="market-item">
-          <view class="label">持仓成本 (单股)</view>
+          <view class="label">基准数值 (单股)</view>
           <view class="value">{{detailInfo.currency}}{{detailInfo.avgCost}}</view>
         </view>
         <view class="market-item text-right">
-          <view class="label">剩余持仓量</view>
+          <view class="label">剩余数量</view>
           <view class="value">
             {{detailInfo.remainingQuantity}}
             <text class="font-sm">股</text>
@@ -110,7 +110,7 @@
       <text class="label">策略推演</text>
     </view>
     <view class="btn-sell" bindtap="openSell">
-      <text>卖出操作</text>
+      <text>移除操作</text>
     </view>
   </view>
 </view>

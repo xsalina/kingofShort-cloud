@@ -1,8 +1,8 @@
 <view class="container">
   <view class="card add-card">
-    <view class="card-title">新增股票类型</view>
+    <view class="card-title">新增记录类型</view>
     <view class="form-item" style="position: relative; z-index: 100;">
-      <text class="label">股票名称/代码</text>
+      <text class="label">记录名称/代码</text>
       <view class="input-wrapper">
         <input class="input" placeholder="输入名称或代码搜索(如: TSLA 或 特斯拉)" placeholder-class="placeholder" value="{{inputName}}" bindinput="onInputSearch" bindfocus="onInputFocus" />
         <view wx:if="{{isSearching}}" class="search-loading"></view>
