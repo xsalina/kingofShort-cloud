@@ -19,7 +19,6 @@ exports.main = async (event) => {
     const now = db.serverDate();
     if (action === "buy") {
       const {
-        stockId,
         stockName,
         market,
         currency,
@@ -28,15 +27,16 @@ exports.main = async (event) => {
         fee = 0,
         code,
         symbol,
+        stockCode
       } = event;
       if (
-        !stockId ||
         !stockName ||
         !market ||
         !currency ||
         !price ||
         !quantity ||
-        !symbol
+        !symbol || 
+        !stockCode
       ) {
         return failResponse({ message: "缺少买入必要参数" });
       }
@@ -47,7 +47,6 @@ exports.main = async (event) => {
 
       const newTrade = {
         userId,
-        stockId,
         stockName,
         market,
         currency,
@@ -63,6 +62,7 @@ exports.main = async (event) => {
         sellRecords: [], // 卖出记录列表
         code,
         symbol,
+        stockCode,
       };
 
       const res = await db
@@ -155,10 +155,9 @@ exports.main = async (event) => {
       });
     } else if (action === "list") {
       // -------- 查询交易列表 --------
-      let { stockId, status, stockName, page = 1, pageSize = 10 } = event;
+      let {  status, stockName, page = 1, pageSize = 10 } = event;
 
       const query = { userId };
-      if (stockId) query.stockId = stockId;
       if (status) query.status = status;
 
       // 【核心新增】模糊查询 stockName

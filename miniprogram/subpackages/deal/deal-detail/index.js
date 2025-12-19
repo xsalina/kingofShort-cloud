@@ -177,18 +177,16 @@ Page({
     // 无论你存的是 'USD' 还是 'gb_tsla'，都由这个函数统一处理
     const standardMarket = this.getStandardMarket(this.data.detailInfo);
 
-    // 4. 判断是否休市
-    // const isTrading = tradingUtils.isTradingTime(standardMarket);
-    const isTrading = true;
+    // 4. 判断是否休息
+    const isTrading = tradingUtils.isTradingTime(standardMarket);
 
     if (!isTrading) {
       console.log(
-        `💤 ${standardMarket} 休息中 (${this.data.detailInfo.market})，不启用定时器`
+        `💤 休息中 (${this.data.detailInfo.market})`
       );
       return;
     }
 
-    console.log(`📈 ${standardMarket} 交易中，开启轮询...`);
 
     // 5. 开启定时器
     this.timer = setInterval(() => {
@@ -196,7 +194,6 @@ Page({
       if (tradingUtils.isTradingTime(standardMarket)) {
         this.fetchRealTimePrice();
       } else {
-        console.log("🛑 收盘了，停止轮询");
         this.stopPolling();
       }
     }, 3000);

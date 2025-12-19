@@ -14,8 +14,8 @@
       <view class="badge badge-{{detailInfo.status}} font-lg">{{detailText}}</view>
     </view>
   </view>
-  <block wx:if="{{detailInfo.status != 'sold'}}">
-    <view class="section-title">数值趋势</view>
+  <block wx:if="{{detailInfo.status && detailInfo.status != 'sold'}}">
+    <view class="section-title">实时数值趋势</view>
     <view class="card market-card">
       <view class="market-grid">
         <view class="market-item">
@@ -25,14 +25,14 @@
           </view>
         </view>
         <view class="market-item text-right">
-          <text class="label">预计差值 (浮动)</text>
+          <text class="label">预计收益 (浮动)</text>
           <view class="font-xl font-bold {{futureEstimatedProfit >= 0 ? 'text-warn' : 'text-primary'}}">
             {{futureEstimatedProfit >= 0 ? '+' : '-'}}{{detailInfo.currency}}{{futureEstimatedProfitText || '0.00'}}
           </view>
         </view>
         <view class="divider"></view>
         <view class="market-item">
-          <view class="label">基准数值 (单股)</view>
+          <view class="label">成本均价 (单股)</view>
           <view class="value">{{detailInfo.currency}}{{detailInfo.avgCost}}</view>
         </view>
         <view class="market-item text-right">
@@ -110,7 +110,7 @@
       <text class="label">策略推演</text>
     </view>
     <view class="btn-sell" bindtap="openSell">
-      <text>移除操作</text>
+      <text>卖出操作</text>
     </view>
   </view>
 </view>

@@ -278,6 +278,20 @@
           "query": "",
           "launchMode": "default",
           "scene": null
+        },
+        {
+          "name": "",
+          "pathName": "subpackages/deal/suggest/index",
+          "query": "params=%7B%22currentSymbol%22%3A%22gb_tsla%22%2C%22stockName%22%3A%22%E7%89%B9%E6%96%AF%E6%8B%89%22%2C%22stockCode%22%3A%22USD%22%2C%22hold%22%3A12%2C%22lastBuyPrice%22%3A398%7D",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
+          "name": "",
+          "pathName": "subpackages/deal/deal-detail/index",
+          "query": "",
+          "launchMode": "default",
+          "scene": null
         }
       ]
     }

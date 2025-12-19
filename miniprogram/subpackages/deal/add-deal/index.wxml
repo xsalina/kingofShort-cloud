@@ -1,23 +1,43 @@
-<view class="container" style="transform: translateY({{keyboardHeight > 0 ? -(keyboardHeight / 4) : 0}}px);">
+<view class="container" style="transform: translateY({{(keyboardHeight > 0 && !isSearchFocus) ? -(keyboardHeight / 4) : 0}}px);">
   <view class="card stock-section">
-    <view class="section-header-row">
-      <view class="section-title">名称</view>
-      <view class="link-btn" bindtap="onAddType" wx:if="{{userInfo.userId}}">
-        找不到? 去添加
-        <text class="arrow">></text>
-      </view>
+  <view class="section-header-row">
+    <view class="section-title">股票名称</view>
+    
+  </view>
+
+  <view class="input-container" style="position: relative; z-index: 10;">
+    
+    <view class="input-wrap" bindtap="onInputFocus">
+      <input 
+        class="input" 
+        type="text" 
+        placeholder="搜索股票名称/代码" 
+        placeholder-class="ph-style" 
+        value="{{inputName}}" 
+        bindinput="onInputSearch"
+        bindfocus="onInputFocus"
+      />
+      
+      <view class="clear-icon" wx:if="{{inputName}}" catchtap="clearInput">✕</view>
     </view>
-    <picker bindchange="onStockChange" value="{{selectedStockIndex}}" range="{{userInfo.userId ? stockOptions : unRegisterTypes}}" range-key="name">
-      <view class="picker-row">
-        <view class="picker-val {{selectedStockObj !== null ? 'active' : ''}}">
-          {{selectedStockObj !== null ? selectedStockObj.name : '请点击选择记录名称'}}
+
+    <view class="search-dropdown" wx:if="{{searchResults.length > 0}}">
+      <block wx:for="{{searchResults}}" wx:key="symbol">
+        <view class="search-item" bindtap="selectStock" data-item="{{item}}">
+          
+          <view class="search-info">
+            <text class="search-name">{{item.name}}</text>
+            <text class="search-code">{{item.stockCode}}</text>
+          </view>
+
+          <view class="search-market tag {{item.code === 'US' ? 'blue' : (item.code === 'HK' ? 'red' : 'orange')}}">
+            {{item.market}}
+          </view>
+
         </view>
-        <view class="picker-tag {{selectedStockObj.code}}" wx:if="{{selectedStockObj !== null}}">
-          {{selectedStockObj.market}} {{selectedStockObj.currency}}
-        </view>
-        <view class="picker-arrow" wx:else>▼</view>
-      </view>
-    </picker>
+      </block>
+    </view>
+  </view>
   </view>
   <view class="card form-section">
     <view class="section-title-simple">买入详情</view>
@@ -26,13 +46,13 @@
         <text class="label">买入价格</text>
         <view class="input-wrap">
           <text class="prefix">{{selectedStockObj ? selectedStockObj.currency : ''}}</text>
-          <input class="input" type="digit" placeholder="0.00" value="{{price}}" data-field="price" bindinput="onInput" />
+          <input class="input" type="digit" placeholder="0.00" value="{{price}}" data-field="price" bindinput="onInput"  bindfocus="onFormFocus" />
         </view>
       </view>
       <view class="form-col">
         <text class="label">买入数量</text>
         <view class="input-wrap">
-          <input class="input" type="digit" placeholder="0" value="{{qty}}" data-field="qty" bindinput="onInput" />
+          <input class="input" type="digit" placeholder="0" value="{{qty}}" data-field="qty" bindinput="onInput"  bindfocus="onFormFocus" />
           <text class="suffix">股</text>
         </view>
       </view>
@@ -42,13 +62,13 @@
         <text class="label">总手续费</text>
         <view class="input-wrap">
           <text class="prefix">{{selectedStockObj ? selectedStockObj.currency : ''}}</text>
-          <input class="input" type="digit" placeholder="0.00" value="{{buyfee}}" data-field="buyfee" bindinput="onInput" />
+          <input class="input" type="digit" placeholder="0.00" value="{{buyfee}}" data-field="buyfee" bindinput="onInput"  bindfocus="onFormFocus" />
         </view>
       </view>
       <view class="form-col">
         <text class="label">目标收益率</text>
         <view class="input-wrap">
-          <input class="input" type="digit" placeholder="10" value="{{rate}}" data-field="rate" bindinput="onInput" />
+          <input class="input" type="digit" placeholder="10" value="{{rate}}" data-field="rate" bindinput="onInput"  bindfocus="onFormFocus" />
           <text class="suffix">%</text>
         </view>
       </view>

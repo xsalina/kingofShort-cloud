@@ -6,6 +6,7 @@ const {
   safeSubtract,
   safeDivide,
 } = require("../../../utils/number.js");
+const { searchStock } = require("../../../utils/stock.js");
 Page({
   data: {
     disabled: false,
@@ -22,17 +23,18 @@ Page({
     suggestedSellPrice: null,
     suggestedProfit: null,
     userInfo: null,
-    unRegisterTypes: [
-      { name: "黄金", market: "A股", currency: "¥", code: "CNY" },
-      { name: "特斯拉", market: "美股", currency: "$", code: "USD" },
-      { name: "小米", market: "A股", currency: "¥", code: "CNY" },
-      { name: "阿里巴巴", market: "A股", currency: "¥", code: "CNY" },
-      { name: "腾讯", market: "A股", currency: "¥", code: "CNY" },
-      { name: "苹果", market: "美股", currency: "$", code: "USD" },
-      { name: "英伟达", market: "美股", currency: "$", code: "USD" },
-      { name: "纳指 100 ETF", market: "美股", currency: "$", code: "USD" },
-    ],
+    
     keyboardHeight: 0,
+
+    // 输入框相关数据
+    inputName: '',      // 输入框显示的文字
+    searchResults: [],  // 搜索结果数组
+    selectedStockObj: null, // 最终选中的对象
+    
+    // 定时器用于防抖 (防止每打一个字都发请求)
+    searchTimer: null,
+    // 【新增】标记当前聚焦的是否为搜索框
+    isSearchFocus: false
   },
   async onLoad() {
     const userInfo = await app.refreshUserInfo();
@@ -40,7 +42,7 @@ Page({
     this.setData({
       userInfo,
     });
-    this.queryTypeList();
+    // this.queryTypeList();
     this.wxOnKeyboard();
   },
   async onShow() {
@@ -52,7 +54,7 @@ Page({
         selectedStockObj: null,
       });
     }
-    this.queryTypeList();
+    // this.queryTypeList();
   },
   // 分享功能
   onShareAppMessage() {
@@ -83,18 +85,6 @@ Page({
       }
     });
   },
-  onStockChange(e) {
-    const { userInfo, stockOptions, unRegisterTypes } = this.data;
-    const index = parseInt(e.detail.value);
-    const stockObj = userInfo?.userId
-      ? stockOptions[index]
-      : unRegisterTypes[index];
-    this.setData({
-      selectedStockIndex: index,
-      selectedStockObj: stockObj,
-    });
-    // this.updateTargetSellPrice();
-  },
 
   onInput(e) {
     const key = e.currentTarget.dataset.field;
@@ -107,14 +97,14 @@ Page({
   updateTargetSellPrice() {
     const { price, qty, rate, buyfee } = this.data;
 
-    if (!price || !qty || !rate || rate <= 0) {
+    if (!price || !qty) {
       this.setData({ suggestedSellPrice: null, suggestedProfit: null });
       return;
     }
     // 总成本 = 买入价格×数量 + 用户输入手续费
     const buyCost = safeAdd(safeMultiply(price, qty), buyfee);
     // 目标总金额 = buyCost × (1 + 目标收益率)
-    const targetRate = (rate || 0) / 100;
+    const targetRate = (rate || 10) / 100;
     const targetTotal = safeMultiply(buyCost, safeAdd(1, targetRate));
     // 建议卖出价 = 目标总金额 ÷ 数量
     const sp = safeDivide(targetTotal, qty);
@@ -147,7 +137,6 @@ Page({
         data: {
           action: "buy",
           userId: this.data.userInfo.userId,
-          stockId: selectedStockObj._id,
           stockName: selectedStockObj.name,
           market: selectedStockObj.market,
           currency: selectedStockObj.currency,
@@ -155,7 +144,8 @@ Page({
           quantity: qty,
           fee: buyfee,
           code: selectedStockObj.code,
-          symbol:selectedStockObj.symbol
+          symbol:selectedStockObj.symbol,
+          stockCode:selectedStockObj.stockCode
         },
       })
       .then((res) => {
@@ -197,5 +187,64 @@ Page({
           // wx.showToast({ title: res.result.message, icon: "none" });
         }
       });
+  },
+  // 1. 输入框输入事件
+  onInputSearch(e) {
+    const keyword = e.detail.value;
+    this.setData({ inputName: keyword });
+
+    if (!keyword) {
+      this.setData({ searchResults: [] });
+      return;
+    }
+
+    // 防抖处理：用户停止输入 500ms 后再搜索
+    if (this.data.searchTimer) clearTimeout(this.data.searchTimer);
+    
+    this.data.searchTimer = setTimeout(() => {
+      this.doSearch(keyword);
+    }, 500);
+  },
+  // 执行搜索
+  doSearch(keyword) {
+    searchStock(keyword).then(results => {
+      this.setData({ searchResults: results });
+    }).catch(err => {
+      console.error('搜索出错', err);
+      this.setData({ searchResults: [] });
+    });
+  },
+  // 2. 选中下拉列表某一项
+  selectStock(e) {
+    const item = e.currentTarget.dataset.item;
+    
+    console.log('用户选中了:', item);
+
+    this.setData({
+      inputName: item.name,       // 输入框显示中文名
+      selectedStockObj: item,     // 存下完整的对象
+      searchResults: [],          // 收起下拉列表
+      
+    });
+  },
+  // 3. 清空输入框
+  clearInput() {
+    this.setData({
+      inputName: '',
+      searchResults: [],
+      selectedStockObj: null
+    });
+  },
+  // 【新增】下方表单输入框聚焦时触发
+  onFormFocus() {
+    if (this.data.isSearchFocus) {
+      this.setData({ isSearchFocus: false });
+    }
+  },
+  // 【修改】搜索输入框聚焦时触发
+  onInputFocus() {
+    if (!this.data.isSearchFocus) {
+      this.setData({ isSearchFocus: true });
+    }
   },
 });
