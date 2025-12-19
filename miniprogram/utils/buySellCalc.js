@@ -48,12 +48,12 @@ function buildBuyTable(cfg, P, cash, T) {
   let triggeredLevels = [];
 
   const table = cfg.buy.map((row) => {
-    const minP = safeMultiply(P, safeAdd(1, row.drop[0] / 100),1);
-    const maxP = safeMultiply(P, safeAdd(1, row.drop[1] / 100),1);
+    const minP = safeMultiply(P, safeAdd(1, row.drop[0] / 100), 1);
+    const maxP = safeMultiply(P, safeAdd(1, row.drop[1] / 100), 1);
     // 买入层级触发修正版
     const triggered = T <= minP && T >= maxP;
-    const buyAmount = safeMultiply(cash, row.percent / 100,1);
-    const shares = T > 0 ? safeDivide(buyAmount, T, 1,1) : 0;
+    const buyAmount = safeMultiply(cash, row.percent / 100, 1);
+    const shares = T > 0 ? safeDivide(buyAmount, T, 1, 1) : 0;
 
     const results = {
       level: row.level,
@@ -78,14 +78,13 @@ function buildBuyTable(cfg, P, cash, T) {
 
 function buildSellTable(cfg, P, hold, T) {
   let triggeredLevels = [];
-
-  const table = cfg.sell.map((row) => {
-    const minP = safeMultiply(P, safeAdd(1, row.rise[0] / 100),1);
-    const maxP = safeMultiply(P, safeAdd(1, row.rise[1] / 100),1);
-    const triggered = T > minP && T <= maxP;
-
-    const sellShares = safeMultiply(hold, row.percent / 100, 1,1);
-    const sellAmount = safeMultiply(sellShares, T,1);
+  const diffValue = safeSubtract(T, P);
+  const table = cfg.sell.map((row, idx) => {
+    const minP = safeMultiply(P, safeAdd(1, row.rise[0] / 100), 1);
+    const maxP = safeMultiply(P, safeAdd(1, row.rise[1] / 100), 1);
+    let triggered = T > minP && T <= maxP;
+    const sellShares = safeMultiply(hold, row.percent / 100, 1, 1);
+    const sellAmount = safeMultiply(sellShares, diffValue);
 
     const results = {
       level: row.level,
@@ -96,6 +95,11 @@ function buildSellTable(cfg, P, hold, T) {
       triggerRange: `${format(minP)} \n ~ \n ${format(maxP)}`,
       triggered,
     };
+    //大于最后一项
+    if (!triggered && idx === cfg.sell.length - 1 && T > maxP) {
+      triggered = true;
+      results.triggered = true
+    }
 
     if (triggered) triggeredLevels.push(results);
 
@@ -117,20 +121,27 @@ function buildTips(T, P, highestBuy, highestSell) {
 
   if (diff > 0) {
     tips += `当前价格高于成本 ${format(diff)}%，`;
-    if(!highestSell){
-      tips += '可等待卖出层级触发后部分止盈'
+    if (!highestSell) {
+      tips += "可等待卖出层级触发后部分止盈";
     }
   } else {
     tips += `当前价格低于成本 ${format(Math.abs(diff)) || 0}%，`;
-     if(!highestBuy){
-      tips += '可在买入层级触发时逐步补仓'
+    if (!highestBuy) {
+      tips += "可在买入层级触发时逐步补仓";
     }
   }
- 
+
   if (highestBuy)
     tips += `触发最高买入层级：${highestBuy.level} | ${highestBuy.buyShares}股 | 买入${highestBuy.buyAmount}`;
-  if (highestSell)
-    tips += `触发最高卖出层级：${highestSell.level} | ${highestSell.sellShares}股 | 收益${highestSell.sellAmount} `;
+  if (highestSell) {
+    const addMoney = safeMultiply(
+      safeSubtract(T, P),
+      highestSell.sellShares || 0
+    );
+    tips += `触发最高卖出层级：${highestSell.level} | ${
+      highestSell.sellShares
+    }股 | 收益${format(addMoney)} `;
+  }
 
   return {
     tipsTextArray: [tips],

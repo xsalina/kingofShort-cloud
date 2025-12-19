@@ -20,7 +20,7 @@ Page({
     const { name, phone } = this.data;
     if (!name) return wx.showToast({ title: "请输入姓名", icon: "none" });
     if (!phone || phone.length !== 11)
-      return wx.showToast({ title: "请输入正确手机号", icon: "none" });
+      return wx.showToast({ title: "请输入11位号码", icon: "none" });
     this.setData({ disabled: true });
     // wx.showLoading({ title: "注册中..." });
     // 调用云函数注册

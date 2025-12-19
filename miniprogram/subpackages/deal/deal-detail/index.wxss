@@ -150,53 +150,138 @@
 }
 
 
-
-/* ---------------- 4. 底部按钮栏 (悬浮长方形风格) ---------------- */
+/* ---------------- 4. 底部按钮栏 (悬浮双按钮风格) ---------------- */
+/* ---------------- 底部悬浮栏 (方案2：左图文 右胶囊) ---------------- */
 .footer-action {
   position: fixed;
   bottom: 0;
   left: 0;
   right: 0;
   
-  /* 1. 背景改为纯白，作为“边距”的底色 */
   background: #ffffff;
   border-top: 1rpx solid #f0f0f0;
   
-  /* 2. 【关键】设置内边距：上下留 20rpx 白边，左右留 30rpx (避免太贴边) */
+  /* 保持原本舒适的内边距 */
   padding: 20rpx 30rpx;
-  
-  /* 3. 适配小黑条：在原有 padding 基础上叠加安全距离 */
   padding-bottom: calc(20rpx + env(safe-area-inset-bottom));
   
   z-index: 999;
   box-shadow: 0 -4rpx 16rpx rgba(0,0,0,0.05);
+
+  /* 【关键】Flex 布局，两端对齐 */
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 
+/* === 左侧：策略入口 (图文结构) === */
+.strategy-tool {
+  display: flex;
+  flex-direction: column; /* 上下排列 */
+  align-items: center;
+  justify-content: center;
+  margin-right: 30rpx; /* 给右边按钮留出距离 */
+  min-width: 100rpx;   /* 保证点击区域够大 */
+}
+
+.strategy-tool .tool-icon-bg {
+  /* 给图标加个浅橙色圆底，显得精致 */
+  width: 48rpx;
+  height: 48rpx;
+  background: #fff5e6; 
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 6rpx;
+}
+
+.strategy-tool .icon {
+  font-size: 28rpx; /* 图标不用太大 */
+}
+
+.strategy-tool .label {
+  font-size: 20rpx;
+  color: #666;
+  font-weight: 500;
+}
+
+.strategy-tool:active {
+  opacity: 0.7;
+}
+
+/* === 右侧：卖出按钮 (大胶囊) === */
 .btn-sell {
-  width: 100%;
+  /* 【关键】flex: 1 自动占满剩余空间 */
+  flex: 1; 
   
-  /* 【关键】高度固定为 80rpx */
   height: 80rpx;
-  
-  /* Flex 居中 */
   display: flex;
   align-items: center;
   justify-content: center;
   
+  /* 红色渐变背景 */
   background: linear-gradient(135deg, #ff7e5f, #eb4d4b);
   color: #fff;
   
-  /* 微圆角长方形 (如果想要完全直角，改成 0) */
-  border-radius: 12rpx; 
+  /* 【关键】全圆角 (胶囊样式) */
+  border-radius: 40rpx; 
   
   font-weight: 600;
   font-size: 32rpx;
   letter-spacing: 2rpx;
-  border: none;
-  box-shadow: 0 6rpx 16rpx rgba(235, 77, 75, 0.25);
+  box-shadow: 0 6rpx 16rpx rgba(235, 77, 75, 0.3); /* 红色投影 */
 }
 
 .btn-sell:active {
   transform: scale(0.98);
   opacity: 0.9;
 }
+
+/* ---------------- 新增：实时市值卡片 ---------------- */
+.market-card {
+  padding: 30rpx;
+  background: #fff;
+}
+
+.market-grid {
+  display: flex;
+  flex-wrap: wrap; /* 允许换行 */
+  justify-content: space-between;
+}
+
+/* 每个数据块占一半宽度 */
+.market-item {
+  width: 48%; 
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 10rpx;
+}
+
+.market-item.text-right {
+  align-items: flex-end; /* 右对齐 */
+}
+
+/* 标签样式 */
+.market-item .label {
+  font-size: 24rpx;
+  color: #999;
+  margin-bottom: 8rpx;
+}
+
+/* 数值样式 */
+.market-item .value {
+  font-size: 32rpx;
+  color: #2d3436;
+  font-weight: 600;
+  font-family: 'DIN Alternate', sans-serif;
+}
+
+/* 分割线 */
+.divider {
+  width: 100%;
+  height: 1rpx;
+  background: #f0f0f0;
+  margin: 20rpx 0 24rpx 0; /* 上下留白 */
+}
+

@@ -1,4 +1,5 @@
 <view class="container">
+  
   <view class="search-section">
     <view class="search-bar">
       <icon class="search-icon" type="search" size="16" color="#b2bec3"></icon>
@@ -7,6 +8,7 @@
       <view class="search-btn" bindtap="onSearch">搜索</view>
     </view>
   </view>
+
   <view class="history-panel" wx:if="{{!searchKeyword && historyList.length > 0}}">
     <view class="history-header">
       <text class="h-title">历史搜索</text>
@@ -16,14 +18,12 @@
     </view>
     <view class="history-tags">
       <block wx:for="{{historyList}}" wx:key="*this">
-        <view class="tag" bindtap="onTapHistory"  bindlongpress="onLongPressHistory" 
-          data-val="{{item}}"
-          data-index="{{index}}">{{item}}</view>
+        <view class="tag" bindtap="onTapHistory" bindlongpress="onLongPressHistory" data-val="{{item}}" data-index="{{index}}">{{item}}</view>
       </block>
     </view>
   </view>
-  <!-- tab 切换 -->
-  <view class="tabs-wrapper sticky-top">
+
+  <view class="tabs-wrapper">
     <view class="tab-slider" style="transform: translateX({{currentTabIndex * 100}}%);"></view>
     <block wx:for="{{tabs}}" wx:key="index">
       <view class="tab-item {{currentTabIndex === index ? 'active' : ''}}" bindtap="switchTab" data-index="{{index}}">
@@ -31,15 +31,33 @@
       </view>
     </block>
   </view>
-  <!-- 列表 -->
-  <view class="transactions-list">
-    <block wx:for="{{transactions}}" wx:key="id">
-      <record-card cardItem="{{item}}" />
+
+  <swiper 
+    class="content-swiper" 
+    current="{{currentTabIndex}}" 
+    bindchange="onSwiperChange"
+    duration="300"
+    style="height: {{swiperHeight}}px; min-height: 50vh;"
+  >
+    <block wx:for="{{tabs}}" wx:key="index">
+      <swiper-item>
+        <view class="list-content-wrapper item-{{index}}">
+          
+          <block wx:if="{{currentTabIndex === index}}">
+             <view class="transactions-list">
+                <block wx:for="{{transactions}}" wx:key="id">
+                  <record-card cardItem="{{item}}" />
+                </block>
+             </view>
+
+             <block wx:if="{{transactions.length === 0 && loaded}}"><empty-tips /></block>
+             <view class="have-nomore" wx:if="{{transactions.length >= 4 && loaded && !hasMore}}">没有更多了</view>
+             <view class="have-nomore" wx:if="{{transactions.length > 0 && hasMore}}">加载中...</view>
+          </block>
+
+        </view>
+      </swiper-item>
     </block>
-  </view>
-  <block wx:if="{{transactions.length === 0 && loaded}}">
-    <!-- 空状态 -->
-    <empty-tips />
-  </block>
-  <view class="have-nomore" wx:if="{{transactions.length >= 4 && loaded && !hasMore}}">没有更多了</view>
+  </swiper>
+
 </view>

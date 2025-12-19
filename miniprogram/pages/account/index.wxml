@@ -10,7 +10,6 @@
             <view class="user-text">
               <view class="row-start">
                 <text class="user-name">{{userInfo.name || userInfo.nickName}}</text>
-                <view class="vip-tag">交易</view>
               </view>
               <text class="user-id">{{userInfo.phone || '未绑定手机'}}</text>
             </view>
@@ -79,16 +78,14 @@
         <text class="arrow">></text>
       </view>
     </view>
-
-    <view class="menu-item" bindtap="goAddStockType">
-      <view class="menu-left">
+    
+    <!-- <view class="menu-item row-between" bindtap="goAddStockType">
+      <view class="row-start">
         <text class="menu-icon">📈</text>
-        <text class="menu-text">股票/币种管理</text>
+        <text class="menu-text">记录名称/币种管理</text>
       </view>
-      <view class="menu-right">
-        <text class="arrow">></text>
-      </view>
-    </view>
+      <text class="arrow">➜</text>
+    </view> -->
 
     <button class="menu-item contact-btn" open-type="contact">
       <view class="menu-left">

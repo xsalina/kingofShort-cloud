@@ -8,7 +8,7 @@ const { successResponse, failResponse } = require("./utils"); // utils.js 同级
 
 exports.main = async (event) => {
   try {
-    const { userId, action, stockId, name, market,code, currency, env } = event;
+    const { userId, action, stockId, name, market,code, currency, env,symbol } = event;
 
     const stockTypesCollection =
       env === "prod" ? "stockTypes" : "test_stockTypes";
@@ -19,7 +19,7 @@ exports.main = async (event) => {
       // 查询用户股票类型，过滤已删除
       const res = await db
         .collection(stockTypesCollection)
-        .where({ userId, isDeleted: false })
+        .where({ userId })
         .orderBy("createTime", "desc")
         .get();
       return successResponse({ data: res.data });
@@ -29,23 +29,17 @@ exports.main = async (event) => {
       // 查询股票类型是否存在
       const stockRes = await db
         .collection(stockTypesCollection)
-        .where({ _id: stockId, userId, isDeleted: false })
+        .where({ _id: stockId, userId })
         .get();
 
       if (stockRes.data.length === 0) {
         return failResponse({ message: "股票类型不存在或已删除" });
       }
 
-      // 软删除
       await db
         .collection(stockTypesCollection)
         .doc(stockId)
-        .update({
-          data: {
-            isDeleted: true,
-            deleteTime: db.serverDate(),
-          },
-        });
+        .remove();
 
       return successResponse({ message: "删除成功" });
     } else if (action === "add") {
@@ -55,7 +49,7 @@ exports.main = async (event) => {
       }
       const stockTypes = await db
         .collection(stockTypesCollection)
-        .where({ userId, isDeleted: false, name })
+        .where({ userId, symbol })
         .get();
       if (stockTypes.data.length > 0) {
         return failResponse({ message: "股票名称已存在" });
@@ -65,8 +59,8 @@ exports.main = async (event) => {
         name,
         market,
         currency,
-        isDeleted: false,
         code,
+        symbol,
         createTime: db.serverDate(),
       };
 
