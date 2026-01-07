@@ -49,11 +49,11 @@
   <view class="card info-card">
     <view class="info-grid">
       <view class="info-item">
-        <text class="label">买入价格</text>
+        <text class="label">单价</text>
         <text class="value">{{detailInfo.currency}}{{detailInfo.price}}</text>
       </view>
       <view class="info-item">
-        <text class="label">买入数量</text>
+        <text class="label">数量</text>
         <text class="value">{{detailInfo.quantity}}</text>
       </view>
       <view class="info-item">

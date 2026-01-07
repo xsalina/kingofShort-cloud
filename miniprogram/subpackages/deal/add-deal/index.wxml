@@ -1,7 +1,7 @@
 <view class="container" style="transform: translateY({{(keyboardHeight > 0 && !isSearchFocus) ? -(keyboardHeight / 4) : 0}}px);">
   <view class="card stock-section">
   <view class="section-header-row">
-    <view class="section-title">股票名称</view>
+    <view class="section-title">名称</view>
     
   </view>
 
@@ -11,7 +11,7 @@
       <input 
         class="input" 
         type="text" 
-        placeholder="搜索股票名称/代码" 
+        placeholder="搜索名称/代码" 
         placeholder-class="ph-style" 
         value="{{inputName}}" 
         bindinput="onInputSearch"
@@ -43,14 +43,14 @@
     <view class="section-title-simple">买入详情</view>
     <view class="form-row">
       <view class="form-col">
-        <text class="label">买入价格</text>
+        <text class="label">单价</text>
         <view class="input-wrap">
           <text class="prefix">{{selectedStockObj ? selectedStockObj.currency : ''}}</text>
           <input class="input" type="digit" placeholder="0.00" value="{{price}}" data-field="price" bindinput="onInput"  bindfocus="onFormFocus" />
         </view>
       </view>
       <view class="form-col">
-        <text class="label">买入数量</text>
+        <text class="label">数量</text>
         <view class="input-wrap">
           <input class="input" type="digit" placeholder="0" value="{{qty}}" data-field="qty" bindinput="onInput"  bindfocus="onFormFocus" />
           <text class="suffix">股</text>
@@ -66,7 +66,7 @@
         </view>
       </view>
       <view class="form-col">
-        <text class="label">目标收益率</text>
+        <text class="label">目标增长率</text>
         <view class="input-wrap">
           <input class="input" type="digit" placeholder="10" value="{{rate}}" data-field="rate" bindinput="onInput"  bindfocus="onFormFocus" />
           <text class="suffix">%</text>
@@ -81,14 +81,14 @@
     </view>
     <view class="result-body row-between">
       <view class="result-item">
-        <text class="res-label">建议卖出价</text>
+        <text class="res-label">卖出价</text>
         <text class="res-num text-primary">
           {{selectedStockObj.currency || ''}}{{suggestedSellPrice || '0.00'}}
         </text>
       </view>
       <view class="divider"></view>
       <view class="result-item text-right">
-        <text class="res-label">预计净赚</text>
+        <text class="res-label">预计差额</text>
         <text class="res-num text-warn">
           {{selectedStockObj.currency || ''}}{{suggestedProfit || '0.00'}}
         </text>
